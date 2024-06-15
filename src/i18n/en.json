@@ -1,0 +1,14 @@
+{
+  "button": {
+    "add": "Add",
+    "exportButton": "Export Excel",
+    "delete": "Delete"
+  },
+  "account": "Account",
+  "productManager": "Product Manager",
+  "userManager": "UserManager",
+  "employeeManager": "Employee Manager",
+  "storeManager": "StoreManager",
+  "masterDataManager": "MasterData Manager",
+  "orderManager": "order Manager"
+}

@@ -1,0 +1,14 @@
+{
+  "button": {
+    "add": "Tạo mới",
+    "exportButton": "Xuất Excel",
+    "delete": "Xoá"
+  },
+  "account": "Tài khoản",
+  "productManager": "Quản lý sản phẩm",
+  "userManager": "Quản lý khách hàng",
+  "employeeManager": "Quản lý nhân sự",
+  "storeManager": "Quản lý kho hàng",
+  "masterDataManager": "Quản lý danh mục",
+  "orderManager": "Quản lý đơn hàng"
+}
