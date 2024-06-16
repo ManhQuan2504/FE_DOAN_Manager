@@ -10,5 +10,9 @@
   "employeeManager": "Quản lý nhân sự",
   "storeManager": "Quản lý kho hàng",
   "masterDataManager": "Quản lý danh mục",
+  "product": "Sản phẩm",
+  "productTest": "Sản phẩm test",
+  "system": "Hệ thống",
+  "function": "Chức năng",
   "orderManager": "Quản lý đơn hàng"
 }

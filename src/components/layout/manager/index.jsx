@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -6,7 +6,8 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Menu, theme } from 'antd';
+import { Button, Layout, theme } from 'antd';
+import Menu from './Menu';
 import './manager-layout.css';
 import { useTranslation } from 'react-i18next';
 import { Space, Switch } from 'antd';
@@ -14,11 +15,13 @@ import i18n from '~/i18n/i18n';
 import DropdownAvt from '../../DropdownAvt';
 import { NavLink } from 'react-router-dom';
 import { PATH } from '~/constants/part';
+import { getFunc } from '~/services/manager/UI';
 
 const { Header, Sider, Content } = Layout;
 
 function ManagerLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
+  const [functions, setFunctions] = useState(null);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -28,66 +31,32 @@ function ManagerLayout({ children }) {
     i18n.changeLanguage(lng);
   };
 
-  const onSwitchChange = (checked) => {
+  const onSwitchChange = (checked) => { //anh việt
     if (checked) {
-      changeLanguage('vi'); // Chuyển sang tiếng Việt nếu checked
+      changeLanguage('vi');
     } else {
-      changeLanguage('en'); // Chuyển sang tiếng Anh nếu không checked
+      changeLanguage('en');
     }
   };
 
-  const menuItems = [
-    {
-      key: '0',
-      label: 'Admin',
-      url: PATH.MANAGER.DASHBOARD,
-    },
-    {
-      key: '1',
-      icon: <UserOutlined />,
-      label: t('productManager'),
-      url: PATH.MANAGER.PRODUCT,
-    },
-    {
-      key: '2',
-      icon: <VideoCameraOutlined />,
-      label: t('userManager'),
-      url: PATH.MANAGER.DASHBOARD,
-    },
-    {
-      key: '3',
-      icon: <UploadOutlined />,
-      label: t('employeeManager'),
-      url: PATH.MANAGER.DASHBOARD,
-    },
-    {
-      key: '4',
-      icon: <UploadOutlined />,
-      label: t('storeManager'),
-      url: PATH.MANAGER.DASHBOARD,
-    },
-    {
-      key: '5',
-      icon: <UploadOutlined />,
-      label: t('masterDataManager'),
-      url: PATH.MANAGER.DASHBOARD,
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getFunc();
+      console.log("🚀 ~ fetchData ~ data:", data)
+      setFunctions(data);
+    };
+
+    fetchData();
+  }, []);
+
+  
 
   return (
     <Layout style={{ height: '100%', minHeight: '100vh' }}>
-      <Sider trigger={null} collapsible collapsed={collapsed} width={270}>
+      <Sider trigger={null} collapsible collapsed={collapsed} width={270} theme="light">
         <div className="demo-logo-vertical" />
-        <Menu theme="dark" mode="inline">
-          {menuItems.map((item) => (
-            <Menu.Item key={item.key} icon={item.icon} >
-              <NavLink to={item.url}>
-                {item.label}
-              </NavLink>
-            </Menu.Item>
-          ))}
+        <Menu theme="light" mode="inline" width={'100%'}>
         </Menu>
-
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer, display: 'flex', alignItems: 'center' }}>

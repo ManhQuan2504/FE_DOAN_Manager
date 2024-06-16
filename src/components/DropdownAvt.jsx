@@ -1,10 +1,9 @@
 import React from 'react';
 import { Dropdown, Menu, Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 const DropdownAvt = () => {
-  const { t } = useTranslation();
 
   const handleMenuClick = (e) => {
     console.log('click', e);

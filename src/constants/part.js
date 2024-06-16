@@ -5,9 +5,11 @@ export const PATH = {
   DASHBOARD: "/dashboard",
   MANAGER:{
     DASHBOARD: `/${MANAGER}`,
-    PRODUCT: `/${MANAGER}/product`,
-    USER: `/${MANAGER}/user`,
-    EMPLOYEE: `/${MANAGER}/employee`,
+    PRODUCTS: `/${MANAGER}/products`,
+    PRODUCTTEST: `/${MANAGER}/productstest`,
+    USERS: `/${MANAGER}/users`,
+    EMPLOYEES: `/${MANAGER}/employees`,
+    FUNCTIONS: `/${MANAGER}/functions`,
   },
   USER: {
     PRODUCT: `product`

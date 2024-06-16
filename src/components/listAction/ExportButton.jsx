@@ -2,9 +2,9 @@ import React from 'react';
 import { Button, Tooltip } from 'antd';
 import { CloudDownloadOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 const ExportButton = ({ onClick, tooltip, ...props }) => {
-  const { t } = useTranslation();
 
   return (
     <Tooltip title={t('button.export')}>
