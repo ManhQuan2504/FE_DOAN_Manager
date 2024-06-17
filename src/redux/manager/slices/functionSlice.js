@@ -23,6 +23,7 @@ const initialState = {
   function: null,
   status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
   error: null,
+  hjuhhju
 };
 
 const functionSlice = createSlice({
