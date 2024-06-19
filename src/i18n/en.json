@@ -14,5 +14,8 @@
   "productTest": "Product test",
   "system": "System",
   "function": "Function",
+  "login": "Login",
+  "logout": "Logout",
+  "register": "Register",
   "orderManager": "order Manager"
 }

@@ -39,15 +39,14 @@ function ManagerLayout({ children }) {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getFunc();
-      console.log("🚀 ~ fetchData ~ data:", data)
-      setFunctions(data);
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data = await getFunc();
+  //     setFunctions(data);
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   
 

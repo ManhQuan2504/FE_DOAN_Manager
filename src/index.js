@@ -7,6 +7,7 @@ import store from './redux/store';
 import GlobalStyles from './assets/global-style';
 import { I18nextProvider } from 'react-i18next';
 import i18next from 'i18next';
+import './index.css';
 
 i18next.init({
   interpolation: { escapeValue: false },  // React already does escaping
@@ -18,7 +19,7 @@ root.render(
     <I18nextProvider i18n={i18next}>
       <Provider store={store}>
         <App />
-      </Provider>
+      </Provider>,
     </I18nextProvider>
   </GlobalStyles>,
 );

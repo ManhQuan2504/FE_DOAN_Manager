@@ -17,3 +17,15 @@ export const getFunc = async () => {
     return error;
   }
 }
+
+export const employeeLogin = async (data) => {
+  data.modelName = 'employees';
+  
+  try {
+    const res = await axios.post(`http://localhost/v1/employees/login`, data);
+    return res.data;
+  } catch (error) {
+    console.error('There was an error making the request:', error);
+    throw error;
+  }
+}

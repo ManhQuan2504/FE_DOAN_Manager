@@ -5,11 +5,13 @@ export const PATH = {
   DASHBOARD: "/dashboard",
   MANAGER:{
     DASHBOARD: `/${MANAGER}`,
+    LOGIN: `/${MANAGER}/login`,
     PRODUCTS: `/${MANAGER}/products`,
     PRODUCTTEST: `/${MANAGER}/productstest`,
     USERS: `/${MANAGER}/users`,
     EMPLOYEES: `/${MANAGER}/employees`,
     FUNCTIONS: `/${MANAGER}/functions`,
+    ACCOUNT: `/${MANAGER}/account`,
   },
   USER: {
     PRODUCT: `product`

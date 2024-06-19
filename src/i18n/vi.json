@@ -14,5 +14,8 @@
   "productTest": "Sản phẩm test",
   "system": "Hệ thống",
   "function": "Chức năng",
+  "login": "Đăng nhập",
+  "logout": "Đăng xuất",
+  "register": "Đăng ký",
   "orderManager": "Quản lý đơn hàng"
 }
