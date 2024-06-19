@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Divider, Radio, Table, Menu } from 'antd';
+import { Table } from 'antd';
 import { NavLink } from 'react-router-dom';
-import AddButton from '~/components/listAction/AddButton';
+import AddButton from '~/components/manager/listAction/AddButton';
+import ExportButton from '~/components/manager/listAction/ExportButton';
 import { PATH } from '~/constants/part';
+import './ProductFormPage.css'; // Import file CSS tùy chỉnh
 
 const ProductFormPage = () => {
   const columns = [
@@ -51,8 +53,12 @@ const ProductFormPage = () => {
 
   return (
     <div>
-      <div>
-        <AddButton />
+      <div className="header-container">
+        <div className="title">SẢN PHẨM</div>
+        <div className="button-container">
+          <AddButton />
+          <ExportButton />
+        </div>
       </div>
       <Table
         rowSelection={{

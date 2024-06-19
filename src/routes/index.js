@@ -2,7 +2,7 @@ import { PATH } from '~/constants/part';
 
 //MANAGER
 import LoginPage from '~/pages/manager/LoginPage/LoginPage';
-import ManagerLayout from '~/components/layout/manager';
+import ManagerLayout from '~/components/manager/layout';
 import Dashboard from '~/pages/manager/Dashboard';
 import ProductFormPage from '~/pages/manager/ProductPage/ProductFormPage';
 import ProductListPage from '~/pages/manager/ProductPage/ProductListPage';
@@ -12,7 +12,7 @@ import FunctionListPage from '~/pages/manager/SystemPage/FunctionListPage';
 import AccountPage from '~/pages/manager/AccountPage/AccountPage';
 
 //USER
-import UserLayout from '~/components/layout/user';
+import UserLayout from '~/components/user/layout';
 import Home from '~/pages/user/Home';
 import Cart from '~/pages/user/Cart';
 

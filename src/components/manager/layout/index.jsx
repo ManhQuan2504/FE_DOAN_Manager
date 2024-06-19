@@ -12,10 +12,9 @@ import './manager-layout.css';
 import { useTranslation } from 'react-i18next';
 import { Space, Switch } from 'antd';
 import i18n from '~/i18n/i18n';
-import DropdownAvt from '../../DropdownAvt';
+import DropdownAvt from '../DropdownAvt';
 import { NavLink } from 'react-router-dom';
 import { PATH } from '~/constants/part';
-import { getFunc } from '~/services/manager/UI';
 
 const { Header, Sider, Content } = Layout;
 

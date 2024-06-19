@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Table } from 'antd';
 import './dashboard.css';
 import { useTranslation } from 'react-i18next';
-import AddButton from '~/components/listAction/AddButton';
+import AddButton from '~/components/manager/listAction/AddButton';
 
 function Dashboard() {
   const { t } = useTranslation();

@@ -52,9 +52,7 @@ const App = () => {
       <Menu
         theme={theme}
         onClick={onClick}
-        style={{
-          width: 256,
-        }}
+        style={{ width: '100%' }}
         defaultOpenKeys={['sub1']}
         selectedKeys={[current]}
         mode="inline"
@@ -70,9 +68,7 @@ const App = () => {
       <Menu
         theme={theme}
         onClick={onClick}
-        style={{
-          width: 256,
-        }}
+        style={{ width: '100%' }}
         defaultOpenKeys={defaultOpenKeys}
         selectedKeys={[current]}
         mode="inline"
