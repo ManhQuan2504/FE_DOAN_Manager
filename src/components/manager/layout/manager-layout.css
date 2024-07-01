@@ -5,10 +5,17 @@
   /* 64px là chiều cao của Header */
 }
 
-.ant-switch-checked {
+.switch-trans.layout-content {
+  overflow-y: auto;
+  height: calc(100vh - 64px);
+  position: relative;
+  /* 64px là chiều cao của Header */
+}
+
+.switch-trans.ant-switch-checked {
   background: red !important;
 }
 
-.ant-switch:not(.ant-switch-checked) {
+.switch-trans.ant-switch:not(.ant-switch-checked) {
   background-color: blue !important;
 }

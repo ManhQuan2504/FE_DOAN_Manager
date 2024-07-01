@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
 } from '@ant-design/icons';
 import { Button, Layout, theme } from 'antd';
 import Menu from './Menu';
@@ -13,41 +10,27 @@ import { useTranslation } from 'react-i18next';
 import { Space, Switch } from 'antd';
 import i18n from '~/i18n/i18n';
 import DropdownAvt from '../DropdownAvt';
-import { NavLink } from 'react-router-dom';
-import { PATH } from '~/constants/part';
 
 const { Header, Sider, Content } = Layout;
 
 function ManagerLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
-  const [functions, setFunctions] = useState(null);
+  const { t } = useTranslation();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-  const { t } = useTranslation();
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
 
-  const onSwitchChange = (checked) => { //anh việt
+  const onSwitchChange = (checked) => { 
     if (checked) {
       changeLanguage('vi');
     } else {
       changeLanguage('en');
     }
   };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const data = await getFunc();
-  //     setFunctions(data);
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-  
 
   return (
     <Layout style={{ height: '100%', minHeight: '100vh' }}>
@@ -65,7 +48,7 @@ function ManagerLayout({ children }) {
             style={{ fontSize: '16px', width: 64, height: 64 }}
           />
           <div style={{ marginLeft: 'auto', marginRight: '20px' }}>
-            <Switch checkedChildren="VN" unCheckedChildren="ENG" defaultChecked onChange={onSwitchChange} style={{ marginRight: '20px' }} />
+            <Switch checkedChildren="VN" unCheckedChildren="ENG" defaultChecked onChange={onSwitchChange} style={{ marginRight: '20px' }} className='switch-trans'/>
             <DropdownAvt />
           </div>
         </Header>

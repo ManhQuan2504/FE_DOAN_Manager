@@ -15,67 +15,66 @@ const getUniqueValues = (categories, key) => {
   return _.uniq(values).sort((a, b) => a.localeCompare(b));
 };
 
-const FunctionListPage = () => {
+const CategoryListPage = () => {
   const { t } = useTranslation();
-  const [functions, setFunctions] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchFunction = async () => {
+    const fetchCategory = async () => {
       setLoading(true);
       try {
         const data = {
-          modelName: 'functions',
+          modelName: 'categories',
           data: {},
         };
         const response = await apiGetList(data);
-        setFunctions(response.dataObject);
+        setCategories(response.dataObject);
       } catch (error) {
-        console.error('Failed to fetch Functions:', error);
+        console.error('Failed to fetch Category:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchFunction();
+    fetchCategory();
   }, []);
 
   const columnsConfig = [
     {
-      title: t('funcName'),
-      dataIndex: 'funcName',
-      key: 'funcName',
+      title: t('categoryCode'),
+      dataIndex: 'categoryCode',
+      key: 'categoryCode',
       render: (text, record) => (
-        <NavLink to={`${PATH.MANAGER.FUNCTIONS}/${record._id}`}>
+        <NavLink to={`${PATH.MANAGER.CATEGORIES}/${record._id}`}>
           {text}
         </NavLink>
       ),
     },
     {
-      title: t('clientPath'),
-      dataIndex: 'clientPath',
-      key: 'clientPath',
+      title: t('categoryName'),
+      dataIndex: 'categoryName',
+      key: 'categoryName',
     },
     {
-      title: t('parentFunc'),
-      dataIndex: 'parentFuncName',
-      key: 'parentFunc',
+      title: t('parentCategoryId'),
+      dataIndex: 'parentCategoryName',
+      key: 'parentCategoryId',
     },
   ];
-  console.log("🚀 ~ FunctionListPage ~ functions:", functions)
 
   return (
     <div>
       <div className="header-list">
         <div className="title">{t('category')}</div>
         <div className="button-list">
-          <AddButton to={`${PATH.MANAGER.FUNCTIONS}/0`} />
+          <AddButton to={`${PATH.MANAGER.CATEGORIES}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={functions} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={categories} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };
 
-export default FunctionListPage;
+export default CategoryListPage;

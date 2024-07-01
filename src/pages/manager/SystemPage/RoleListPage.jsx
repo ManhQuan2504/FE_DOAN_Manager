@@ -9,73 +9,62 @@ import _ from 'lodash';
 import TableComponent from '~/components/TableComponent';
 import { useTranslation } from 'react-i18next';
 
-// Helper function to get unique values and sort them
-const getUniqueValues = (categories, key) => {
-  const values = categories.map(category => category[key]).filter(Boolean);
-  return _.uniq(values).sort((a, b) => a.localeCompare(b));
-};
 
-const FunctionListPage = () => {
+const RoleListPage = () => {
   const { t } = useTranslation();
-  const [functions, setFunctions] = useState([]);
+  const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchFunction = async () => {
+    const fetchRoles = async () => {
       setLoading(true);
       try {
         const data = {
-          modelName: 'functions',
+          modelName: 'roles',
           data: {},
         };
         const response = await apiGetList(data);
-        setFunctions(response.dataObject);
+        setRoles(response.dataObject);
       } catch (error) {
-        console.error('Failed to fetch Functions:', error);
+        console.error('Failed to fetch ROLES:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchFunction();
+    fetchRoles();
   }, []);
 
   const columnsConfig = [
     {
-      title: t('funcName'),
-      dataIndex: 'funcName',
-      key: 'funcName',
+      title: t('roleCode'),
+      dataIndex: 'roleCode',
+      key: 'roleCode',
       render: (text, record) => (
-        <NavLink to={`${PATH.MANAGER.FUNCTIONS}/${record._id}`}>
+        <NavLink to={`${PATH.MANAGER.ROLES}/${record._id}`}>
           {text}
         </NavLink>
       ),
     },
     {
-      title: t('clientPath'),
-      dataIndex: 'clientPath',
-      key: 'clientPath',
-    },
-    {
-      title: t('parentFunc'),
-      dataIndex: 'parentFuncName',
-      key: 'parentFunc',
+      title: t('roleName'),
+      dataIndex: 'roleName',
+      key: 'roleName',
     },
   ];
-  console.log("🚀 ~ FunctionListPage ~ functions:", functions)
 
   return (
     <div>
       <div className="header-list">
         <div className="title">{t('category')}</div>
         <div className="button-list">
-          <AddButton to={`${PATH.MANAGER.FUNCTIONS}/0`} />
+          <AddButton to={`${PATH.MANAGER.ROLES}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={functions} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={roles} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };
 
-export default FunctionListPage;
+export default RoleListPage;

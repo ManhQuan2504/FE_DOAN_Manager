@@ -12,6 +12,9 @@ export const PATH = {
     EMPLOYEES: `/${MANAGER}/employees`,
     FUNCTIONS: `/${MANAGER}/functions`,
     ACCOUNT: `/${MANAGER}/account`,
+    CATEGORIES: `/${MANAGER}/categories`,
+    UOMS: `/${MANAGER}/uoms`,
+    ROLES: `/${MANAGER}/roles`,
   },
   USER: {
     PRODUCT: `product`
