@@ -15,6 +15,7 @@ export const PATH = {
     CATEGORIES: `/${MANAGER}/categories`,
     UOMS: `/${MANAGER}/uoms`,
     ROLES: `/${MANAGER}/roles`,
+    TAXS: `/${MANAGER}/taxs`,
   },
   USER: {
     PRODUCT: `product`

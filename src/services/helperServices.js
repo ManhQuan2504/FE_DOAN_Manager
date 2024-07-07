@@ -55,6 +55,30 @@ export const apiCreate = async (formData) => {
   }
 };
 
+export const apiUpload = async (files) => {
+  try {
+    if (!Array.isArray(files)) {
+      throw new Error('Files must be an array.');
+    }
+
+    const formData = new FormData();
+    files.forEach(file => {
+      formData.append('images', file.originFileObj); // Đảm bảo sử dụng originFileObj để lấy đối tượng file thật
+    });
+
+    const res = await axios.post(`http://localhost/uploads`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    return res.data;
+  } catch (error) {
+    console.error('There was an error making the request:', error);
+    throw error;
+  }
+};
+
+
 export const apiUpdate = async (formData) => {
   const { modelName, id } = formData;
 

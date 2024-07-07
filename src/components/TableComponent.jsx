@@ -5,14 +5,21 @@ import { t } from 'i18next';
 
 // Helper function to get unique values and sort them
 const getUniqueValues = (data, key) => {
-  const values = data?.map(item => item[key] || 'No Value');
-  return _.uniq(values).sort((a, b) => a.localeCompare(b));
+  const values = data?.map(item => (item[key] || 'No Value').toString()); // Chuyển đổi thành chuỗi
+  
+  // Loại bỏ các giá trị trùng lặp và sắp xếp
+  return _.uniq(values).sort((a, b) => {
+    // Chuyển đổi a và b thành chuỗi nếu chưa
+    const aValue = typeof a === 'string' ? a : '';
+    const bValue = typeof b === 'string' ? b : '';
+    return aValue.localeCompare(bValue);
+  });
 };
+
 
 const TableComponent = ({ data, columnsConfig, loading }) => {
   const [pageSize, setPageSize] = useState(30); // Default page size
 
-  // Add index column (STT) to columnsConfig
   const columns = [
     {
       title: t('index'),
@@ -31,22 +38,20 @@ const TableComponent = ({ data, columnsConfig, loading }) => {
         return recordValue.startsWith(value);
       },
       sorter: (a, b) => {
-        const aValue = a[col.dataIndex] || '';
-        const bValue = b[col.dataIndex] || '';
+        const aValue = typeof a[col.dataIndex] === 'string' ? a[col.dataIndex] : ''; // Ensure aValue is a string
+        const bValue = typeof b[col.dataIndex] === 'string' ? b[col.dataIndex] : ''; // Ensure bValue is a string
         return aValue.localeCompare(bValue);
       },
     })),
   ];
 
-  // Function to handle page size change
   const handlePageSizeChange = (current, size) => {
     setPageSize(size);
-    // You can add any additional logic here if needed when page size changes
     console.log(`Page size changed to ${size}`);
   };
 
   return (
-    <div >
+    <div>
       <Table
         columns={columns}
         dataSource={data}

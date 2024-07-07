@@ -20,23 +20,23 @@ const CategoryListPage = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchCategory = async () => {
-      setLoading(true);
-      try {
-        const data = {
-          modelName: 'categories',
-          data: {},
-        };
-        const response = await apiGetList(data);
-        setCategories(response.dataObject);
-      } catch (error) {
-        console.error('Failed to fetch Category:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchCategory = async () => {
+    setLoading(true);
+    try {
+      const data = {
+        modelName: 'categories',
+        data: {},
+      };
+      const response = await apiGetList(data);
+      setCategories(response.dataObject);
+    } catch (error) {
+      console.error('Failed to fetch Category:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchCategory();
   }, []);
 

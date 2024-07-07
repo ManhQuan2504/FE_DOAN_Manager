@@ -19,6 +19,8 @@ import CategoryFormPage from '~/pages/manager/masterDataPage/CategoryFormPage';
 import CategoryListPage from '~/pages/manager/masterDataPage/CategoryListPage';
 import UomFormPage from '~/pages/manager/masterDataPage/UomFormPage';
 import UomListPage from '~/pages/manager/masterDataPage/UomListPage';
+import TaxFormPage from '~/pages/manager/masterDataPage/TaxFormPage';
+import TaxListPage from '~/pages/manager/masterDataPage/TaxListPage';
 
 //USER
 import UserLayout from '~/components/user/layout';
@@ -44,6 +46,8 @@ export const AppRoutes = [
     { path: `${PATH.MANAGER.CATEGORIES}/:id`, component: CategoryFormPage, layout: ManagerLayout },
     { path: PATH.MANAGER.UOMS, component: UomListPage, layout: ManagerLayout },
     { path: `${PATH.MANAGER.UOMS}/:id`, component: UomFormPage, layout: ManagerLayout },
+    { path: PATH.MANAGER.TAXS, component: TaxListPage, layout: ManagerLayout },
+    { path: `${PATH.MANAGER.TAXS}/:id`, component: TaxFormPage, layout: ManagerLayout },
 
     //USER
     { path: PATH.HOME, component: Home, layout: UserLayout },

@@ -58,5 +58,11 @@
   "materialStock": "Material Stock",
   "stockImport": "Stock Import",
   "stockExport": "Stock Export",
+  "tax": "Tax",
+  "taxId": "Tax",
+  "taxCode": "Tax Code",
+  "taxName": "Tax Name",
+  "taxValue": "Tax Value",
+  "images": "Images",
   "orderManager": "order Manager"
 }

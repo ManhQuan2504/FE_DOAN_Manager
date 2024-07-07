@@ -20,23 +20,23 @@ const FunctionListPage = () => {
   const [functions, setFunctions] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchFunction = async () => {
-      setLoading(true);
-      try {
-        const data = {
-          modelName: 'functions',
-          data: {},
-        };
-        const response = await apiGetList(data);
-        setFunctions(response.dataObject);
-      } catch (error) {
-        console.error('Failed to fetch Functions:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchFunction = async () => {
+    setLoading(true);
+    try {
+      const data = {
+        modelName: 'functions',
+        data: {},
+      };
+      const response = await apiGetList(data);
+      setFunctions(response.dataObject);
+    } catch (error) {
+      console.error('Failed to fetch Functions:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchFunction();
   }, []);
 
@@ -62,7 +62,6 @@ const FunctionListPage = () => {
       key: 'parentFunc',
     },
   ];
-  console.log("🚀 ~ FunctionListPage ~ functions:", functions)
 
   return (
     <div>

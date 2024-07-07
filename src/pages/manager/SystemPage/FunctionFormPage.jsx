@@ -19,33 +19,34 @@ const FunctionFormPage = () => {
   const [loading, setLoading] = useState(false);
   const [functions, setFunctions] = useState([]);
   
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const data = {
-          modelName: 'functions',
-          data: {},
-        };
-        const response = await apiGetList(data);
-        setFunctions(response.dataObject);
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const data = {
+        modelName: 'functions',
+        data: {},
+      };
+      const response = await apiGetList(data);
+      setFunctions(response.dataObject);
 
-        if (id && id !== '0') {
-          const functionData = await apiGetById({ modelName: 'functions', id });
-          form.setFieldsValue(functionData.dataObject); // Sử dụng form.setFieldsValue khi form đã được khởi tạo
-        }
-      } catch (error) {
-        console.error('Failed to fetch data:', error);
-      } finally {
-        setLoading(false);
+      if (id && id !== '0') {
+        const functionData = await apiGetById({ modelName: 'functions', id });
+        form.setFieldsValue(functionData.dataObject); // Sử dụng form.setFieldsValue khi form đã được khởi tạo
       }
-    };
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [id, form]); // Sử dụng form là dependency của useEffect
 
   const funcParentChange = value => {
     const selectedFunction = functions.find(finction => finction._id === value);
+    console.log("🚀 ~ @@@@funcParentChange ~ selectedFunction:", selectedFunction.funcName)
     
     form.setFieldsValue({
       parentFunc: selectedFunction._id,
@@ -53,9 +54,8 @@ const FunctionFormPage = () => {
     });
 
     const formData = form.getFieldValue();
-    console.log('Form Data:', formData);
+    console.log('!!!!!!!!!!!!!!!!Form Data:', formData);
   };
-  console.log("!!!!!!!!!!!!!!!!!!!!!!!!🚀", form.getFieldValue())
 
   return (
     <div>

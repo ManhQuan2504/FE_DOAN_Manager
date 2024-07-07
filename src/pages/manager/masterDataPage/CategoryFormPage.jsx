@@ -13,9 +13,9 @@ const { TextArea } = Input;
 
 const CategoryFormPage = () => {
   const { t } = useTranslation();
-  const { id } = useParams(); // get id from URL parameters
-  const navigate = useNavigate();
+  const { id } = useParams();
   const [form] = Form.useForm();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   

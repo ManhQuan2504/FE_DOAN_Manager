@@ -9,7 +9,7 @@ const CreateButton = ({ modelName, form, navigate, ...props }) => {
 
   const handleCreate = async () => {
     try {
-      const formData = await form.validateFields();
+      const formData = await form.getFieldValue();
       console.log("🚀 ~ !!!!handleCreate ~ formData:", formData)
       const data = {
         modelName: modelName,

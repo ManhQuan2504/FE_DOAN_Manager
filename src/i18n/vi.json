@@ -58,5 +58,11 @@
   "materialStock": "Vật tư",
   "stockImport": "Nhập kho",
   "stockExport": "Xuất kho",
+  "tax": "Thuế",
+  "taxId": "thuế",
+  "taxCode": "Mã thuế",
+  "taxName": "Tên thuế",
+  "taxValue": "Giá trị thuế",
+  "images": "Hình ảnh",
   "orderManager": "Quản lý đơn hàng"
 }
