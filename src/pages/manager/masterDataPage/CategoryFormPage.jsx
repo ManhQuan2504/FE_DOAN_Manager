@@ -18,7 +18,7 @@ const CategoryFormPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -46,7 +46,7 @@ const CategoryFormPage = () => {
 
   const categoryParentChange = value => {
     const selectedCategory = categories.find(category => category._id === value);
-    
+
     form.setFieldsValue({
       parentCategoryId: selectedCategory._id,
       parentCategoryCode: selectedCategory.categoryCode,
@@ -86,7 +86,7 @@ const CategoryFormPage = () => {
                 onChange={categoryParentChange}
               >
                 {categories
-                  .filter(category => category.isParent) 
+                  .filter(category => category.isParent)
                   .map(category => (
                     <Option key={category._id} value={category._id}>
                       {category.categoryName}
@@ -95,15 +95,19 @@ const CategoryFormPage = () => {
               </Select>
             </Form.Item>
           </Col>
-        </Row>
 
-        <Row>
           <Col span={6}>
-            <Form.Item label={t('active')} name="active">
-              <Switch defaultChecked={true} />
+            <Form.Item label={t('isParentCategory')} name="isParent">
+              <Switch defaultChecked={false} />
             </Form.Item>
           </Col>
         </Row>
+
+        <Col span={6}>
+          <Form.Item label={t('active')} name="active">
+            <Switch defaultChecked={true} />
+          </Form.Item>
+        </Col>
 
       </Form>
     </div>

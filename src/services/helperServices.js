@@ -27,13 +27,14 @@ export const apiGetList = async (data) => {
 }
 
 export const apiGetById = async (data) => {
-  const { modelName, id } = data;
+  const { modelName, id, field = [] } = data;
 
-  const queryString = Object.keys(data)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+  const queryString = Object.keys(field)
+    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(field[key])}`)
     .join('&');
 
   try {
+    console.log("🚀 ~ !!!!!!!!!! ", `http://localhost/v1/${modelName}/${id}?modelName=${modelName}&field=${queryString}`)
     const res = await axios.get(`http://localhost/v1/${modelName}/${id}?modelName=${modelName}&field=${queryString}`);
     return res.data;
   } catch (error) {

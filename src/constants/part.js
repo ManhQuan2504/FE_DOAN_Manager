@@ -17,7 +17,11 @@ export const PATH = {
     ROLES: `/${MANAGER}/roles`,
     TAXS: `/${MANAGER}/taxs`,
   },
-  USER: {
-    PRODUCT: `product`
+  CUSTOMER: {
+    HOME: "/",
+    PRODUCT: `product`,
+    LOGIN: `/login`,
+    SIGNIN: `/signin`,
+    HOME: `/home`,
   }
 }

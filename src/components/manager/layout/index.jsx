@@ -60,6 +60,8 @@ function ManagerLayout({ children }) {
             minHeight: 280,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
+            overflowY: 'hidden',
+            height: 'auto'
           }}
         >
           <div className="content-body">{children}</div>

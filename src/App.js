@@ -2,7 +2,7 @@
 // import { decrement, increment } from './redux/slide/couterSlide';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppRoutes } from '~/routes';
-import DefaultLayoutUser from './components/user/layout';
+import DefaultLayoutUser from './components/customer/layout';
 import { Fragment } from 'react';
 function App() {
   // const count = useSelector((state) => state.counter.value);

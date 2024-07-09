@@ -46,6 +46,7 @@ const App = () => {
 
   const menuItems = transformDataToMenuItems(functionList);
   const defaultOpenKeys = menuItems.map(item => item.key);
+  console.log("🚀 ~ App ~ defaultOpenKeys:", defaultOpenKeys)
 
   return (
     <>

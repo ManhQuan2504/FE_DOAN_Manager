@@ -64,5 +64,6 @@
   "taxName": "Tên thuế",
   "taxValue": "Giá trị thuế",
   "images": "Hình ảnh",
+  "isParentCategory": "Là danh mục cha",
   "orderManager": "Quản lý đơn hàng"
 }

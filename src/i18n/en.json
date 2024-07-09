@@ -64,5 +64,6 @@
   "taxName": "Tax Name",
   "taxValue": "Tax Value",
   "images": "Images",
+  "isParentCategory": "Is Parent Category",
   "orderManager": "order Manager"
 }
