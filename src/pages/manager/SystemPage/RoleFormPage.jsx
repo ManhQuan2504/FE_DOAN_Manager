@@ -17,14 +17,16 @@ const RoleFormPage = () => {
   const [loading, setLoading] = useState(false);
   const [permissions, setPermissions] = useState([]);
   const [permissionList, setPermissionList] = useState([]);
+  const [functions, setFunctions] = useState([]);
+  const [functionsList, setFunctionsList] = useState([]);
   const [pageSize, setPageSize] = useState(30); // Default page size
-  console.log("🚀 ~ RoleFormPage ~ permissionList:", permissionList)
 
   const handlePageSizeChange = (current, size) => {
     setPageSize(size);
     // You can add any additional logic here if needed when page size changes
     console.log(`Page size changed to ${size}`);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -36,10 +38,17 @@ const RoleFormPage = () => {
         const dataPer = await apiGetList(perReq);
         setPermissions(dataPer.dataObject);
 
+        const funcReq = {
+          modelName: MODELNAME.FUNCTIONS, // Update to FUNCTIONS
+          data: {},
+        };
+        const dataFunc = await apiGetList(funcReq);
+        setFunctions(dataFunc.dataObject);
+
         if (id && id !== '0') {
           const roleData = await apiGetById({ modelName: MODELNAME.ROLES, id });
-          console.log("🚀 ~ fetchData ~ roleData:", roleData)
           setPermissionList(roleData.dataObject.permissionList?.map(item => item) || []);
+          setFunctionsList(roleData.dataObject.functionList?.map(item => item) || []);
           form.setFieldsValue(roleData.dataObject);
         }
       } catch (error) {
@@ -87,13 +96,26 @@ const RoleFormPage = () => {
     },
   ];
 
+  const funcColumnsConfig = [
+    {
+      title: t('funcName'),
+      dataIndex: 'funcName',
+      key: 'funcName',
+    },
+    {
+      title: t('clientPath'),
+      dataIndex: 'clientPath',
+      key: 'clientPath',
+    },
+  ];
+
   // Function to get unique values for filtering
   const getUniqueValues = (data, key) => {
     const uniqueValues = [...new Set(data?.map(item => item[key] || 'No Value'))];
     return uniqueValues;
   };
 
-  // Function to handle checkbox change
+  // Function to handle checkbox change for permissions
   const onCheckboxChange = (permissionId) => {
     const updatedPermissionList = permissionList.includes(permissionId)
       ? permissionList.filter(id => id !== permissionId)
@@ -106,7 +128,20 @@ const RoleFormPage = () => {
     });
   };
 
-  // Function to handle select all checkbox change
+  // Function to handle checkbox change for functions
+  const onCheckboxTableFunctionChange = (functionId) => {
+    const updatedFunctionList = functionsList.includes(functionId)
+      ? functionsList.filter(id => id !== functionId)
+      : [...functionsList, functionId];
+
+    setFunctionsList(updatedFunctionList);
+    form.setFieldsValue({
+      ...form.getFieldsValue(),
+      functionList: updatedFunctionList, // Ensure it matches the form field name
+    });
+  };
+
+  // Function to handle select all checkbox change for permissions
   const onSelectAllChange = (e) => {
     const checked = e.target.checked;
     const allPermissionIds = permissions.map(item => item._id);
@@ -120,6 +155,23 @@ const RoleFormPage = () => {
     form.setFieldsValue({
       ...form.getFieldsValue(),
       permissionList: checked ? allPermissionIds : [],
+    });
+  };
+
+  // Function to handle select all checkbox change for functions
+  const onSelectAllFunctionsChange = (e) => {
+    const checked = e.target.checked;
+    const allFunctionIds = functions.map(item => item._id);
+
+    if (checked) {
+      setFunctionsList(allFunctionIds);
+    } else {
+      setFunctionsList([]);
+    }
+
+    form.setFieldsValue({
+      ...form.getFieldsValue(),
+      functionList: checked ? allFunctionIds : [],
     });
   };
 
@@ -166,6 +218,49 @@ const RoleFormPage = () => {
     },
   ];
 
+  const funcColumns = [
+    {
+      title: t('index'),
+      dataIndex: 'index',
+      key: 'index',
+      width: 70,
+      render: (text, record, index) => index + 1, // Render STT based on the index in the filtered/sorted data
+    },
+    ...funcColumnsConfig.map(col => ({
+      ...col,
+      filters: getUniqueValues(functions, col.dataIndex).map(value => ({ text: value, value })),
+      filterMode: 'tree',
+      filterSearch: true,
+      onFilter: (value, record) => {
+        const recordValue = record[col.dataIndex] || 'No Value';
+        return recordValue.startsWith(value);
+      },
+      sorter: (a, b) => {
+        const aValue = a[col.dataIndex] || '';
+        const bValue = b[col.dataIndex] || '';
+        return aValue.localeCompare(bValue);
+      },
+    })),
+    {
+      title: (
+        <Checkbox
+          checked={functionsList.length === functions.length}
+          indeterminate={functionsList.length > 0 && functionsList.length < functions.length}
+          onChange={onSelectAllFunctionsChange}
+        />
+      ),
+      key: 'operation',
+      fixed: 'right',
+      width: 50,
+      render: (text, record) => {
+        const isChecked = functionsList.includes(record._id);
+        return (
+          <Checkbox checked={isChecked} onChange={() => onCheckboxTableFunctionChange(record._id)} />
+        );
+      },
+    },
+  ];
+
   return (
     <div>
       <div className="header-list">
@@ -199,12 +294,32 @@ const RoleFormPage = () => {
           </Col>
         </Row>
 
-        <label style={{ fontWeight: 'bold', fontSize: 20 }}>{t("permisionList")}</label>
+        <label style={{ fontWeight: 'bold', fontSize: 20 }}>{t("permissionList")}</label>
         <div>&nbsp;</div>
 
         <Table
           columns={columns}
           dataSource={permissions}
+          loading={loading}
+          style={{ minHeight: '400px' }}
+          scroll={{ x: 800, y: 400 }}
+          size="small"
+          rowKey="_id"
+          pagination={{
+            pageSize: pageSize, // Current page size
+            showSizeChanger: true,
+            pageSizeOptions: ['30', '50', '100', '200'], // Options for page size
+            onShowSizeChange: handlePageSizeChange,
+            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`, // Show total records
+          }}
+        />
+
+        <label style={{ fontWeight: 'bold', fontSize: 20 }}>{t("functionList")}</label>
+        <div>&nbsp;</div>
+
+        <Table
+          columns={funcColumns}
+          dataSource={functions}
           loading={loading}
           style={{ minHeight: '400px' }}
           scroll={{ x: 800, y: 400 }}

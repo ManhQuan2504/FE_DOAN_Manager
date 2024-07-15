@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import 'antd/dist/reset.css';  // Import CSS của Ant Design
-import { employeeLogin, getFunc } from '~/services/manager/UI';
+import { employeeLogin, getFunc, getPer } from '~/services/manager/UI';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '~/redux/manager/slices/authSlice';
 import { fetchFunction } from '~/redux/manager/slices/functionSlice';
@@ -26,10 +26,15 @@ const LoginPage = () => {
     };
     try {
       const result = await employeeLogin(loginData);
+      console.log("🚀 ~ onFinish ~ result:", result)
       if(result) {
-        localStorage.setItem('user', JSON.stringify(result.dataObject));
-        const resultFunc = await getFunc();
-        localStorage.setItem('functions', JSON.stringify(resultFunc.dataObject));
+        localStorage.setItem('user', JSON.stringify(result?.dataObject));
+        const { functionList, permissionList } = result?.dataObject?.roleId;
+        const resultFunc = await getFunc(functionList);
+        localStorage.setItem('functions', JSON.stringify(resultFunc));
+        const resultPer = await getPer(permissionList);
+        localStorage.setItem('permissions', JSON.stringify(resultPer));
+
       }      
       // dispatch(login(result));
       // dispatch(fetchFunction());

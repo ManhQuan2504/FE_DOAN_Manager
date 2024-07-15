@@ -27,21 +27,25 @@ const App = () => {
   };
 
   const transformDataToMenuItems = (data) => {
-    const menuItems = data
-      .filter(item => item.isParent)
-      .map(parent => ({
-        key: parent._id,
-        label: t(parent.funcName),
-        children: data
-          .filter(child => child.parentFunc === parent._id)
-          .map(child => ({
-            key: child._id,
-            label: t(child.funcName),
-            url: child.clientPath,
-          })),
-      }));
+    if (data && data.length > 0) {
+      const menuItems = data
+        .filter(item => item.isParent)
+        .map(parent => ({
+          key: parent._id,
+          label: t(parent.funcName),
+          children: data
+            .filter(child => child.parentFunc === parent._id)
+            .map(child => ({
+              key: child._id,
+              label: t(child.funcName),
+              url: child.clientPath,
+            })),
+        }));
 
-    return menuItems;
+      return menuItems;
+    } else {
+      return [];
+    }
   };
 
   const menuItems = transformDataToMenuItems(functionList);

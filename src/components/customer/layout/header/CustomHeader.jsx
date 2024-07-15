@@ -14,21 +14,25 @@ const CustomHeader = () => {
   const categoriesList = JSON.parse(localStorage?.categories || '[]');
 
   const transformDataToMenuItems = (data) => {
-    const menuItems = data
-      .filter(item => item.isParent && !item.parentCategoryId) // Lọc chỉ lấy các mục là parent
-      .map(parent => ({
-        key: parent._id,
-        label: t(parent.categoryName),
-        children: data
-          .filter(child => child.parentCategoryId === parent._id)
-          .map(child => ({
-            key: child._id,
-            label: t(child.categoryName),
-            url: child.clientPath,
-          })),
-      }));
+    if (data && data.length > 0) {
+      const menuItems = data
+        .filter(item => item.isParent && !item.parentCategoryId) // Lọc chỉ lấy các mục là parent
+        .map(parent => ({
+          key: parent._id,
+          label: t(parent.categoryName),
+          children: data
+            .filter(child => child.parentCategoryId === parent._id)
+            .map(child => ({
+              key: child._id,
+              label: t(child.categoryName),
+              url: child.clientPath,
+            })),
+        }));
 
-    return menuItems;
+      return menuItems;
+    } else {
+      return [];
+    }
   };
 
   const menuItems = transformDataToMenuItems(categoriesList);
@@ -81,12 +85,12 @@ const CustomHeader = () => {
           <Menu.ItemGroup
             defaultOpenKeys={defaultOpenKeys}
             title=""
-            style={{ display: 'flex',  flex: 1, fontWeight: 'bold' }}
+            style={{ display: 'flex', flex: 1, fontWeight: 'bold' }}
           >
             {menuItems.map((item) => (
-              <SubMenu key={item.key} title={item.label} style={{padding: 0}}>
+              <SubMenu key={item.key} title={item.label} style={{ padding: 0 }}>
                 {item.children.map((child) => (
-                  <Menu.Item key={child.key} style={{  padding: 0 }}>
+                  <Menu.Item key={child.key} style={{ padding: 0 }}>
                     <NavLink to={child.url}>{child.label}</NavLink>
                   </Menu.Item>
                 ))}
