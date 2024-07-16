@@ -29,7 +29,7 @@ const LoginPage = () => {
       console.log("🚀 ~ onFinish ~ result:", result)
       if(result) {
         localStorage.setItem('user', JSON.stringify(result?.dataObject));
-        const { functionList, permissionList } = result?.dataObject?.roleId;
+        const { functionList, permissionList } = result?.dataObject?.role;
         const resultFunc = await getFunc(functionList);
         localStorage.setItem('functions', JSON.stringify(resultFunc));
         const resultPer = await getPer(permissionList);

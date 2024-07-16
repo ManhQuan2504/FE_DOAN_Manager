@@ -10,7 +10,7 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-const ImageUpload = ({ value = [], onChange }) => {
+const ImageUpload = ({ value = [], limit, onChange }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState([]);
@@ -51,10 +51,10 @@ const ImageUpload = ({ value = [], onChange }) => {
         onPreview={handlePreview} // Sử dụng handlePreview trực tiếp vào onPreview
         onChange={handleChange} // onChange cập nhật fileList và gọi hàm onChange
         multiple
-        maxCount={10}
+        maxCount={limit}
         beforeUpload={() => false}
       >
-        {fileList.length >= 10 ? null : uploadButton}
+        {fileList.length >= limit ? null : uploadButton}
       </Upload>
       <Image
         style={{ display: 'none' }}

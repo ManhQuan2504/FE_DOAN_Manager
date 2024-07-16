@@ -5,6 +5,7 @@ import { PATH } from '~/constants/part';
 import { UserOutlined, VideoCameraOutlined, UploadOutlined } from '@ant-design/icons';
 import { t } from 'i18next';
 import { useDispatch, useSelector } from "react-redux";
+import * as Style from "./styles";
 
 const { SubMenu } = Menu;
 
@@ -50,25 +51,13 @@ const App = () => {
 
   const menuItems = transformDataToMenuItems(functionList);
   const defaultOpenKeys = menuItems.map(item => item.key);
-  console.log("🚀 ~ App ~ defaultOpenKeys:", defaultOpenKeys)
-
   return (
     <>
-      <Menu
-        theme={theme}
-        onClick={onClick}
-        style={{ width: '100%' }}
-        defaultOpenKeys={['sub1']}
-        selectedKeys={[current]}
-        mode="inline"
-        items={[
-          {
-            key: '0',
-            label: 'Admin',
-            url: PATH.MANAGER.DASHBOARD,
-          },
-        ]}
-      />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 60, width: '100%' }}>
+        <Style.HeaderLogo onClick={() => navigate('/manager')}>
+          LANCHISHOP
+        </Style.HeaderLogo>
+      </div>
 
       <Menu
         theme={theme}

@@ -22,12 +22,14 @@ import M_UomListPage from '~/pages/manager/masterDataPage/UomListPage';
 import M_TaxFormPage from '~/pages/manager/masterDataPage/TaxFormPage';
 import M_TaxListPage from '~/pages/manager/masterDataPage/TaxListPage';
 
+import M_EmployeeFormPage from '~/pages/manager/EmployeePage/EmployeeFormPage';
+import M_EmployeeListPage from '~/pages/manager/EmployeePage/EmployeeListPage';
+
 //CUSTOMER
 import UserLayout from '~/components/customer/layout';
 import C_LoginPage from '~/pages/customer/LoginPage/LoginPage';
 import C_SigninPage from '~/pages/customer/LoginPage/SigninPage';
 import Home from '~/pages/customer/Home';
-import Cart from '~/pages/customer/Cart';
 
 export const AppRoutes = [
     //MANAGER
@@ -50,6 +52,9 @@ export const AppRoutes = [
     { path: `${PATH.MANAGER.UOMS}/:id`, component: M_UomFormPage, layout: ManagerLayout },
     { path: PATH.MANAGER.TAXS, component: M_TaxListPage, layout: ManagerLayout },
     { path: `${PATH.MANAGER.TAXS}/:id`, component: M_TaxFormPage, layout: ManagerLayout },
+
+    { path: PATH.MANAGER.EMPLOYEES, component: M_EmployeeListPage, layout: ManagerLayout },
+    { path: `${PATH.MANAGER.EMPLOYEES}/:id`, component: M_EmployeeFormPage, layout: ManagerLayout },
 
     //CUSTOMER
     { path: PATH.CUSTOMER.LOGIN, component: C_LoginPage, layout: null },

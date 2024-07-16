@@ -217,7 +217,7 @@ const ProductFormPage = () => {
         <Row>
           <Col span={12}>
             <Form.Item label={t('images')} name="images">
-              <ImageUpload fileList={product?.images} />
+              <ImageUpload fileList={product?.images} limit={10}/>
             </Form.Item>
           </Col>
         </Row>
