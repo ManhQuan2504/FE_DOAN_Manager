@@ -81,5 +81,14 @@
   "report": "Báo cáo",
   "reportSale": "Doanh thu bán hàng",
   "avatar": "Avatar",
+  "customerName": "Tên khách hàng",
+  "orderNumber": "Số đơn đặt hàng",
+  "saleNumber": "Số đơn bán hàng",
+  "totalAmount": "Tổng thanh toán",
+  "paided": "Đã thanh toán",
+  "saleState": "Trạng thái",
+  "saleDate": "Ngày bán hàng",
+  "orderState": "Trạng thái",
+  "orderDate": "Ngày đặt hàng",
   "orderManager": "Quản lý đơn hàng"
 }

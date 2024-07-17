@@ -81,5 +81,14 @@
   "report": "Report",
   "reportSale": "Report Sale",
   "avatar": "Avatar",
+  "customerName": "Customer Name",
+  "orderNumber": "Order Number",
+  "saleNumber": "Sale Number",
+  "totalAmount": "Total Amount",
+  "paided": "Paided",
+  "saleState": "Sale Status",
+  "saleDate": "Sale Date",
+  "orderState": "Order Status",
+  "orderDate": "Order Date",
   "orderManager": "order Manager"
 }

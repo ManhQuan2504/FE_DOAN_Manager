@@ -16,12 +16,8 @@ export const PATH = {
     UOMS: `/${MANAGER}/uoms`,
     ROLES: `/${MANAGER}/roles`,
     TAXS: `/${MANAGER}/taxs`,
+    CUSTOMERS: `/${MANAGER}/customers`,
+    SALES: `/${MANAGER}/sales`,
+    ORDERS: `/${MANAGER}/orders`,
   },
-  CUSTOMER: {
-    HOME: "/",
-    PRODUCT: `product`,
-    LOGIN: `/login`,
-    SIGNIN: `/signin`,
-    HOME: `/home`,
-  }
 }

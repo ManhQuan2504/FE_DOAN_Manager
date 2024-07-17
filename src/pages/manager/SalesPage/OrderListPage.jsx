@@ -8,72 +8,77 @@ import TableComponent from '~/components/TableComponent';
 import { useTranslation } from 'react-i18next';
 import { apiGetList } from '~/services/helperServices';
 
-const EmployeeFormPage = () => {
+const OrderListPage = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
-  const [employees, setEmployees] = useState([]);
+  const [orders, setOrders] = useState([]);
 
-  const fetchEmployees = async () => {
+  const fetchOrders = async () => {
     setLoading(true);
     try {
       const data = {
-        modelName: 'employees',
+        modelName: 'orders',
         data: {},
       };
       const response = await apiGetList(data);
       console.log("🚀 ~ fetchEmployees ~ response:", response)
-      setEmployees(response.dataObject);
+      setOrders(response.dataObject);
     } catch (error) {
-      console.error('Failed to fetch Functions:', error);
+      console.error('Failed to fetch orders:', error);
     } finally {
       setLoading(false);
     }
   };
   
   useEffect(() => {
-    fetchEmployees();
+    fetchOrders();
   }, []);
 
   const columnsConfig = [
     {
-      title: t('employeeCode'),
-      dataIndex: 'employeeCode',
-      key: 'employeeCode',
+      title: t('orderNumber'),
+      dataIndex: 'orderNumber',
+      key: 'orderNumber',
       render: (text, record) => (
-        <NavLink to={`${PATH.MANAGER.EMPLOYEES}/${record._id}`}>
+        <NavLink to={`${PATH.MANAGER.ORDERS}/${record._id}`}>
           {text}
         </NavLink>
       ),
     },
     {
-      title: t('employeeName'),
-      dataIndex: 'employeeName',
-      key: 'employeeName',
+      title: t('customer'),
+      dataIndex: 'customer',
+      key: 'customer',
     },
     {
-      title: t('role'),
-      key: 'roleName',
-      render: (text, record) => record?.role?.roleName,
+      title: t('totalAmount'),
+      dataIndex: 'totalAmount',
+      key: 'totalAmount',
     },
-    // {
-    //   title: t('price'),
-    //   dataIndex: 'price',
-    //   key: 'price',
-    // },
+    {
+      title: t('paided'),
+      dataIndex: 'paided',
+      key: 'paided',
+    },
+    {
+      title: t('saleState'),
+      dataIndex: 'saleState',
+      key: 'saleState',
+    },
   ];
 
   return (
     <div>
       <div className="header-list">
-        <div className="title">{t('employee')}</div>
+        <div className="title">{t('order')}</div>
         <div className="button-list">
-          <AddButton to={`${PATH.MANAGER.EMPLOYEES}/0`} />
+          <AddButton to={`${PATH.MANAGER.ORDERS}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={employees} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={orders} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };
 
-export default EmployeeFormPage;
+export default OrderListPage;

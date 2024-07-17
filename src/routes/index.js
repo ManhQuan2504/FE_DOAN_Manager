@@ -25,11 +25,14 @@ import M_TaxListPage from '~/pages/manager/masterDataPage/TaxListPage';
 import M_EmployeeFormPage from '~/pages/manager/EmployeePage/EmployeeFormPage';
 import M_EmployeeListPage from '~/pages/manager/EmployeePage/EmployeeListPage';
 
-//CUSTOMER
-import UserLayout from '~/components/customer/layout';
-import C_LoginPage from '~/pages/customer/LoginPage/LoginPage';
-import C_SigninPage from '~/pages/customer/LoginPage/SigninPage';
-import Home from '~/pages/customer/Home';
+import M_CustomerFormPage from '~/pages/manager/CustomerPage/CustomerFormPage';
+import M_CustomerListPage from '~/pages/manager/CustomerPage/CustomerListPage';
+
+import M_SalesFormPage from '~/pages/manager/SalesPage/SalesFormPage';
+import M_SalesListPage from '~/pages/manager/SalesPage/SalesListPage';
+import M_OrderFormPage from '~/pages/manager/SalesPage/OrderFormPage';
+import M_OrderListPage from '~/pages/manager/SalesPage/OrderListPage';
+
 
 export const AppRoutes = [
     //MANAGER
@@ -56,9 +59,13 @@ export const AppRoutes = [
     { path: PATH.MANAGER.EMPLOYEES, component: M_EmployeeListPage, layout: ManagerLayout },
     { path: `${PATH.MANAGER.EMPLOYEES}/:id`, component: M_EmployeeFormPage, layout: ManagerLayout },
 
-    //CUSTOMER
-    { path: PATH.CUSTOMER.LOGIN, component: C_LoginPage, layout: null },
-    { path: PATH.CUSTOMER.SIGNIN, component: C_SigninPage, layout: null },
-    { path: PATH.CUSTOMER.HOME, component: Home, layout: UserLayout },
+    { path: PATH.MANAGER.CUSTOMERS, component: M_CustomerListPage, layout: ManagerLayout },
+    { path: `${PATH.MANAGER.CUSTOMERS}/:id`, component: M_CustomerFormPage, layout: ManagerLayout },
+
+    { path: PATH.MANAGER.SALES, component: M_SalesListPage, layout: ManagerLayout },
+    { path: `${PATH.MANAGER.SALES}/:id`, component: M_SalesFormPage, layout: ManagerLayout },
+    { path: PATH.MANAGER.ORDERS, component: M_OrderListPage, layout: ManagerLayout },
+    { path: `${PATH.MANAGER.ORDERS}/:id`, component: M_OrderFormPage, layout: ManagerLayout },
+
 ];
 

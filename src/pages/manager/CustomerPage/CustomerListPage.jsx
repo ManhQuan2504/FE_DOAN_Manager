@@ -11,18 +11,18 @@ import { apiGetList } from '~/services/helperServices';
 const EmployeeFormPage = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
-  const [employees, setEmployees] = useState([]);
+  const [customers, setCustomers] = useState([]);
 
   const fetchEmployees = async () => {
     setLoading(true);
     try {
       const data = {
-        modelName: 'employees',
+        modelName: 'customers',
         data: {},
       };
       const response = await apiGetList(data);
-      console.log("🚀 ~ fetchEmployees ~ response:", response)
-      setEmployees(response.dataObject);
+      console.log("🚀 ~ fetchCustomers ~ response:", response)
+      setCustomers(response.dataObject);
     } catch (error) {
       console.error('Failed to fetch Functions:', error);
     } finally {
@@ -36,42 +36,41 @@ const EmployeeFormPage = () => {
 
   const columnsConfig = [
     {
-      title: t('employeeCode'),
-      dataIndex: 'employeeCode',
-      key: 'employeeCode',
+      title: t('customerName'),
+      dataIndex: 'customerName',
+      key: 'customerName',
       render: (text, record) => (
-        <NavLink to={`${PATH.MANAGER.EMPLOYEES}/${record._id}`}>
+        <NavLink to={`${PATH.MANAGER.CUSTOMERS}/${record._id}`}>
           {text}
         </NavLink>
       ),
     },
     {
-      title: t('employeeName'),
-      dataIndex: 'employeeName',
-      key: 'employeeName',
+      title: t('email'),
+      dataIndex: 'email',
+      key: 'email',
     },
     {
-      title: t('role'),
-      key: 'roleName',
-      render: (text, record) => record?.role?.roleName,
+      title: t('phoneNumber'),
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
     },
-    // {
-    //   title: t('price'),
-    //   dataIndex: 'price',
-    //   key: 'price',
-    // },
+    {
+      title: t('address'),
+      dataIndex: 'address',
+      key: 'address',
+    },
   ];
 
   return (
     <div>
       <div className="header-list">
-        <div className="title">{t('employee')}</div>
+        <div className="title">{t('customer')}</div>
         <div className="button-list">
-          <AddButton to={`${PATH.MANAGER.EMPLOYEES}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={employees} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={customers} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };
