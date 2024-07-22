@@ -59,13 +59,13 @@ const TaxFormPage = () => {
       <Form layout="vertical" style={{ maxWidth: '100%' }} form={form} onChange={formChange}>
         <Row gutter={[12]}>
           <Col span={6}>
-            <Form.Item label={t('taxCode')} name="taxCode" rules={[{ required: true, message: t('isRequired') }]}>
+            <Form.Item label={t('taxCode')} name="taxCode" rules={[{ required: true, message: "Vui lòng nhập mã thuế" }]}>
               <Input />
             </Form.Item>
           </Col>
 
           <Col span={6}>
-            <Form.Item label={t('taxValue')} name="taxValue">
+            <Form.Item label={t('taxValue')} name="taxValue" rules={[{ required: true, message: "Vui lòng nhập giá trị thuế" }]}>
               <InputNumber style={{ width: '100%', textAlign: 'right' }} formatter={percentFormatter} parser={percentParser} />
             </Form.Item>
           </Col>

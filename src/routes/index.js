@@ -21,6 +21,8 @@ import M_UomFormPage from '~/pages/manager/masterDataPage/UomFormPage';
 import M_UomListPage from '~/pages/manager/masterDataPage/UomListPage';
 import M_TaxFormPage from '~/pages/manager/masterDataPage/TaxFormPage';
 import M_TaxListPage from '~/pages/manager/masterDataPage/TaxListPage';
+import M_VendorListPage from '~/pages/manager/masterDataPage/VendorListPage';
+import M_vendorFormPage from '~/pages/manager/masterDataPage/vendorFormPage';
 
 import M_EmployeeFormPage from '~/pages/manager/EmployeePage/EmployeeFormPage';
 import M_EmployeeListPage from '~/pages/manager/EmployeePage/EmployeeListPage';
@@ -32,6 +34,11 @@ import M_SalesFormPage from '~/pages/manager/SalesPage/SalesFormPage';
 import M_SalesListPage from '~/pages/manager/SalesPage/SalesListPage';
 import M_OrderFormPage from '~/pages/manager/SalesPage/OrderFormPage';
 import M_OrderListPage from '~/pages/manager/SalesPage/OrderListPage';
+
+// import M_StockImportListPage from '~/pages/manager/WarehousePage/StockImportListPage';
+// import M_StockImportFormPage from '~/pages/manager/WarehousePage/StockImportFormPage';
+// import M_MaterialStockListPage from '~/pages/manager/WarehousePage/MaterialStockListPage';
+// import M_MaterialStockFormPage from '~/pages/manager/WarehousePage/MaterialStockFormPage';
 
 
 export const AppRoutes = [
@@ -55,6 +62,8 @@ export const AppRoutes = [
     { path: `${PATH.MANAGER.UOMS}/:id`, component: M_UomFormPage, layout: ManagerLayout },
     { path: PATH.MANAGER.TAXS, component: M_TaxListPage, layout: ManagerLayout },
     { path: `${PATH.MANAGER.TAXS}/:id`, component: M_TaxFormPage, layout: ManagerLayout },
+    { path: PATH.MANAGER.VENDORS, component: M_VendorListPage, layout: ManagerLayout },
+    { path: `${PATH.MANAGER.VENDORS}/:id`, component: M_vendorFormPage, layout: ManagerLayout },
 
     { path: PATH.MANAGER.EMPLOYEES, component: M_EmployeeListPage, layout: ManagerLayout },
     { path: `${PATH.MANAGER.EMPLOYEES}/:id`, component: M_EmployeeFormPage, layout: ManagerLayout },
@@ -66,6 +75,13 @@ export const AppRoutes = [
     { path: `${PATH.MANAGER.SALES}/:id`, component: M_SalesFormPage, layout: ManagerLayout },
     { path: PATH.MANAGER.ORDERS, component: M_OrderListPage, layout: ManagerLayout },
     { path: `${PATH.MANAGER.ORDERS}/:id`, component: M_OrderFormPage, layout: ManagerLayout },
+
+    // { path: PATH.MANAGER.MATERIALSTOCKS, component: M_MaterialStockListPage, layout: ManagerLayout },
+    // { path: `${PATH.MANAGER.MATERIALSTOCKS}/:id`, component: M_MaterialStockFormPage, layout: ManagerLayout },
+    // { path: PATH.MANAGER.STOCKIMPORTS, component: M_StockImportListPage, layout: ManagerLayout },
+    // { path: `${PATH.MANAGER.STOCKIMPORTS}/:id`, component: M_StockImportFormPage, layout: ManagerLayout },
+    // { path: PATH.MANAGER.STOCKEXPORTS, component: M_TaxListPage, layout: ManagerLayout },
+    // { path: `${PATH.MANAGER.STOCKEXPORTS}/:id`, component: M_TaxFormPage, layout: ManagerLayout },
 
 ];
 

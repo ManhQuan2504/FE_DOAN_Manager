@@ -19,5 +19,9 @@ export const PATH = {
     CUSTOMERS: `/${MANAGER}/customers`,
     SALES: `/${MANAGER}/sales`,
     ORDERS: `/${MANAGER}/orders`,
+    MATERIALSTOCKS: `/${MANAGER}/materialStocks`,
+    STOCKIMPORTS: `/${MANAGER}/stockImports`,
+    STOCKEXPORTS: `/${MANAGER}/stockExports`,
+    VENDORS: `/${MANAGER}/vendors`,
   },
 }

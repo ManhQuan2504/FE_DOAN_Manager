@@ -15,7 +15,9 @@ const { TextArea } = Input;
 const ProductFormPage = () => {
   const { t } = useTranslation();
   const [employee, setEmployee] = useState([]);
+  console.log("🚀 ~ ProductFormPage ~ employee:", employee)
   const [roles, setRoles] = useState([]);
+  console.log("🚀 ~ ProductFormPage ~ roles:", roles)
   const [loading, setLoading] = useState(true);
   const [form] = Form.useForm();
   const { id } = useParams();

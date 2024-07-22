@@ -15,21 +15,20 @@ const getUniqueValues = (categories, key) => {
   return _.uniq(values).sort((a, b) => a.localeCompare(b));
 };
 
-const FunctionListPage = () => {
+const StockImportListPage = () => {
   const { t } = useTranslation();
-  const [functions, setFunctions] = useState([]);
-  console.log("🚀 ~ FunctionListPage ~ functions:", functions)
+  const [stockImports, setStockImports] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchFunction = async () => {
+  const fetchStockImports = async () => {
     setLoading(true);
     try {
       const data = {
-        modelName: 'functions',
+        modelName: 'stockImports',
         data: {},
       };
       const response = await apiGetList(data);
-      setFunctions(response.dataObject);
+      setStockImports(response.dataObject);
     } catch (error) {
       console.error('Failed to fetch Functions:', error);
     } finally {
@@ -38,44 +37,44 @@ const FunctionListPage = () => {
   };
 
   useEffect(() => {
-    fetchFunction();
+    fetchStockImports();
   }, []);
 
   const columnsConfig = [
     {
-      title: t('funcName'),
-      dataIndex: 'funcName',
-      key: 'funcName',
+      title: t('stockImportCode'),
+      dataIndex: 'stockImportCode',
+      key: 'stockImportCode',
       render: (text, record) => (
-        <NavLink to={`${PATH.MANAGER.FUNCTIONS}/${record._id}`}>
+        <NavLink to={`${PATH.MANAGER.STOCKIMPORTS}/${record._id}`}>
           {text}
         </NavLink>
       ),
     },
     {
-      title: t('clientPath'),
-      dataIndex: 'clientPath',
-      key: 'clientPath',
+      title: t('product'),
+      key: 'productName',
+      render: (text, record) => record?.product?.productName,
     },
     {
-      title: t('parentFunc'),
-      dataIndex: 'parentFuncName',
-      key: 'parentFunc',
+      title: t('qty'),
+      dataIndex: 'qty',
+      key: 'qty',
     },
   ];
 
   return (
     <div>
       <div className="header-list">
-        <div className="title">{t('category')}</div>
+        <div className="title">{t('stockImport')}</div>
         <div className="button-list">
-          <AddButton to={`${PATH.MANAGER.FUNCTIONS}/0`} />
+          <AddButton to={`${PATH.MANAGER.STOCKIMPORTS}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={functions} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={stockImports} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };
 
-export default FunctionListPage;
+export default StockImportListPage;

@@ -71,12 +71,12 @@ const CategoryFormPage = () => {
       <Form layout="vertical" style={{ maxWidth: '100%' }} form={form}>
         <Row gutter={[12]}>
           <Col span={6}>
-            <Form.Item label={t('categoryCode')} name="categoryCode" rules={[{ required: true }]}>
+            <Form.Item label={t('categoryCode')} name="categoryCode" rules={[{ required: true, message: "Vui lòng nhập mã danh mục" }]}>
               <Input />
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label={t('categoryName')} name="categoryName" rules={[{ required: true }]}>
+            <Form.Item label={t('categoryName')} name="categoryName" rules={[{ required: true, message: "Vui lòng nhập tên danh mục" }]}>
               <Input />
             </Form.Item>
           </Col>

@@ -13,6 +13,7 @@ const ProductFormPage = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  console.log("🚀 ~ ProductFormPage ~ products:", products)
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -51,10 +52,9 @@ const ProductFormPage = () => {
       key: 'productName',
     },
     {
-      title: t('categoryName'),
-      dataIndex: ['categoryId', 'categoryName'],
+      title: t('category'),
       key: 'categoryName',
-      render: (text, record) => record.categoryId?.categoryName || '',
+      render: (text, record) => record.category?.categoryName,
     },
     {
       title: t('price'),
