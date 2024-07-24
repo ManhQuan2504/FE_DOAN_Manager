@@ -105,5 +105,13 @@
   "vendor": "Nhà cung cấp",
   "vendorCode": "Mã nhà cung cấp",
   "vendorName": "Tên nhà cung cấp",
-  "orderManager": "Quản lý đơn hàng"
+  "waitingImport": "Chờ nhập",
+  "waitingExport": "Chờ xuất",
+  "stockImportCode": "Mã nhập kho",
+  "stockImportStatus": "Trạng thái đơn nhập",
+  "stockExportStatus": "Trạng thái đơn xuất",
+  "stockExportCode": "Mã xuất kho",
+  "cost": "Giá trị",
+  "createdAt": "Thời gian tạo",
+  "orderManager": "Quản lý đơn hàng"
 }

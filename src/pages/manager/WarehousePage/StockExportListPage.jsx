@@ -15,20 +15,20 @@ const getUniqueValues = (categories, key) => {
   return _.uniq(values).sort((a, b) => a.localeCompare(b));
 };
 
-const StockImportListPage = () => {
+const StockExportListPage = () => {
   const { t } = useTranslation();
-  const [stockImports, setStockImports] = useState([]);
+  const [stockExports, setStockExports] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchStockImports = async () => {
+  const fetchStockExports = async () => {
     setLoading(true);
     try {
       const data = {
-        modelName: 'stockImports',
+        modelName: 'stockExports',
         data: {},
       };
       const response = await apiGetList(data);
-      setStockImports(response.dataObject);
+      setStockExports(response.dataObject);
     } catch (error) {
       console.error('Failed to fetch Functions:', error);
     } finally {
@@ -37,16 +37,16 @@ const StockImportListPage = () => {
   };
 
   useEffect(() => {
-    fetchStockImports();
+    fetchStockExports();
   }, []);
 
   const columnsConfig = [
     {
-      title: t('stockImportCode'),
-      dataIndex: 'stockImportCode',
-      key: 'stockImportCode',
+      title: t('stockExportCode'),
+      dataIndex: 'stockExportCode',
+      key: 'stockExportCode',
       render: (text, record) => (
-        <NavLink to={`${PATH.MANAGER.STOCKIMPORTS}/${record._id}`}>
+        <NavLink to={`${PATH.MANAGER.STOCKEXPORTS}/${record._id}`}>
           {text}
         </NavLink>
       ),
@@ -73,13 +73,13 @@ const StockImportListPage = () => {
       <div className="header-list">
         <div className="title">{t('stockImport')}</div>
         <div className="button-list">
-          <AddButton to={`${PATH.MANAGER.STOCKIMPORTS}/0`} />
+          <AddButton to={`${PATH.MANAGER.STOCKEXPORTS}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={stockImports} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={stockExports} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };
 
-export default StockImportListPage;
+export default StockExportListPage;

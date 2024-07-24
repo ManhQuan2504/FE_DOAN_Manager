@@ -13,7 +13,7 @@ import { COLOR_MENU } from '~/constants/colorConstants';
 import axios from 'axios';
 import { Option } from 'antd/es/mentions';
 
-const StockImportFormPage = () => {
+const StockExportFormPage = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -22,9 +22,9 @@ const StockImportFormPage = () => {
   const [vendors, setVendors] = useState([]);
   const [employeeName, setEmployeeName] = useState('');
   const [productData, setProductData] = useState([]); // State to store product data
-  console.log("🚀 ~1 StockImportFormPage ~ productData:", productData)
+  console.log("🚀 ~1 StockExportFormPage ~ productData:", productData)
 
-  const CreateStockImportButton = ({ modelName, form, navigate, ...props }) => {
+  const CreateStockExportButton = ({ modelName, form, navigate, ...props }) => {
     const { t } = useTranslation();
 
     const handleCreate = async () => {
@@ -37,7 +37,7 @@ const StockImportFormPage = () => {
           },
         };
 
-        await axios.post(`http://localhost/v1/stockImports/createStockImports`, data);
+        await axios.post(`http://localhost/v1/stockExports/createStockExports`, data);
         message.success(t('messages.createSuccess'));
         navigate(-1);
       } catch (error) {
@@ -52,10 +52,10 @@ const StockImportFormPage = () => {
     );
   };
 
-  const ImportButton = ({ modelName, form, navigate, ...props }) => {
+  const ExportButton = ({ modelName, form, navigate, ...props }) => {
     const { t } = useTranslation();
 
-    const importStock = async () => {
+    const exportStock = async () => {
       try {
         const formData = await form.getFieldValue();
         const data = {
@@ -65,7 +65,7 @@ const StockImportFormPage = () => {
           },
         };
 
-        await axios.post(`http://localhost/v1/stockImports/import/${id}`, data);
+        await axios.post(`http://localhost/v1/stockExports/Export/${id}`, data);
         message.success(t('messages.createSuccess'));
         navigate(-1);
       } catch (error) {
@@ -74,8 +74,8 @@ const StockImportFormPage = () => {
     };
 
     return (
-      <Button type="primary" onClick={importStock} {...props}>
-        {t('stockImport')}
+      <Button type="primary" onClick={exportStock} {...props}>
+        {t('stockExport')}
       </Button>
     );
   };
@@ -101,23 +101,23 @@ const StockImportFormPage = () => {
       setLoading(true);
       try {
         if (id && id !== '0') {
-          const stockImportData = await apiGetById({ modelName: 'stockImports', id });
-          console.log("🚀 ~ fetchData ~ stockImportData:", stockImportData);
+          const stockExportData = await apiGetById({ modelName: 'stockExports', id });
+          console.log("🚀 ~ fetchData ~ stockExportData:", stockExportData);
 
           form.setFieldsValue({
-            ...stockImportData.dataObject,
-            product: stockImportData.dataObject.product._id,
-            vendor: stockImportData.dataObject.vendor._id,
-            employee: stockImportData.dataObject.employee._id,
+            ...stockExportData.dataObject,
+            product: stockExportData.dataObject.product._id,
+            vendor: stockExportData.dataObject.vendor._id,
+            employee: stockExportData.dataObject.employee._id,
           });
 
-          setEmployeeName(stockImportData.dataObject.employee.employeeName);
+          setEmployeeName(stockExportData.dataObject.employee.employeeName);
 
           // Set product data to display the product in Select
-          setProductData([stockImportData.dataObject.product]);
+          setProductData([stockExportData.dataObject.product]);
         } else {
           const autoCode = generateAutoCode('NK');
-          form.setFieldsValue({ stockImportCode: autoCode });
+          form.setFieldsValue({ stockExportCode: autoCode });
 
           const user = JSON.parse(localStorage.getItem('user'));
           setEmployeeName(user ? user.employeeName : '');
@@ -143,25 +143,25 @@ const StockImportFormPage = () => {
   return (
     <div>
       <div className="header-list">
-        <div className="title">{t('stockImport')}</div>
+        <div className="title">{t('stockExport')}</div>
         <div className="button-list">
           <BackButton />
-          <UpdateButton form={form} navigate={navigate} id={id} modelName="stockImports" />
-          <DeleteButton id={id} modelName="stockImports" />
-          <ImportButton form={form} navigate={navigate} modelName="stockImports" />
-          <CreateStockImportButton form={form} navigate={navigate} modelName="stockImports" />
+          <UpdateButton form={form} navigate={navigate} id={id} modelName="stockExports" />
+          <DeleteButton id={id} modelName="stockExports" />
+          <ExportButton form={form} navigate={navigate} modelName="stockExports" />
+          <CreateStockExportButton form={form} navigate={navigate} modelName="stockExports" />
         </div>
       </div>
       <Form layout="vertical" style={{ maxWidth: '100%' }} form={form} onValuesChange={formChange}>
         <Row gutter={[12]}>
           <Col span={6}>
-            <Form.Item label={t('stockImportCode')} name="stockImportCode" rules={[{ required: true, message: "Vui lòng nhập mã phiếu nhập kho" }]}>
+            <Form.Item label={t('stockExportCode')} name="stockExportCode" rules={[{ required: true, message: "Vui lòng nhập mã phiếu nhập kho" }]}>
               <Input />
             </Form.Item>
           </Col>
 
           <Col span={6}>
-            <Form.Item label={t('stockImportStatus')} name="stockImportStatus">
+            <Form.Item label={t('stockExportStatus')} name="stockExportStatus">
               <Input readOnly/>
             </Form.Item>
           </Col>
@@ -228,4 +228,4 @@ const StockImportFormPage = () => {
   );
 };
 
-export default StockImportFormPage;
+export default StockExportFormPage;

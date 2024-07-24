@@ -66,7 +66,7 @@ const ProductFormPage = () => {
   return (
     <div>
       <div className="header-list">
-        <div className="title">{t('category')}</div>
+        <div className="title">{t('product')}</div>
         <div className="button-list">
           <AddButton to={`${PATH.MANAGER.PRODUCTS}/0`} />
           <ExportButton />

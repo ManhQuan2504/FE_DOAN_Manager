@@ -105,5 +105,13 @@
   "vendor": "Vendor",
   "vendorCode": "Vendor Code",
   "vendorName": "Vendor Name",
+  "waitingImport": "Waiting Import",
+  "waitingExport": "Waiting Export",
+  "stockImportCode": "Stock Import Code",
+  "stockImportStatus": "Stock Import Status",
+  "stockExportStatus": "Stock Import Status",
+  "stockExportCode": "Stock Export Code",
+  "cost": "Cost",
+  "createdAt": "Created At",
   "orderManager": "order Manager"
 }

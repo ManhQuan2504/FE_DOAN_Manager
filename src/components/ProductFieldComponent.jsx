@@ -5,14 +5,24 @@ import { t } from 'i18next';
 
 const { Option } = Select;
 
-const ProductSearch = () => {
+const ProductSearch = ({ form, name, initProducts }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keySearch, setKeySearch] = useState('');
+  const [selectedValue, setSelectedValue] = useState('');
+
+  useEffect(() => {
+    if (initProducts && initProducts.length > 0) {
+      setProducts(initProducts);
+      // Automatically select the first product if initProducts has items
+      setSelectedValue(initProducts[0]._id);
+      form.setFieldsValue({ [name]: initProducts[0]._id });
+    }
+  }, [initProducts]);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      if (!keySearch) return; // Chỉ fetch nếu có keySearch
+      if (!keySearch) return;
 
       setLoading(true);
       const data = {
@@ -32,20 +42,28 @@ const ProductSearch = () => {
     };
 
     fetchProducts();
-  }, [keySearch]); // Thêm keySearch vào dependencies của useEffect
+  }, [keySearch]);
 
   const handleSearch = (value) => {
-    setKeySearch(value); // Cập nhật keySearch khi giá trị trong ô search thay đổi
+    setKeySearch(value);
+  };
+
+  const handleChange = (value) => {
+    setSelectedValue(value);
+    form.setFieldsValue({ [name]: value });
   };
 
   return (
     <Select
       showSearch
       placeholder={t('selectProduct')}
-      onSearch={handleSearch} // Gọi handleSearch khi người dùng nhập vào ô search
-      filterOption={false} // Tắt filter mặc định của Select
+      onSearch={handleSearch}
+      onChange={handleChange}
+      filterOption={false}
       notFoundContent={loading ? <Spin size="small" /> : null}
       style={{ width: '100%' }}
+      autoFocus
+      value={selectedValue}
     >
       {products.map((product) => (
         <Option key={product._id} value={product._id}>

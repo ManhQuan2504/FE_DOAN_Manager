@@ -34,7 +34,6 @@ export const apiGetById = async (data) => {
     .join('&');
 
   try {
-    console.log("🚀 ~ !!!!!!!!!! ", `http://localhost/v1/${modelName}/${id}?modelName=${modelName}&field=${queryString}`)
     const res = await axios.get(`http://localhost/v1/${modelName}/${id}?modelName=${modelName}&field=${queryString}`);
     return res.data;
   } catch (error) {

@@ -35,10 +35,11 @@ import M_SalesListPage from '~/pages/manager/SalesPage/SalesListPage';
 import M_OrderFormPage from '~/pages/manager/SalesPage/OrderFormPage';
 import M_OrderListPage from '~/pages/manager/SalesPage/OrderListPage';
 
-// import M_StockImportListPage from '~/pages/manager/WarehousePage/StockImportListPage';
-// import M_StockImportFormPage from '~/pages/manager/WarehousePage/StockImportFormPage';
-// import M_MaterialStockListPage from '~/pages/manager/WarehousePage/MaterialStockListPage';
-// import M_MaterialStockFormPage from '~/pages/manager/WarehousePage/MaterialStockFormPage';
+import M_StockImportListPage from '~/pages/manager/WarehousePage/StockImportListPage';
+import M_StockImportFormPage from '~/pages/manager/WarehousePage/StockImportFormPage';
+import M_StockExportListPage from '~/pages/manager/WarehousePage/StockExportListPage';
+import M_StockExportFormPage from '~/pages/manager/WarehousePage/StockExportFormPage';
+import M_MaterialStockListPage from '~/pages/manager/WarehousePage/MaterialStockListPage';
 
 
 export const AppRoutes = [
@@ -76,12 +77,11 @@ export const AppRoutes = [
     { path: PATH.MANAGER.ORDERS, component: M_OrderListPage, layout: ManagerLayout },
     { path: `${PATH.MANAGER.ORDERS}/:id`, component: M_OrderFormPage, layout: ManagerLayout },
 
-    // { path: PATH.MANAGER.MATERIALSTOCKS, component: M_MaterialStockListPage, layout: ManagerLayout },
-    // { path: `${PATH.MANAGER.MATERIALSTOCKS}/:id`, component: M_MaterialStockFormPage, layout: ManagerLayout },
-    // { path: PATH.MANAGER.STOCKIMPORTS, component: M_StockImportListPage, layout: ManagerLayout },
-    // { path: `${PATH.MANAGER.STOCKIMPORTS}/:id`, component: M_StockImportFormPage, layout: ManagerLayout },
-    // { path: PATH.MANAGER.STOCKEXPORTS, component: M_TaxListPage, layout: ManagerLayout },
-    // { path: `${PATH.MANAGER.STOCKEXPORTS}/:id`, component: M_TaxFormPage, layout: ManagerLayout },
+    { path: PATH.MANAGER.MATERIALSTOCKS, component: M_MaterialStockListPage, layout: ManagerLayout },
+    { path: PATH.MANAGER.STOCKIMPORTS, component: M_StockImportListPage, layout: ManagerLayout },
+    { path: `${PATH.MANAGER.STOCKIMPORTS}/:id`, component: M_StockImportFormPage, layout: ManagerLayout },
+    { path: PATH.MANAGER.STOCKEXPORTS, component: M_StockExportListPage, layout: ManagerLayout },
+    { path: `${PATH.MANAGER.STOCKEXPORTS}/:id`, component: M_StockExportFormPage, layout: ManagerLayout },
 
 ];
 
