@@ -113,5 +113,11 @@
   "stockExportCode": "Mã xuất kho",
   "cost": "Giá trị",
   "createdAt": "Thời gian tạo",
+  "saleQty": "Số lượng mua",
+  "warranty": "Bảo hành",
+  "month": "Tháng",
+  "day": "Ngày",
+  "year": "Năm",
+  "addSaleLine": "Thêm",
   "orderManager": "Quản lý đơn hàng"
 }

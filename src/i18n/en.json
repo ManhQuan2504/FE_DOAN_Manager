@@ -113,5 +113,11 @@
   "stockExportCode": "Stock Export Code",
   "cost": "Cost",
   "createdAt": "Created At",
+  "saleQty": "Sale Quantity",
+  "warranty": "Warranty",
+  "month": "Month",
+  "day": "Day",
+  "year": "Year",
+  "addSaleLine": "Add",
   "orderManager": "order Manager"
 }

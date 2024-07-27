@@ -34,6 +34,8 @@ const TableComponent = ({ data, columnsConfig, loading }) => {
     },
     ...columnsConfig.map(col => ({
       ...col,
+      // Ensure the width property is applied if it's provided in the columnsConfig
+      width: col.width || 'auto',
       filters: getUniqueValues(data, col.key).map(value => ({ text: value, value })),
       filterMode: 'tree',
       filterSearch: true,

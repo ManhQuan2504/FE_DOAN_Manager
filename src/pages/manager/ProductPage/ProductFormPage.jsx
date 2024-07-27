@@ -196,11 +196,18 @@ const ProductFormPage = () => {
       code: "multiColor",
     },
   ];
-  
+
+  const onColorChange = (e) => {
+    const selectedColor = COLOR_MENU.find(color => color.code === e.target.value);
+    if (selectedColor) {
+      form.setFieldsValue({ color: selectedColor.name });
+    }
+  };
+
   function renderOptionColor() {
     return COLOR_MENU.map((colorItem, colorIndex) => {
       return (
-        <Style.CustomRadio value={colorItem.code}>
+        <Style.CustomRadio value={colorItem.name} key={colorIndex}>
           {colorItem.code === "ffffff" || colorItem.code === "multiColor" ? (
             <Style.CustomTag>{colorItem.name}</Style.CustomTag>
           ) : (
@@ -218,10 +225,6 @@ const ProductFormPage = () => {
     fetchUoms();
     fetchTaxs();
     fetchData();
-
-    // return () => {
-    //   form.resetFields();
-    // };
   }, [id, form]);
 
   return (
@@ -232,10 +235,17 @@ const ProductFormPage = () => {
           <BackButton />
           <UpdateButton form={form} navigate={navigate} id={id} modelName="products" />
           <DeleteButton id={id} modelName="products" />
-          <CreateProductButton form={form} navigate={navigate} modelName="products" />
+          <CreateProductButton form={form} navigate={navigate} id={id} modelName="products" />
         </div>
       </div>
-      <Form form={form} layout="vertical" style={{ maxWidth: '100%' }} onValuesChange={formChange}>
+      <Form
+        form={form}
+        labelCol={{ span: 24 }}
+        wrapperCol={{ span: 24 }}
+        layout="vertical"
+        onValuesChange={formChange}
+        onFinish={(value) => console.log(value)}
+      >
         <Row gutter={[12]}>
           <Col span={6}>
             <Form.Item label={t('productCode')} name="productCode" rules={[{ required: true, message: "Vui lòng nhập mã sản phẩm" }]}>
@@ -280,7 +290,7 @@ const ProductFormPage = () => {
             <Form.Item label={t('price')} name="price" rules={[{ required: true, message: "Bạn chưa nhập đơn giá" }]}>
               <InputNumber
                 style={{ width: '100%' }}
-                formatter={value => `${value}VNĐ`}
+                formatter={value => `${value} VNĐ`}
                 parser={value => value.replace('VNĐ', '')}
               />
             </Form.Item>
@@ -307,6 +317,15 @@ const ProductFormPage = () => {
               </Select>
             </Form.Item>
           </Col>
+          <Col span={6}>
+            <Form.Item label={t('warranty')} name="warranty">
+              <InputNumber
+                addonAfter={`(${t('month')})`}
+                style={{ width: '100%' }}
+                defaultValue={0}
+              />
+            </Form.Item>
+          </Col>
         </Row>
 
         <Row>
@@ -324,7 +343,7 @@ const ProductFormPage = () => {
               name="color"
               rules={[{ required: true, message: "Vui lòng chọn màu" }]}
             >
-              <Radio.Group>{renderOptionColor()}</Radio.Group>
+              <Radio.Group onChange={onColorChange}>{renderOptionColor()}</Radio.Group>
             </Form.Item>
           </Col>
         </Row>
