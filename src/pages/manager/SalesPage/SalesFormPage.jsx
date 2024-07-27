@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Row, Col, Select, Tabs, InputNumber, Button, Table } from 'antd';
+import { Form, Input, Row, Col, Select, Tabs, InputNumber, Button, Table, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { apiGetById, apiGetList } from '~/services/helperServices';
+import { apiCreate, apiGetById, apiGetList } from '~/services/helperServices';
 import CreateButton from '~/components/manager/listAction/CreateButton';
 import BackButton from '~/components/manager/listAction/BackButton';
 import UpdateButton from '~/components/manager/listAction/UpdateButton';
@@ -44,11 +44,47 @@ const SalesFormPage = () => {
   const [productData, setProductData] = useState([]);
   const [productsData, setProductsData] = useState([]);
   const [salesDetail, setSalesDetail] = useState([]);
+  console.log("🚀 ~ SalesFormPage ~ salesDetail:", salesDetail)
   const [pageSize, setPageSize] = useState(30);
-  const [errorAddLineMessage, setErrorAddLineMessagee] = useState('');
+  const [errorAddLineMessage, setErrorAddLineMessage] = useState('');
+  const [totalAmount, setTotalAmount] = useState('');
 
   const formChange = async (changedValues, allValues) => {
     console.log("🚀 ~ form.getFieldsValue():", form.getFieldsValue());
+  };
+
+  const CreateSaletButton = ({ modelName, form, navigate, ...props }) => {
+    const { t } = useTranslation();
+
+    const handleCreate = async () => {
+      try {
+        const { saleNumber, customer, employee, phoneNumber } = await form.getFieldValue();
+        const data = {
+          modelName: 'sales',
+          data: {
+            productList: salesDetail,
+            saleNumber, customer, employee, phoneNumber
+          },
+        };
+        console.log("🚀 ~ handleCreate ~ data:", data)
+        await apiCreate(data);
+        message.success(t('messages.createSuccess'));
+        navigate(-1);
+
+      } catch (error) {
+        message.error(t('messages.createFail'));
+      }
+    };
+
+    return (
+      <Button
+        type="primary"
+        onClick={handleCreate}
+        {...props}
+      >
+        {t('button.create')}
+      </Button>
+    );
   };
 
   const onColorChange = async (value) => {
@@ -87,8 +123,11 @@ const SalesFormPage = () => {
     try {
       if (id && id !== '0') {
         const saleData = await apiGetById({ modelName: 'sales', id });
+        console.log("🚀 ~ fetchData ~ saleData:", saleData)
         setSale(saleData.dataObject);
         form.setFieldsValue(saleData.dataObject);
+        setSalesDetail(saleData?.dataObject?.productList);
+        setEmployeeName(saleData ? saleData?.dataObject?.employee?.employeeName : '');
       } else {
         const autoCode = generateAutoCode('BH');
 
@@ -113,19 +152,25 @@ const SalesFormPage = () => {
 
   const addSaleLine = () => {
     const product = form.getFieldValue('product');
-    console.log("🚀 ~ addSaleLine ~ product:", product)
     const color = form.getFieldValue('color');
-    console.log("🚀 ~ addSaleLine ~ color:", color)
     const qty = form.getFieldValue('qty');
-    console.log("🚀 ~ addSaleLine ~ qty:", qty)
     const saleQty = form.getFieldValue('saleQty');
-    console.log("🚀 ~ addSaleLine ~ saleQty:", saleQty)
     const productDetails = productsData.find(item => item._id === product);
+    const totalAmount = productDetails.map(item => item.price += product);
+
+    if (qty <= 0) {
+      setErrorAddLineMessage("Sản phẩm không đủ tồn kho");
+      return;
+    }
+
+    if (saleQty <= 0) {
+      setErrorAddLineMessage("Số lượng mua phải lớn hơn 0");
+      return;
+    }
 
     if (product && color && saleQty) {
       const newSaleDetail = {
         productName: productDetails.productName,
-        uomName: productDetails.uomName,
         saleQty: saleQty,
         price: productDetails.price,
         warranty: productDetails.warranty,
@@ -138,6 +183,7 @@ const SalesFormPage = () => {
 
       // Reset form fields in the salesProduct tab
       form.resetFields(['product', 'color', 'qty', 'saleQty']);
+      setErrorAddLineMessage(''); // Clear error message after adding successfully
     }
   };
 
@@ -158,15 +204,15 @@ const SalesFormPage = () => {
       key: 'saleQty',
     },
     {
-      title: t('price'),
+      title: `${t('price')} (VNĐ)`,
       dataIndex: 'price',
       width: 170,
       key: 'price',
     },
     {
-      title: t('warranty'),
+      title: `${t('warranty')} (${t('month')})`,
       dataIndex: 'warranty',
-      width: 170,
+      width: 180,
       key: 'warranty',
     },
     {
@@ -175,7 +221,7 @@ const SalesFormPage = () => {
       width: 70, // Adjust the width of the "X" column here
       render: (text, record, index) => (
         <Button type="link" icon={<CloseOutlined />} onClick={() => removeSaleLine(index)}>
-          
+
         </Button>
       ),
     },
@@ -228,7 +274,7 @@ const SalesFormPage = () => {
           <BackButton />
           <UpdateButton form={form} navigate={navigate} id={id} modelName="sales" />
           <DeleteButton id={id} modelName="sales" />
-          <CreateButton form={form} navigate={navigate} modelName="sales" />
+          <CreateSaletButton form={form} navigate={navigate} modelName="sales" />
         </div>
       </div>
       <Form form={form} layout="vertical" style={{ maxWidth: '100%' }} onValuesChange={formChange}>
@@ -236,12 +282,12 @@ const SalesFormPage = () => {
           <TabPane tab={t('salesInfor')} key="1">
             <Row gutter={[12]}>
               <Col span={6}>
-                <Form.Item label={t('saleNumber')} name="saleNumber">
+                <Form.Item label={t('saleNumber')} name="saleNumber" rules={[{ required: true, message: "Vui lòng nhập số đơn bán hàng" }]}>
                   <Input />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label={t('employeeName')}>
+                <Form.Item label={t('employeeName')} rules={[{ required: true, message: "Vui lòng nhập số đơn bán hàng" }]}>
                   <Input value={employeeName} readOnly />
                 </Form.Item>
                 <Form.Item name="employee" hidden>
@@ -249,12 +295,12 @@ const SalesFormPage = () => {
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label={t('customer')} name="customer">
+                <Form.Item label={t('customer')} name="customer" rules={[{ required: true, message: "Vui lòng nhập tên khách hàng" }]}>
                   <Input />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label={t('phoneNumber')} name="phoneNumber">
+                <Form.Item label={t('phoneNumber')} name="phoneNumber" rules={[{ required: true, message: "Vui lòng nhập SĐT" }]}>
                   <Input />
                 </Form.Item>
               </Col>
@@ -266,12 +312,12 @@ const SalesFormPage = () => {
           <TabPane tab={t('salesProduct')} key="1">
             <Row gutter={[12]}>
               <Col span={6}>
-                <Form.Item label={t('product')} name="product">
+                <Form.Item label={t('product')} name="product" rules={[{ required: true, message: "Vui lòng nhập sản phẩm" }]}>
                   <ProductSearch form={form} name="product" initProducts={productData} />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label={t('color')} name="color">
+                <Form.Item label={t('color')} name="color" rules={[{ required: true, message: "Vui lòng chọn màu sắc" }]}>
                   <Select onChange={onColorChange}>
                     {COLOR_MENU.map(color => (
                       <Option key={color.name} value={color.name}>
@@ -287,15 +333,15 @@ const SalesFormPage = () => {
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label={t('saleQty')} name="saleQty">
-                  <InputNumber style={{ width: '100%' }} defaultValue={0} />
+                <Form.Item label={t('saleQty')} name="saleQty" rules={[{ required: true, message: "Vui lòng nhập số lượng" }]}>
+                  <InputNumber style={{ width: '100%' }} />
                 </Form.Item>
               </Col>
             </Row>
             <Row>
               <Col span={6}>
                 <Button onClick={addSaleLine}>{t('addSaleLine')}</Button>
-                <div></div>
+                <span style={{ color: 'red', marginLeft: 10 }}>{errorAddLineMessage}</span>
               </Col>
             </Row>
           </TabPane>
@@ -316,8 +362,20 @@ const SalesFormPage = () => {
                 showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
               }}
               scroll={{ y: 430 }}
-              style={{ minHeight: '400px' }}
+              // style={{ minHeight: '400px' }}
+              size="small"
             />
+            <Row gutter={[12]}>
+              <Col span={6}>
+              </Col>
+              <Col span={6}>
+              </Col>
+              <Col span={6}>
+              </Col>
+              <Col span={6}>
+                <div>{t('totalAmount')}: {totalAmount}</div>
+              </Col>
+            </Row>
           </TabPane>
         </Tabs>
       </Form>

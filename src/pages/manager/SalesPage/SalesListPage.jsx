@@ -57,8 +57,8 @@ const SalesListPage = () => {
     },
     {
       title: t('employee'),
-      dataIndex: 'employee',
-      key: 'employee',
+      key: 'employeeName',
+      render: (text, record) => record.employee?.employeeName,
     },
   ];
 
