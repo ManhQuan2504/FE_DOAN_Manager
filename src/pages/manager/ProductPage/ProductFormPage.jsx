@@ -287,11 +287,11 @@ const ProductFormPage = () => {
 
         <Row gutter={[12]}>
           <Col span={6}>
-            <Form.Item label={t('price')} name="price" rules={[{ required: true, message: "Bạn chưa nhập đơn giá" }]}>
+            <Form.Item label={`${t('pricesales')} (VNĐ)`} name="price" rules={[{ required: true, message: "Bạn chưa nhập đơn giá" }]}>
               <InputNumber
                 style={{ width: '100%' }}
-                formatter={value => `${value} VNĐ`}
-                parser={value => value.replace('VNĐ', '')}
+                formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                parser={(value) => value?.replace(/(,*)/g, '')}
               />
             </Form.Item>
           </Col>

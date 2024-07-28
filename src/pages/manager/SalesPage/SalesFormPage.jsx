@@ -47,7 +47,7 @@ const SalesFormPage = () => {
   console.log("🚀 ~ SalesFormPage ~ salesDetail:", salesDetail)
   const [pageSize, setPageSize] = useState(30);
   const [errorAddLineMessage, setErrorAddLineMessage] = useState('');
-  const [totalAmount, setTotalAmount] = useState('');
+  const [totalAmount, setTotalAmount] = useState(0);
 
   const formChange = async (changedValues, allValues) => {
     console.log("🚀 ~ form.getFieldsValue():", form.getFieldsValue());
@@ -59,11 +59,12 @@ const SalesFormPage = () => {
     const handleCreate = async () => {
       try {
         const { saleNumber, customer, employee, phoneNumber } = await form.getFieldValue();
+        console.log("🚀 ~ handleCreate ~ totalAmount:", totalAmount)
         const data = {
           modelName: 'sales',
           data: {
             productList: salesDetail,
-            saleNumber, customer, employee, phoneNumber
+            saleNumber, customer, employee, phoneNumber, totalAmount
           },
         };
         console.log("🚀 ~ handleCreate ~ data:", data)
@@ -128,6 +129,7 @@ const SalesFormPage = () => {
         form.setFieldsValue(saleData.dataObject);
         setSalesDetail(saleData?.dataObject?.productList);
         setEmployeeName(saleData ? saleData?.dataObject?.employee?.employeeName : '');
+        setTotalAmount(saleData ? saleData?.dataObject?.totalAmount : 0);
       } else {
         const autoCode = generateAutoCode('BH');
 
@@ -150,13 +152,17 @@ const SalesFormPage = () => {
     fetchData();
   }, [id, form]);
 
+  const calculateTotalAmount = (details) => {
+    const total = details.reduce((sum, detail) => sum + (detail.price * detail.saleQty), 0);
+    setTotalAmount(total);
+  };
+
   const addSaleLine = () => {
     const product = form.getFieldValue('product');
     const color = form.getFieldValue('color');
     const qty = form.getFieldValue('qty');
     const saleQty = form.getFieldValue('saleQty');
     const productDetails = productsData.find(item => item._id === product);
-    const totalAmount = productDetails.map(item => item.price += product);
 
     if (qty <= 0) {
       setErrorAddLineMessage("Sản phẩm không đủ tồn kho");
@@ -178,7 +184,13 @@ const SalesFormPage = () => {
         color,
         qty,
       };
-      setSalesDetail(prevDetails => [...prevDetails, newSaleDetail]);
+
+      setSalesDetail(prevDetails => {
+        const newDetails = [...prevDetails, newSaleDetail];
+        calculateTotalAmount(newDetails);
+        return newDetails;
+      });
+
       console.log("🚀 ~ SalesFormPage ~ salesDetail:", salesDetail)
 
       // Reset form fields in the salesProduct tab
@@ -188,7 +200,11 @@ const SalesFormPage = () => {
   };
 
   const removeSaleLine = (index) => {
-    setSalesDetail(prevDetails => prevDetails.filter((_, i) => i !== index));
+    setSalesDetail(prevDetails => {
+      const newDetails = prevDetails.filter((_, i) => i !== index);
+      calculateTotalAmount(newDetails);
+      return newDetails;
+    });
   };
 
   const columnsConfig = [
@@ -208,6 +224,7 @@ const SalesFormPage = () => {
       dataIndex: 'price',
       width: 170,
       key: 'price',
+      render: (text) => `${text}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
     },
     {
       title: `${t('warranty')} (${t('month')})`,

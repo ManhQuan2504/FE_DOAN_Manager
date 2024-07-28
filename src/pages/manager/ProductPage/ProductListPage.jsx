@@ -60,6 +60,7 @@ const ProductFormPage = () => {
       title: t('price'),
       dataIndex: 'price',
       key: 'price',
+      render: (text) => `${text}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
     },
   ];
 

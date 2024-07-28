@@ -162,7 +162,7 @@ const StockImportFormPage = () => {
 
           <Col span={6}>
             <Form.Item label={t('stockImportStatus')} name="stockImportStatus">
-              <Input readOnly/>
+              <Input readOnly />
             </Form.Item>
           </Col>
 
@@ -213,11 +213,11 @@ const StockImportFormPage = () => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label={t('cost')} name="cost" rules={[{ required: true, message: "Bạn chưa nhập đơn giá" }]}>
+            <Form.Item label={`${t('cost')} (VNĐ)`} name="cost" rules={[{ required: true, message: "Bạn chưa nhập đơn giá" }]}>
               <InputNumber
                 style={{ width: '100%' }}
-                formatter={value => `${value} VNĐ`}
-                parser={value => value.replace('VNĐ', '')}
+                formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                parser={(value) => value?.replace(/(,*)/g, '')}
               />
             </Form.Item>
           </Col>

@@ -8,6 +8,7 @@ import { PATH } from '~/constants/part';
 import _ from 'lodash';
 import TableComponent from '~/components/TableComponent';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
 // Helper function to get unique values and sort them
 const getUniqueValues = (categories, key) => {
@@ -55,6 +56,7 @@ const StockExportListPage = () => {
       title: t('createdAt'),
       dataIndex: 'createdAt',
       key: 'createdAt',
+      render: (text) => moment(text).format('DD-MM-YYYY'),
     },
     {
       title: t('product'),

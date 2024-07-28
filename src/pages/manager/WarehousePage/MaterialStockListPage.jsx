@@ -93,7 +93,6 @@ const MaterialStockListPage = () => {
       title: t('color'),
       dataIndex: 'color',
       key: 'color',
-      render: (text) => getColorName(text),
     },
     {
       title: t('qty'),

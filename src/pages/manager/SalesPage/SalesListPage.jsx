@@ -7,6 +7,7 @@ import { PATH } from '~/constants/part';
 import TableComponent from '~/components/TableComponent';
 import { useTranslation } from 'react-i18next';
 import { apiGetList } from '~/services/helperServices';
+import moment from 'moment';
 
 const SalesListPage = () => {
   const { t } = useTranslation();
@@ -49,6 +50,7 @@ const SalesListPage = () => {
       title: t('saleDate'),
       dataIndex: 'saleDate',
       key: 'saleDate',
+      render: (text) => moment(text).format('DD-MM-YYYY'),
     },
     {
       title: t('customer'),

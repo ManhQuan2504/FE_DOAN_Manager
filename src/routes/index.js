@@ -41,6 +41,7 @@ import M_StockExportListPage from '~/pages/manager/WarehousePage/StockExportList
 import M_StockExportFormPage from '~/pages/manager/WarehousePage/StockExportFormPage';
 import M_MaterialStockListPage from '~/pages/manager/WarehousePage/MaterialStockListPage';
 
+import M_ReportSalePage from '~/pages/manager/ReportPage/ReportSalePage';
 
 export const AppRoutes = [
     //MANAGER
@@ -82,6 +83,8 @@ export const AppRoutes = [
     { path: `${PATH.MANAGER.STOCKIMPORTS}/:id`, component: M_StockImportFormPage, layout: ManagerLayout },
     { path: PATH.MANAGER.STOCKEXPORTS, component: M_StockExportListPage, layout: ManagerLayout },
     { path: `${PATH.MANAGER.STOCKEXPORTS}/:id`, component: M_StockExportFormPage, layout: ManagerLayout },
+
+    { path: `${PATH.MANAGER.REPORTSALES}`, component: M_ReportSalePage, layout: ManagerLayout },
 
 ];
 
