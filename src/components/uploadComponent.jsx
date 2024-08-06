@@ -31,9 +31,19 @@ const ImageUpload = ({ value = [], limit, onChange }) => {
     setPreviewOpen(true);
   };
 
-  const handleChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-    onChange(newFileList);
+  const handleChange = async ({ fileList: newFileList }) => {
+    const updatedFileList = [];
+    for (const file of newFileList) {
+      console.log("🚀 ~ handleChange ~ !file.url && !file.preview:", !file.url && !file.preview)
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj);
+      }
+      console.log("🚀 ~ handleChange ~ file:", file)
+      updatedFileList.push(file);
+    }
+
+    setFileList(updatedFileList);
+    onChange(updatedFileList);
   };
 
   const uploadButton = (
@@ -48,8 +58,8 @@ const ImageUpload = ({ value = [], limit, onChange }) => {
       <Upload
         listType="picture-card"
         fileList={fileList}
-        onPreview={handlePreview} // Sử dụng handlePreview trực tiếp vào onPreview
-        onChange={handleChange} // onChange cập nhật fileList và gọi hàm onChange
+        onPreview={handlePreview}
+        onChange={handleChange}
         multiple
         maxCount={limit}
         beforeUpload={() => false}

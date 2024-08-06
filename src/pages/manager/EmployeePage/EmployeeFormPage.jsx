@@ -8,6 +8,8 @@ import BackButton from '~/components/manager/listAction/BackButton';
 import UpdateButton from '~/components/manager/listAction/UpdateButton';
 import DeleteButton from '~/components/manager/listAction/DeleteButton';
 import ImageUpload from '~/components/uploadComponent';
+import Password from 'antd/es/input/Password';
+import axios from 'axios';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -42,7 +44,7 @@ const ProductFormPage = () => {
             },
           };
           console.log("🚀 ~ handleCreate ~ data:", data)
-          await apiCreate(data);
+          await axios.post(`http://localhost/v1/employees/createEmployee`, data);
           message.success(t('messages.createSuccess'));
           navigate('/manager/employees'); // Navigate back to the previous page
         }
@@ -143,8 +145,8 @@ const ProductFormPage = () => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label={t('password')} name="password">
-              <Input />
+            <Form.Item label={t('password')} name="password" >
+              <Password />
             </Form.Item>
           </Col>
         </Row>

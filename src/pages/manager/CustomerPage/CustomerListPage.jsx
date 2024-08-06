@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import { NavLink } from 'react-router-dom';
-import AddButton from '~/components/manager/listAction/AddButton';
 import ExportButton from '~/components/manager/listAction/ExportButton';
 import { PATH } from '~/constants/part';
 import TableComponent from '~/components/TableComponent';
 import { useTranslation } from 'react-i18next';
 import { apiGetList } from '~/services/helperServices';
+import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
-const EmployeeFormPage = () => {
+const CustomerListPage = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [customers, setCustomers] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
-  const fetchEmployees = async () => {
+  const fetchCustomers = async () => {
     setLoading(true);
     try {
       const data = {
@@ -24,14 +25,14 @@ const EmployeeFormPage = () => {
       console.log("🚀 ~ fetchCustomers ~ response:", response)
       setCustomers(response.dataObject);
     } catch (error) {
-      console.error('Failed to fetch Functions:', error);
+      console.error('Failed to fetch customers:', error);
     } finally {
       setLoading(false);
     }
   };
   
   useEffect(() => {
-    fetchEmployees();
+    fetchCustomers();
   }, []);
 
   const columnsConfig = [
@@ -67,12 +68,13 @@ const EmployeeFormPage = () => {
       <div className="header-list">
         <div className="title">{t('customer')}</div>
         <div className="button-list">
+          <SearchOnList setSearchResults={setSearchResults} modelName={'customers'}/>
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={customers} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={searchResults.length > 0 ? searchResults : customers} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };
 
-export default EmployeeFormPage;
+export default CustomerListPage;

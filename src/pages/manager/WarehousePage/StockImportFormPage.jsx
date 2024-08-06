@@ -66,10 +66,10 @@ const StockImportFormPage = () => {
         };
 
         await axios.post(`http://localhost/v1/stockImports/import/${id}`, data);
-        message.success(t('messages.createSuccess'));
+        message.success(t('messages.importStockSuccess'));
         navigate(-1);
       } catch (error) {
-        message.error(t('messages.createFail'));
+        message.error(t('messages.importStockFail'));
       }
     };
 

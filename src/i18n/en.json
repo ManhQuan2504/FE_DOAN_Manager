@@ -14,7 +14,9 @@
     "updateSuccess": "Update Success",
     "updateFail": "Update Fail",
     "deleteSuccess": "Delete Success",
-    "deleteFail": "Delete Fail"
+    "deleteFail": "Delete Fail",
+    "importStockSuccess": "Import Stock Success",
+    "importStockFail": "Import Stock Fail"
   },
   "isRequired": "Is Required",
   "account": "Account",
@@ -119,5 +121,8 @@
   "day": "Day",
   "year": "Year",
   "addSaleLine": "Add",
+  "viewReport": "View Report",
+  "pricesales": "Price Sales",
+  "saleReport": "Sale Report",
   "orderManager": "order Manager"
 }

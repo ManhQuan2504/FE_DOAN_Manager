@@ -8,7 +8,7 @@ function App() {
       <div>
         <Routes>
           {/* Điều hướng từ đường dẫn gốc đến URL mong muốn */}
-          <Route path="/" element={<Navigate to="/manager/" replace />} />
+          <Route path="/" element={<Navigate to="/manager/reportSales" replace />} />
 
           {AppRoutes.map((route, index) => {
             const Page = route.component;

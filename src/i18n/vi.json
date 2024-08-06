@@ -14,7 +14,9 @@
     "updateSuccess": "Cập nhật thành công",
     "updateFail": "Cập nhật thất bại",
     "deleteSuccess": "Xoá thành công",
-    "deleteFail": "Xoá thất bại"
+    "deleteFail": "Xoá thất bại",
+    "importStockSuccess": "Nhập kho thành công",
+    "importStockFail": "Nhập kho thất bại"
   },
   "isRequired": "Bắt buộc nhập",
   "account": "Tài khoản",
@@ -119,5 +121,8 @@
   "day": "Ngày",
   "year": "Năm",
   "addSaleLine": "Thêm",
+  "viewReport": "Xem báo cáo",
+  "pricesales": "Đơn giá",
+  "saleReport": "Báo cáo mua hàng",
   "orderManager": "Quản lý đơn hàng"
 }

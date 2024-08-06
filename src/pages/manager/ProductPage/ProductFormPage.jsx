@@ -20,7 +20,6 @@ const ProductFormPage = () => {
   const [product, setProduct] = useState();
   console.log("🚀 ~ ProductFormPage ~ product:", product)
   const [taxs, setTaxs] = useState([]);
-  console.log("🚀 ~ ProductFormPage ~ taxs:", taxs)
   const [loading, setLoading] = useState(true);
   const [form] = Form.useForm();
   const { id } = useParams();
