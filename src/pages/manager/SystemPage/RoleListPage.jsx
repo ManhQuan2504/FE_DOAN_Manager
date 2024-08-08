@@ -8,12 +8,14 @@ import { PATH } from '~/constants/part';
 import _ from 'lodash';
 import TableComponent from '~/components/TableComponent';
 import { useTranslation } from 'react-i18next';
+import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 
 const RoleListPage = () => {
   const { t } = useTranslation();
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     const fetchRoles = async () => {
@@ -58,11 +60,12 @@ const RoleListPage = () => {
       <div className="header-list">
         <div className="title">{t('category')}</div>
         <div className="button-list">
+          <SearchOnList setSearchResults={setSearchResults} modelName={'roles'}/>
           <AddButton to={`${PATH.MANAGER.ROLES}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={roles} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={searchResults.length > 0 ? searchResults : roles} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };

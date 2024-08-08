@@ -7,6 +7,7 @@ import { PATH } from '~/constants/part';
 import { useTranslation } from 'react-i18next';
 import TableComponent from '~/components/TableComponent';
 import { Form } from 'antd';
+import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const TaxListPage = () => {
   const { t } = useTranslation();
@@ -14,6 +15,7 @@ const TaxListPage = () => {
   const [form] = Form.useForm();
   const [taxs, setTaxs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchResults, setSearchResults] = useState([]);
 
   const fetchTaxs = async () => {
     setLoading(true);
@@ -59,11 +61,12 @@ const TaxListPage = () => {
       <div className="header-list">
         <div className="title">{t('tax')}</div>
         <div className="button-list">
+          <SearchOnList setSearchResults={setSearchResults} modelName={'taxs'}/>
           <AddButton to={`${PATH.MANAGER.TAXS}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={taxs} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={searchResults.length > 0 ? searchResults : taxs} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };

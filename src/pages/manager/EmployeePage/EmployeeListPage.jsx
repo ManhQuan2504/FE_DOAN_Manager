@@ -7,11 +7,13 @@ import { PATH } from '~/constants/part';
 import TableComponent from '~/components/TableComponent';
 import { useTranslation } from 'react-i18next';
 import { apiGetList } from '~/services/helperServices';
+import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const EmployeeFormPage = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [employees, setEmployees] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
   const fetchEmployees = async () => {
     setLoading(true);
@@ -67,11 +69,12 @@ const EmployeeFormPage = () => {
       <div className="header-list">
         <div className="title">{t('employee')}</div>
         <div className="button-list">
+          <SearchOnList setSearchResults={setSearchResults} modelName={'employees'}/>
           <AddButton to={`${PATH.MANAGER.EMPLOYEES}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={employees} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={searchResults.length > 0 ? searchResults : employees} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };

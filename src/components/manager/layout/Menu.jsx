@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom'; // Sử dụng useNavigate thay cho Navigate
 import { PATH } from '~/constants/part';
-import { UserOutlined, VideoCameraOutlined, UploadOutlined } from '@ant-design/icons';
 import { t } from 'i18next';
-import { useDispatch, useSelector } from "react-redux";
 import * as Style from "./styles";
 
 const { SubMenu } = Menu;
@@ -62,7 +60,7 @@ const App = () => {
       <Menu
         theme={theme}
         onClick={onClick}
-        style={{ width: '100%' }}
+        style={{ width: '100%', maxHeight: '700px', overflowY: 'auto' }} // Thêm thuộc tính để tạo thanh cuộn
         defaultOpenKeys={defaultOpenKeys}
         selectedKeys={[current]}
         mode="inline"

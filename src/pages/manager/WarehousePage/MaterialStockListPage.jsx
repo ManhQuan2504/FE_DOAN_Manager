@@ -6,6 +6,7 @@ import { PATH } from '~/constants/part';
 import { useTranslation } from 'react-i18next';
 import { apiGetList } from '~/services/helperServices';
 import _ from 'lodash';
+import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const COLOR_MENU = [
   { name: 'đen', code: '000000' },
@@ -51,7 +52,7 @@ const MaterialStockListPage = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  console.log("🚀 ~ MaterialStockListPage ~ products:", products);
+  const [searchResults, setSearchResults] = useState([]);
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -169,10 +170,11 @@ const MaterialStockListPage = () => {
       <div className="header-list">
         <div className="title">{t('materialStock')}</div>
         <div className="button-list">
+          <SearchOnList setSearchResults={setSearchResults} modelName={'products'}/>
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={products} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={searchResults.length > 0 ? searchResults : products}  columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };

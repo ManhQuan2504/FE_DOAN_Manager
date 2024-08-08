@@ -9,6 +9,7 @@ import _ from 'lodash';
 import TableComponent from '~/components/TableComponent';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
+import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 // Helper function to get unique values and sort them
 const getUniqueValues = (categories, key) => {
@@ -20,6 +21,7 @@ const StockExportListPage = () => {
   const { t } = useTranslation();
   const [stockExports, setStockExports] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchResults, setSearchResults] = useState([]);
 
   const fetchStockExports = async () => {
     setLoading(true);
@@ -75,11 +77,12 @@ const StockExportListPage = () => {
       <div className="header-list">
         <div className="title">{t('stockImport')}</div>
         <div className="button-list">
+          <SearchOnList setSearchResults={setSearchResults} modelName={'stockExports'}/>
           <AddButton to={`${PATH.MANAGER.STOCKEXPORTS}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={stockExports} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={searchResults.length > 0 ? searchResults : stockExports} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };

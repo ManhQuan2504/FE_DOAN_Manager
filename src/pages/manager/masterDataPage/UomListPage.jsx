@@ -6,11 +6,13 @@ import { apiGetList } from '~/services/helperServices'; // Đảm bảo đườn
 import { PATH } from '~/constants/part';
 import { useTranslation } from 'react-i18next';
 import TableComponent from '~/components/TableComponent';
+import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const UomListPage = () => {
   const { t } = useTranslation();
   const [uoms, setUoms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     const fetchUoms = async () => {
@@ -56,11 +58,12 @@ const UomListPage = () => {
       <div className="header-list">
         <div className="title">{t('uom')}</div>
         <div className="button-list">
+          <SearchOnList setSearchResults={setSearchResults} modelName={'uoms'}/>
           <AddButton to={`${PATH.MANAGER.UOMS}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={uoms} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={searchResults.length > 0 ? searchResults : uoms} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };

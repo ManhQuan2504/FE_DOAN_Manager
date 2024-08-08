@@ -8,6 +8,7 @@ import { PATH } from '~/constants/part';
 import _ from 'lodash';
 import TableComponent from '~/components/TableComponent';
 import { useTranslation } from 'react-i18next';
+import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 // Helper function to get unique values and sort them
 const getUniqueValues = (categories, key) => {
@@ -19,6 +20,7 @@ const CategoryListPage = () => {
   const { t } = useTranslation();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchResults, setSearchResults] = useState([]);
 
   const fetchCategory = async () => {
     setLoading(true);
@@ -68,11 +70,12 @@ const CategoryListPage = () => {
       <div className="header-list">
         <div className="title">{t('category')}</div>
         <div className="button-list">
+          <SearchOnList setSearchResults={setSearchResults} modelName={'categories'}/>
           <AddButton to={`${PATH.MANAGER.CATEGORIES}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={categories} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={searchResults.length > 0 ? searchResults : categories} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };

@@ -124,5 +124,7 @@
   "viewReport": "View Report",
   "pricesales": "Price Sales",
   "saleReport": "Sale Report",
+  "description": "Description",
+  "specifications": "Specifications",
   "orderManager": "order Manager"
 }

@@ -8,12 +8,13 @@ import './ProductFormPage.css'; // Import file CSS tùy chỉnh
 import TableComponent from '~/components/TableComponent';
 import { useTranslation } from 'react-i18next';
 import { apiGetList } from '~/services/helperServices';
+import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const ProductFormPage = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  console.log("🚀 ~ ProductFormPage ~ products:", products)
+  const [searchResults, setSearchResults] = useState([]);
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -69,11 +70,12 @@ const ProductFormPage = () => {
       <div className="header-list">
         <div className="title">{t('product')}</div>
         <div className="button-list">
+          <SearchOnList setSearchResults={setSearchResults} modelName={'products'}/>
           <AddButton to={`${PATH.MANAGER.PRODUCTS}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={products} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={searchResults.length > 0 ? searchResults : products} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };

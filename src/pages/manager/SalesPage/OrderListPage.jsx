@@ -7,11 +7,13 @@ import { PATH } from '~/constants/part';
 import TableComponent from '~/components/TableComponent';
 import { useTranslation } from 'react-i18next';
 import { apiGetList } from '~/services/helperServices';
+import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const OrderListPage = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -21,7 +23,6 @@ const OrderListPage = () => {
         data: {},
       };
       const response = await apiGetList(data);
-      console.log("🚀 ~ fetchEmployees ~ response:", response)
       setOrders(response.dataObject);
     } catch (error) {
       console.error('Failed to fetch orders:', error);
@@ -72,11 +73,12 @@ const OrderListPage = () => {
       <div className="header-list">
         <div className="title">{t('order')}</div>
         <div className="button-list">
+          <SearchOnList setSearchResults={setSearchResults} modelName={'orders'}/>
           <AddButton to={`${PATH.MANAGER.ORDERS}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={orders} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={searchResults.length > 0 ? searchResults : orders} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };

@@ -6,11 +6,13 @@ import { apiGetList } from '~/services/helperServices'; // Đảm bảo đườn
 import { PATH } from '~/constants/part';
 import { useTranslation } from 'react-i18next';
 import TableComponent from '~/components/TableComponent';
+import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const VendorListPage = () => {
   const { t } = useTranslation();
   const [vendors, setVendors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     const fetchVendors = async () => {
@@ -61,11 +63,12 @@ const VendorListPage = () => {
       <div className="header-list">
         <div className="title">{t('vendor')}</div>
         <div className="button-list">
+          <SearchOnList setSearchResults={setSearchResults} modelName={'vendors'}/>
           <AddButton to={`${PATH.MANAGER.VENDORS}/0`} />
           <ExportButton />
         </div>
       </div>
-      <TableComponent data={vendors} columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={searchResults.length > 0 ? searchResults : vendors} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };

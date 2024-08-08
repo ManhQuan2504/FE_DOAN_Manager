@@ -124,5 +124,7 @@
   "viewReport": "Xem báo cáo",
   "pricesales": "Đơn giá",
   "saleReport": "Báo cáo mua hàng",
+  "description": "Mô tả",
+  "specifications": "Thông số kĩ thuật",
   "orderManager": "Quản lý đơn hàng"
 }

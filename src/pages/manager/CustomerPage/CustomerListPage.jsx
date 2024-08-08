@@ -22,7 +22,6 @@ const CustomerListPage = () => {
         data: {},
       };
       const response = await apiGetList(data);
-      console.log("🚀 ~ fetchCustomers ~ response:", response)
       setCustomers(response.dataObject);
     } catch (error) {
       console.error('Failed to fetch customers:', error);
