@@ -10,6 +10,7 @@ const UpdateButton = ({ modelName, form, id, navigate, ...props }) => {
   const handleCreate = async () => {
     try {
       const formData = form.getFieldValue();
+      console.log("🚀 ~ handleCreate ~ formData:", formData)
       const data = {
         modelName: modelName,
         id,

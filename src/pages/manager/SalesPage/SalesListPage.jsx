@@ -51,7 +51,7 @@ const SalesListPage = () => {
       title: t('saleDate'),
       dataIndex: 'saleDate',
       key: 'saleDate',
-      render: (text) => moment(text).format('DD-MM-YYYY'),
+      render: (text) => moment(text).format('DD-MM-YYYY HH:mm'),
     },
     {
       title: t('customer'),

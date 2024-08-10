@@ -8,6 +8,7 @@ import TableComponent from '~/components/TableComponent';
 import { useTranslation } from 'react-i18next';
 import { apiGetList } from '~/services/helperServices';
 import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
+import moment from 'moment';
 
 const OrderListPage = () => {
   const { t } = useTranslation();
@@ -47,9 +48,15 @@ const OrderListPage = () => {
       ),
     },
     {
+      title: t('orderDate'),
+      dataIndex: 'orderDate',
+      key: 'orderDate',
+      render: (text) => moment(text).format('DD-MM-YYYY HH:mm'),
+    },
+    {
       title: t('customer'),
-      dataIndex: 'customer',
       key: 'customer',
+      render: (text, record) => record.customer?.customerName,
     },
     {
       title: t('totalAmount'),
@@ -57,14 +64,14 @@ const OrderListPage = () => {
       key: 'totalAmount',
     },
     {
-      title: t('paided'),
-      dataIndex: 'paided',
-      key: 'paided',
+      title: t('paymentMethod'),
+      dataIndex: 'paymentMethod',
+      key: 'paymentMethod',
     },
     {
-      title: t('saleState'),
-      dataIndex: 'saleState',
-      key: 'saleState',
+      title: t('orderState'),
+      dataIndex: 'orderState',
+      key: 'orderState',
     },
   ];
 

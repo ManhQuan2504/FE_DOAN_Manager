@@ -126,5 +126,8 @@
   "saleReport": "Sale Report",
   "description": "Description",
   "specifications": "Specifications",
+  "paymentMethod": "Payment MeThod",
+  "orderInfor": "Order Infor",
+  "orderDetail": "Order Detail",
   "orderManager": "order Manager"
 }

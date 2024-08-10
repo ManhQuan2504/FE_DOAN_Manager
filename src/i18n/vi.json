@@ -126,5 +126,8 @@
   "saleReport": "Báo cáo mua hàng",
   "description": "Mô tả",
   "specifications": "Thông số kĩ thuật",
+  "paymentMethod": "Phương thức TT",
+  "orderInfor": "Thông tin đơn hàng",
+  "orderDetail": "Chi tiết đơn hàng",
   "orderManager": "Quản lý đơn hàng"
 }
