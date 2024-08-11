@@ -13,6 +13,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const ProductFormPage = () => {
+  document.title = "Khách hàng";
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [form] = Form.useForm();

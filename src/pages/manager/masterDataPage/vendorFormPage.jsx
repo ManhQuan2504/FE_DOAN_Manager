@@ -10,6 +10,7 @@ import { apiGetById } from '~/services/helperServices';
 import { generateAutoCode } from '~/helper/functionHelper';
 
 const VendorFormPage = () => {
+  document.title = "Nhà cung cấp";
   const { t } = useTranslation();
   const { id } = useParams(); // get id from URL parameters
   const navigate = useNavigate();

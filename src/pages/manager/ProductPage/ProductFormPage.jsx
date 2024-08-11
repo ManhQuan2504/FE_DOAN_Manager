@@ -14,6 +14,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const ProductFormPage = () => {
+  document.title = "Sản phẩm";
   const { t } = useTranslation();
   const [categories, setCategories] = useState([]);
   const [uoms, setUoms] = useState([]);

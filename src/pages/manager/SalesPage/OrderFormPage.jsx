@@ -13,6 +13,7 @@ import moment from 'moment';
 const { TextArea } = Input;
 
 const OrderFormPage = () => {
+  document.title = "Đặt hàng";
   const { t } = useTranslation();
   const [order, setOrder] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -14,6 +14,7 @@ import axios from 'axios';
 import { Option } from 'antd/es/mentions';
 
 const StockImportFormPage = () => {
+  document.title = "Nhập kho";
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();

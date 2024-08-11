@@ -34,6 +34,7 @@ const getUniqueValues = (data, key) => {
 };
 
 const SalesFormPage = () => {
+  document.title = "Bán hàng";
   const { t } = useTranslation();
   const [sale, setSale] = useState({});
   const [loading, setLoading] = useState(true);

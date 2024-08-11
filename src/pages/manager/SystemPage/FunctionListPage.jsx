@@ -17,6 +17,7 @@ const getUniqueValues = (categories, key) => {
 };
 
 const FunctionListPage = () => {
+  document.title = "Chức năng";
   const { t } = useTranslation();
   const [functions, setFunctions] = useState([]);
   const [loading, setLoading] = useState(true);

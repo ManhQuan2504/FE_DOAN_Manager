@@ -10,6 +10,7 @@ import { apiGetById } from '~/services/helperServices';
 import { percentFormatter, percentParser, vndFormatter, vndParser } from '~/constants/helperConstants';
 
 const TaxFormPage = () => {
+  document.title = "Thuế";
   const { t } = useTranslation();
   const { id } = useParams(); // get id from URL parameters
   const [form] = Form.useForm();

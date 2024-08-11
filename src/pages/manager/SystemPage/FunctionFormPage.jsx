@@ -12,6 +12,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const FunctionFormPage = () => {
+  document.title = "Chức năng";
   const { t } = useTranslation();
   const { id } = useParams(); // get id from URL parameters
   const navigate = useNavigate();

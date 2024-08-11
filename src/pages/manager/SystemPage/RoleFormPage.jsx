@@ -10,6 +10,7 @@ import { apiGetById, apiGetList } from '~/services/helperServices';
 import { MODELNAME } from '~/constants/modelName';
 
 const RoleFormPage = () => {
+  document.title = "Thẩm quyền";
   const { t } = useTranslation();
   const { id } = useParams(); // get id from URL parameters
   const navigate = useNavigate();

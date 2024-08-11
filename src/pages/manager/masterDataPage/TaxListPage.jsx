@@ -10,6 +10,7 @@ import { Form } from 'antd';
 import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const TaxListPage = () => {
+  document.title = "Thuế";
   const { t } = useTranslation();
   const { id } = useParams();
   const [form] = Form.useForm();

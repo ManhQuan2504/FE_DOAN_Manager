@@ -9,6 +9,7 @@ import TableComponent from '~/components/TableComponent';
 import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const VendorListPage = () => {
+  document.title = "Nhà cung cấp";
   const { t } = useTranslation();
   const [vendors, setVendors] = useState([]);
   const [loading, setLoading] = useState(true);

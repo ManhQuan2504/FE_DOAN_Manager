@@ -32,6 +32,7 @@ const getColorName = (code) => {
 
 // Helper function to get unique values and sort them
 const getUniqueValues = (data, key) => {
+  document.title = "Vật tư";
   const values = data?.map(item => {
     const keys = key.split('.');
     let value = item;

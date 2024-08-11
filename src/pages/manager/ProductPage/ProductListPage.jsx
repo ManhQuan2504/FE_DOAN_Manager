@@ -11,6 +11,7 @@ import { apiGetList } from '~/services/helperServices';
 import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const ProductFormPage = () => {
+  document.title = "Sản phẩm";
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);

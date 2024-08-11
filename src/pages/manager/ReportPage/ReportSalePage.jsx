@@ -1,36 +1,42 @@
-import React, { useState } from 'react';
-import { DatePicker, Button, Table, Row, Col, Form } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { DatePicker, Button, Table, Row, Col, Form, Tabs } from 'antd';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line } from 'recharts';
 import { useTranslation } from 'react-i18next';
 import ExportButton from '~/components/manager/listAction/ExportButton';
 import BackButton from '~/components/manager/listAction/BackButton';
 import axios from 'axios';
+import dayjs from 'dayjs'; // Import dayjs for date handling
+import { TabPane } from 'react-bootstrap';
 
 const { RangePicker } = DatePicker;
 
 const ReportSale = () => {
+  document.title = "Báo cáo thống kê";
   const { t } = useTranslation();
-  const [dateRange, setDateRange] = useState([]);
+  const [dateRange, setDateRange] = useState([dayjs().subtract(7, 'day'), dayjs()]); // Default to last 7 days
   const [dataReportByProduct, setDataReportByProduct] = useState([]);
   const [dataReportByDate, setDataReportByDate] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [records, setRecords] = useState([]);
   const [form] = Form.useForm();
 
-  const formChange = async (changedValues, allValues) => {
+  useEffect(() => {
+    fetchReportData(); // Fetch report data on component mount
+  }, [dateRange]);
+
+  const formChange = (changedValues, allValues) => {
     console.log("🚀 ~ form.getFieldsValue():", form.getFieldsValue());
   };
 
   const fetchReportData = async () => {
     setLoading(true);
     try {
-      const fromDate = dateRange[0].$d;
-      const toDate = dateRange[1].$d;
+      const fromDate = dateRange[0] ? dateRange[0].format('YYYY-MM-DD') : '';
+      const toDate = dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : '';
       const data = {
         modelName: 'sales',
         data: {
-          fromDate: fromDate.toISOString(),
-          toDate: toDate.toISOString()
+          fromDate,
+          toDate
         },
       };
 
@@ -39,10 +45,9 @@ const ReportSale = () => {
         .join('&');
 
       const response = await axios.get(`http://localhost/v1/sales/salesAggregate/?${queryString}`);
-      console.log("🚀 ~ fetchReportData ~ response:", response)
-      const { reportByDate, reportByProduct } = response.data; // Adjust here to get data from response.data
-      setDataReportByDate(reportByDate);
-      setDataReportByProduct(reportByProduct);
+      const { reportByDate, reportByProduct } = response.data;
+      setDataReportByDate(reportByDate || []);
+      setDataReportByProduct(reportByProduct || []);
     } catch (error) {
       console.error('Failed to fetch report data:', error);
     } finally {
@@ -52,21 +57,20 @@ const ReportSale = () => {
 
   const columns = [
     {
-      title: t('Product Name'),
+      title: t('productName'),
       dataIndex: 'productName',
       key: 'productName',
     },
     {
-      title: t('Quantity Sold'),
+      title: t('sold'),
       dataIndex: 'totalQuantity',
       key: 'totalQuantity',
     },
     {
-      title: t('Revenue'),
+      title: t('total'),
       dataIndex: 'totalSales',
       key: 'totalSales',
     },
-    // Thêm các cột khác nếu cần
   ];
 
   return (
@@ -82,50 +86,99 @@ const ReportSale = () => {
         <Form form={form} layout="vertical" style={{ maxWidth: '100%' }} onValuesChange={formChange}>
           <Row gutter={[12]}>
             <Col span={6}>
-              <RangePicker name="saleNumber" style={{ width: '100%' }} onChange={(dates) => setDateRange(dates)} />
+              <RangePicker
+                style={{ width: '100%' }}
+                value={dateRange}
+                onChange={(dates) => setDateRange(dates)}
+                format="YYYY-MM-DD"
+              />
             </Col>
             <Col span={6}>
               <Button type="primary" onClick={fetchReportData}>{t('viewReport')}</Button>
               <span style={{ color: 'red', marginLeft: 10 }}>{ }</span>
             </Col>
           </Row>
+          <Tabs defaultActiveKey="1">
+            <TabPane tab={t('reportByPrices')} key="1">
+              <Row gutter={[24]}>
+                <Col span={24}>
+                  {dataReportByDate.length > 0 ? (
+                    <LineChart width={1000} height={400} data={dataReportByDate} margin={{ top: 5, right: 20, bottom: 5, left: 60 }}>
+                      <Line type="monotone" dataKey="totalSales" stroke="#8884d8" />
+                      <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
+                      <XAxis dataKey="_id" tickFormatter={(date) => new Date(date).toLocaleDateString()} />
+                      <YAxis tickFormatter={(value) => value.toLocaleString()} /> {/* Định dạng giá trị trục tung */}
+                      <Legend
+                        layout="vertical"
+                        verticalAlign="middle"
+                        align="right"
+                        wrapperStyle={{ paddingLeft: 30 }}
+                        formatter={(value) => {
+                          return value === 'totalSales' ? 'Doanh thu' : value;
+                        }}
+                      />
+                      <Tooltip
+                        formatter={(value, name) => {
+                          // Thay đổi cách hiển thị giá trị tooltip
+                          const formattedValue = value.toLocaleString();
+                          return name === 'totalSales' ? ['Doanh thu', formattedValue] : [name, formattedValue];
+                        }}
+                      />
+                    </LineChart>
 
-          <div style={{ marginTop: 20 }}>
-            <Row gutter={[24]}>
-              <Col span={12}>
-                <LineChart width={500} height={300} data={dataReportByDate} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                  <Line type="monotone" dataKey="totalSales" stroke="#8884d8" />
-                  <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
-                  <XAxis dataKey="_id" />
-                  <YAxis />
-                  <Legend />
-                  <Tooltip />
-                </LineChart>
-              </Col>
-              <Col span={12}>
-                <BarChart width={500} height={300} data={dataReportByProduct}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="productName" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="totalSales" fill="#82ca9d" />
-                  <Bar dataKey="totalQuantity" fill="#8884d8" />
-                </BarChart>
-              </Col>
-            </Row>
-          </div>
+                  ) : <p>{t('noDataAvailable')}</p>}
+                </Col>
+              </Row>
+            </TabPane>
+          </Tabs>
 
-          <Table
-            columns={columns}
-            dataSource={dataReportByProduct}
-            loading={loading}
-            rowKey="_id"
-            pagination={{ pageSize: 10 }}
-          />
+          <Tabs defaultActiveKey="1">
+            <TabPane tab={t('reportByProducts')} key="1">
+              <Row gutter={[24]}>
+                <Col span={24}>
+                  {dataReportByProduct.length > 0 ? (
+                    <BarChart width={1000} height={400} data={dataReportByProduct} margin={{ top: 5, right: 20, bottom: 5, left: 60 }}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="productName" />
+                      <YAxis tickFormatter={(value) => value.toLocaleString()} /> {/* Định dạng giá trị trục tung */}
+                      <Tooltip
+                        formatter={(value, name) => {
+                          // Thay đổi cách hiển thị giá trị tooltip
+                          const formattedValue = value.toLocaleString();
+                          return name === 'totalQuantity' ? ['Số lượng bán', formattedValue] : [name, formattedValue];
+                        }}
+                      />
+                      <Legend
+                        layout="vertical"
+                        verticalAlign="middle"
+                        align="right"
+                        wrapperStyle={{ paddingLeft: 30 }}
+                        formatter={(value) => {
+                          return value === 'totalQuantity' ? 'Số lượng bán' : value;
+                        }}
+                      />
+                      <Bar dataKey="totalQuantity" fill="#82ca9d" />
+                    </BarChart>
+                  ) : <p>{t('noDataAvailable')}</p>}
+                </Col>
+              </Row>
+            </TabPane>
+          </Tabs>
+
+          <Tabs defaultActiveKey="1">
+            <TabPane tab={t('detail')} key="1">
+              <Table
+                columns={columns}
+                dataSource={dataReportByProduct}
+                loading={loading}
+                rowKey="_id"
+                pagination={{ pageSize: 10 }}
+              />
+            </TabPane>
+          </Tabs>
         </Form>
       </div>
-    </div>
+    </div >
   );
 };
 

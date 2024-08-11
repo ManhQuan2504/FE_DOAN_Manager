@@ -9,6 +9,7 @@ import TableComponent from '~/components/TableComponent';
 import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const UomListPage = () => {
+  document.title = "Đơn vị tính";
   const { t } = useTranslation();
   const [uoms, setUoms] = useState([]);
   const [loading, setLoading] = useState(true);

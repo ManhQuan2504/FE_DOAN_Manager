@@ -129,5 +129,16 @@
   "paymentMethod": "Phương thức TT",
   "orderInfor": "Thông tin đơn hàng",
   "orderDetail": "Chi tiết đơn hàng",
+  "reportByPrices": "Báo cáo theo doanh thu",
+  "reportByProducts": "Báo cáo theo sản phẩm",
+  "noDataAvailable": "Không tìm thấy giá trị",
+  "detail": "Chi tiết",
+  "total": "Tổng cộng",
+  "sold": "Đã bán",
+  "permissionList": "Danh sách tài nguyên",
+  "accountInformation": "Thông tin cá nhân",
+  "method": "Phương thức",
+  "changeAvatar": "Thay đổi avatar",
+  "saveChanges": "Lưu thay đổi",
   "orderManager": "Quản lý đơn hàng"
 }

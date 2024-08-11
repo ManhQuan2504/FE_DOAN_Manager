@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { PATH } from '~/constants/part';
 
 const LoginPage = () => {
+  document.title = "Đăng nhập";
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state);

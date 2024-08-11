@@ -12,6 +12,7 @@ import SearchOnList from '~/components/manager/listAction/SearchOnListComponent'
 
 
 const RoleListPage = () => {
+  document.title = "Thẩm quyền";
   const { t } = useTranslation();
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);

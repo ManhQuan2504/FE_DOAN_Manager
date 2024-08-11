@@ -11,6 +11,7 @@ import SearchOnList from '~/components/manager/listAction/SearchOnListComponent'
 import moment from 'moment';
 
 const OrderListPage = () => {
+  document.title = "Đặt hàng";
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
@@ -31,7 +32,7 @@ const OrderListPage = () => {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -67,7 +68,16 @@ const OrderListPage = () => {
       title: t('paymentMethod'),
       dataIndex: 'paymentMethod',
       key: 'paymentMethod',
-    },
+      render: (text) => {
+        if (text === 'cod') {
+          return t('Thanh toán khi nhận hàng');
+        } else if (text === 'paypal') {
+          return t('Thanh toán Paypal');
+        } else {
+          return text; // Nếu có thêm phương thức thanh toán khác, nó sẽ được hiển thị nguyên văn
+        }
+      }
+    },    
     {
       title: t('orderState'),
       dataIndex: 'orderState',
@@ -80,7 +90,7 @@ const OrderListPage = () => {
       <div className="header-list">
         <div className="title">{t('order')}</div>
         <div className="button-list">
-          <SearchOnList setSearchResults={setSearchResults} modelName={'orders'}/>
+          <SearchOnList setSearchResults={setSearchResults} modelName={'orders'} />
           <AddButton to={`${PATH.MANAGER.ORDERS}/0`} />
           <ExportButton />
         </div>

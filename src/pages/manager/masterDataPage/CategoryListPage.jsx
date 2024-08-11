@@ -17,6 +17,7 @@ const getUniqueValues = (categories, key) => {
 };
 
 const CategoryListPage = () => {
+  document.title = "Danh mục";
   const { t } = useTranslation();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);

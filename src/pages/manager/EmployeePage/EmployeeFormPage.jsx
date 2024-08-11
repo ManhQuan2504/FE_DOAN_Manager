@@ -15,6 +15,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const ProductFormPage = () => {
+  document.title = "Nhân viên";
   const { t } = useTranslation();
   const [employee, setEmployee] = useState([]);
   console.log("🚀 ~ ProductFormPage ~ employee:", employee)

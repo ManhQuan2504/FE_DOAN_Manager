@@ -9,6 +9,7 @@ import { apiGetList } from '~/services/helperServices';
 import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const CustomerListPage = () => {
+  document.title = "Khách hàng";
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [customers, setCustomers] = useState([]);

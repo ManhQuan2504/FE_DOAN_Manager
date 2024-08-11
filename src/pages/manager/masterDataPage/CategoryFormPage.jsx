@@ -12,6 +12,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const CategoryFormPage = () => {
+  document.title = "Danh mục";
   const { t } = useTranslation();
   const { id } = useParams();
   const [form] = Form.useForm();

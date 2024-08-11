@@ -11,6 +11,7 @@ import moment from 'moment';
 import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const SalesListPage = () => {
+  document.title = "Bán hàng";
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [sales, setSales] = useState([]);

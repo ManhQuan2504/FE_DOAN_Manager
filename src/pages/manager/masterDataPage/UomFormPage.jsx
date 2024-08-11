@@ -11,6 +11,7 @@ import { apiGetById } from '~/services/helperServices';
 const { TextArea } = Input;
 
 const UomFormPage = () => {
+  document.title = "Đơn vị tính";
   const { t } = useTranslation();
   const { id } = useParams(); // get id from URL parameters
   const navigate = useNavigate();

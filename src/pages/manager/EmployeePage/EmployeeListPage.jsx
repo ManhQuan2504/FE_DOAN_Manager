@@ -10,6 +10,7 @@ import { apiGetList } from '~/services/helperServices';
 import SearchOnList from '~/components/manager/listAction/SearchOnListComponent';
 
 const EmployeeFormPage = () => {
+  document.title = "Nhân viên";
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [employees, setEmployees] = useState([]);

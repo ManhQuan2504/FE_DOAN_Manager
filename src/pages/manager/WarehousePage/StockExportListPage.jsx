@@ -18,6 +18,7 @@ const getUniqueValues = (categories, key) => {
 };
 
 const StockExportListPage = () => {
+  document.title = "Xuất kho";
   const { t } = useTranslation();
   const [stockExports, setStockExports] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,10 +56,15 @@ const StockExportListPage = () => {
       ),
     },
     {
+      title: t('stockExportStatus'),
+      dataIndex: 'stockExportStatus',
+      key: 'stockExportStatus',
+    },
+    {
       title: t('createdAt'),
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (text) => moment(text).format('DD-MM-YYYY'),
+      render: (text) => moment(text).format('DD-MM-YYYY HH:mm'),
     },
     {
       title: t('product'),

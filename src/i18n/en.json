@@ -129,5 +129,16 @@
   "paymentMethod": "Payment MeThod",
   "orderInfor": "Order Infor",
   "orderDetail": "Order Detail",
+  "reportByPrices": "Report By Prices",
+  "reportByProducts": "Report By Products",
+  "noDataAvailable": "No Data Available",
+  "detail": "Detail",
+  "total": "Total",
+  "sold": "Sold",
+  "permissionList": "Permision List",
+  "method": "Method",
+  "accountInformation": "Account Information",
+  "changeAvatar": "Change Avatar",
+  "saveChanges": "Save Changes",
   "orderManager": "order Manager"
 }

@@ -8,7 +8,6 @@ import M_AccountPage from '~/pages/manager/AccountPage/AccountPage';
 
 import M_ProductFormPage from '~/pages/manager/ProductPage/ProductFormPage';
 import M_ProductListPage from '~/pages/manager/ProductPage/ProductListPage';
-import M_ProductFormPageTEST from '~/pages/manager/ProductPage/ProductFormPageTEST';
 
 import M_FunctionFormPage from '~/pages/manager/SystemPage/FunctionFormPage';
 import M_FunctionListPage from '~/pages/manager/SystemPage/FunctionListPage';
@@ -50,7 +49,6 @@ export const AppRoutes = [
     { path: `${PATH.MANAGER.ACCOUNT}`, component: M_AccountPage, layout: ManagerLayout },
 
     { path: PATH.MANAGER.PRODUCTS, component: M_ProductListPage, layout: ManagerLayout },
-    { path: PATH.MANAGER.PRODUCTTEST, component: M_ProductFormPageTEST, layout: ManagerLayout },
     { path: `${PATH.MANAGER.PRODUCTS}/:id`, component: M_ProductFormPage, layout: ManagerLayout },
 
     { path: PATH.MANAGER.FUNCTIONS, component: M_FunctionListPage, layout: ManagerLayout },
