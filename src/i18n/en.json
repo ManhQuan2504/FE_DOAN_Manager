@@ -6,6 +6,10 @@
     "back": "Back",
     "update": "Update",
     "create": "Create",
+    "accept": "Accept",
+    "reject": "Reject",
+    "shiped": "Shiped",
+    "print": "Print",
     "remove": "Remove"
   },
   "messages": {
@@ -16,6 +20,8 @@
     "deleteSuccess": "Delete Success",
     "deleteFail": "Delete Fail",
     "importStockSuccess": "Import Stock Success",
+    "actionFail": "Action Fail",
+    "actionSuccess": "Action Success",
     "importStockFail": "Import Stock Fail"
   },
   "isRequired": "Is Required",

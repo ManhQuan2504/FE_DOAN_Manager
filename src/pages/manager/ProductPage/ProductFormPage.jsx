@@ -156,40 +156,8 @@ const ProductFormPage = () => {
       code: "c0c0c0",
     },
     {
-      name: "đỏ",
-      code: "e7352b",
-    },
-    {
-      name: "xanh dương",
-      code: "1790c8",
-    },
-    {
       name: "nâu",
       code: "825d41",
-    },
-    {
-      name: "vàng",
-      code: "fed533",
-    },
-    {
-      name: "hồng",
-      code: "ff69b4",
-    },
-    {
-      name: "tím",
-      code: "800080",
-    },
-    {
-      name: "xanh ngọc",
-      code: "00ced1",
-    },
-    {
-      name: "be",
-      code: "f5f5dc",
-    },
-    {
-      name: "xanh navy",
-      code: "000080",
     },
     {
       name: "nhiều màu",
@@ -233,9 +201,12 @@ const ProductFormPage = () => {
         <div className="title">{t('product')}</div>
         <div className="button-list">
           <BackButton />
-          <UpdateButton form={form} navigate={navigate} id={id} modelName="products" />
           <DeleteButton id={id} modelName="products" />
-          <CreateProductButton form={form} navigate={navigate} id={id} modelName="products" />
+          {id && id !== '0' ? (
+            <UpdateButton form={form} navigate={navigate} id={id} modelName="products" />
+          ) : (
+            <CreateProductButton form={form} navigate={navigate} id={id} modelName="products" />
+          )}
         </div>
       </div>
       <Form

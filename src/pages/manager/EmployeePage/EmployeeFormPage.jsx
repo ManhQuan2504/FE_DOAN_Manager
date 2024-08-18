@@ -52,7 +52,7 @@ const ProductFormPage = () => {
 
       } catch (error) {
         console.error('Failed to create item:', error);
-        message.error(t('messages.createFail'));
+        message.error(error);
       }
     };
 
@@ -123,9 +123,12 @@ const ProductFormPage = () => {
         <div className="title">{t('employee')}</div>
         <div className="button-list">
           <BackButton />
-          <UpdateButton form={form} navigate={navigate} id={id} modelName="employees" />
           <DeleteButton id={id} modelName="employees" />
-          <CreateEmployeeButton form={form} navigate={navigate} modelName="employees" />
+          {id && id !== '0' ? (
+            <UpdateButton form={form} navigate={navigate} id={id} modelName="employees" />
+          ) : (
+            <CreateEmployeeButton form={form} navigate={navigate} modelName="employees" />
+          )}
         </div>
       </div>
       <Form form={form} layout="vertical" style={{ maxWidth: '100%' }} onValuesChange={formChange}>
@@ -187,7 +190,7 @@ const ProductFormPage = () => {
         <Row>
           <Col span={12}>
             <Form.Item label={t('avatar')} name="avatar">
-              <ImageUpload fileList={employee.avatar} limit={1}/>
+              <ImageUpload fileList={employee.avatar} limit={1} />
             </Form.Item>
           </Col>
         </Row>

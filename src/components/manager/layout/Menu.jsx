@@ -5,8 +5,6 @@ import { PATH } from '~/constants/part';
 import { t } from 'i18next';
 import * as Style from "./styles";
 
-const { SubMenu } = Menu;
-
 const App = () => {
   const [theme, setTheme] = useState('light');
   const [current, setCurrent] = useState('1');
@@ -27,28 +25,24 @@ const App = () => {
 
   const transformDataToMenuItems = (data) => {
     if (data && data.length > 0) {
-      const menuItems = data
-        .filter(item => item.isParent)
-        .map(parent => ({
-          key: parent._id,
-          label: t(parent.funcName),
-          children: data
-            .filter(child => child.parentFunc === parent._id)
-            .map(child => ({
-              key: child._id,
-              label: t(child.funcName),
-              url: child.clientPath,
-            })),
-        }));
-
+      const menuItems = data.map(item => ({
+        key: item._id,
+        label: t(item.funcName),
+        url: item.clientPath,
+      }));
+  
+      // Sắp xếp theo tên đã dịch
+      menuItems.sort((a, b) => a.label.localeCompare(b.label, 'vi', { sensitivity: 'base' }));
+  
       return menuItems;
     } else {
       return [];
     }
   };
+  
 
   const menuItems = transformDataToMenuItems(functionList);
-  const defaultOpenKeys = menuItems.map(item => item.key);
+
   return (
     <>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 60, width: '100%' }}>
@@ -60,19 +54,14 @@ const App = () => {
       <Menu
         theme={theme}
         onClick={onClick}
-        style={{ width: '100%', maxHeight: '700px', overflowY: 'auto' }} // Thêm thuộc tính để tạo thanh cuộn
-        defaultOpenKeys={defaultOpenKeys}
+        style={{ width: '100%', maxHeight: '700px', overflowY: 'auto', fontSize: '15px' }} // Thêm thuộc tính để tạo thanh cuộn
         selectedKeys={[current]}
         mode="inline"
       >
         {menuItems.map((item) => (
-          <SubMenu key={item.key} title={item.label}>
-            {item.children.map((child) => (
-              <Menu.Item key={child.key}>
-                <NavLink to={child.url}>{child.label}</NavLink>
-              </Menu.Item>
-            ))}
-          </SubMenu>
+          <Menu.Item key={item.key}>
+            <NavLink to={item.url}>{item.label}</NavLink>
+          </Menu.Item>
         ))}
       </Menu>
     </>

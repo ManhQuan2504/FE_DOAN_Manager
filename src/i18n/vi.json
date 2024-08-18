@@ -5,7 +5,11 @@
     "delete": "Xoá",
     "back": "Quay lại",
     "update": "Cập nhật",
+    "reject": "Từ chối",
+    "accept": "Chấp nhận",
+    "print": "In hoá đơn",
     "create": "Tạo mới",
+    "shiped": "Đã giao",
     "remove": "Xoá bỏ"
   },
   "messages": {
@@ -16,6 +20,8 @@
     "deleteSuccess": "Xoá thành công",
     "deleteFail": "Xoá thất bại",
     "importStockSuccess": "Nhập kho thành công",
+    "actionFail": "Thao tác thất bại",
+    "actionSuccess": "Thao tác thành công",
     "importStockFail": "Nhập kho thất bại"
   },
   "isRequired": "Bắt buộc nhập",

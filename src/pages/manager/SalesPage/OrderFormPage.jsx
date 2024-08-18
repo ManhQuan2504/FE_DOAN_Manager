@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Row, Col, Table, Tabs, InputNumber } from 'antd';
+import { Form, Input, Row, Col, Table, Tabs, InputNumber, Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { apiGetById } from '~/services/helperServices';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -9,6 +9,9 @@ import DeleteButton from '~/components/manager/listAction/DeleteButton';
 import _ from 'lodash';
 import TabPane from 'antd/es/tabs/TabPane';
 import moment from 'moment';
+import axios from 'axios';
+import generatePDF from '~/functions/manager/orderFunction';
+import { htmlContent } from './htmlContentPrint';
 
 const { TextArea } = Input;
 
@@ -16,16 +19,118 @@ const OrderFormPage = () => {
   document.title = "Đặt hàng";
   const { t } = useTranslation();
   const [order, setOrder] = useState([]);
+  console.log("🚀 ~ OrderFormPage ~ order:", order)
   const [loading, setLoading] = useState(true);
   const [form] = Form.useForm();
   const { id } = useParams();
   const navigate = useNavigate();
   const [pageSize, setPageSize] = useState(30);
   const [orderDetail, setOrderDetail] = useState([]);
-  const [employeeName, setEmployeeName] = useState('');
+  const [orderState, setOrderState] = useState('');
 
   const formChange = async (changedValues, allValues) => {
     console.log("🚀 ~ form.getFieldsValue():", form.getFieldsValue());
+  };
+
+
+  console.log(form.getFieldValue())
+  const PrintButton = ({ orderDetail, ...props }) => {
+    const { t } = useTranslation();
+
+    const handlePrint = async () => {
+      const updatedHtmlContent = htmlContent(order);
+      await generatePDF(updatedHtmlContent);
+    };
+
+    return (
+      <Button type="primary" onClick={handlePrint} {...props}>
+        {t('button.print')}
+      </Button>
+    );
+  };
+
+  const AcceptButton = ({ modelName, form, navigate, ...props }) => {
+    const { t } = useTranslation();
+
+    const accept = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const data = {
+          modelName: modelName,
+          data: {
+            orderState: "Chờ giao hàng",
+            employee: user ? user._id : '',
+          },
+        };
+
+        await axios.put(`http://localhost/v1/orders/${id}`, data);
+        navigate(-1);
+      } catch (error) {
+        message.error(t('messages.importStockFail'));
+      }
+    };
+
+    return (
+      <Button type="primary" onClick={accept} {...props}>
+        {t('button.accept')}
+      </Button>
+    );
+  };
+
+  const RejectButton = ({ form, navigate, id, modelName, ...props }) => {
+    const { t } = useTranslation();
+
+    const reject = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const data = {
+          modelName: modelName,
+          data: {
+            orderState: "Đã từ chối",
+            employee: user ? user._id : '',
+          },
+        };
+
+        await axios.put(`http://localhost/v1/orders/${id}`, data);
+        navigate(-1);
+      } catch (error) {
+        message.error(t('messages.actionFail'));
+      }
+    };
+
+    return (
+      <Button type="primary" onClick={reject} {...props}>
+        {t('button.reject')}
+      </Button>
+    );
+  };
+
+  const ShipedButton = ({ modelName, form, navigate, ...props }) => {
+    const { t } = useTranslation();
+
+    const accept = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const data = {
+          modelName: modelName,
+          data: {
+            orderState: "Đã giao",
+            employee: user ? user._id : '',
+          },
+        };
+
+        await axios.put(`http://localhost/v1/orders/${id}`, data);
+        navigate(-1);
+      } catch (error) {
+        message.error(t('messages.actionFail'));
+      }
+    };
+
+    return (
+      <Button type="primary" onClick={accept} {...props}>
+        {t('button.shiped')}
+      </Button>
+    );
   };
 
   const getUniqueValues = (data, key) => {
@@ -58,14 +163,15 @@ const OrderFormPage = () => {
         const orderDate = orderData?.dataObject?.orderDate
           ? moment(orderData?.dataObject?.orderDate).format('DD-MM-YYYY HH:mm')
           : null;
-        console.log("🚀 ~ fetchData ~ orderDate:", orderDate)
         orderData.dataObject.orderDate = orderDate;
         setOrder(orderData?.dataObject);
         setOrderDetail(orderData?.dataObject?.productList);
+        setOrderState(orderData?.dataObject?.orderState)
         form.setFieldsValue({
           customerName: orderData?.dataObject?.customer?.customerName,
           phoneNumber: orderData?.dataObject?.customer?.phoneNumber,
           orderDate: orderData?.dataObject?.customer?.phoneNumber,
+          employeeName: orderData?.dataObject?.employee?.employeeName,
           // paided: orderData?.dataObject?.customer?.phoneNumber,
           ...orderData?.dataObject,
         });
@@ -148,8 +254,27 @@ const OrderFormPage = () => {
         <div className="title">{t('order')}</div>
         <div className="button-list">
           <BackButton />
-          <UpdateButton form={form} navigate={navigate} id={id} modelName="orders" />
-          <DeleteButton id={id} modelName="orders" />
+          <PrintButton orderDetail={orderDetail} />
+
+          {orderState && orderState == 'Chờ phê duyệt' ? (
+            <AcceptButton form={form} navigate={navigate} id={id} modelName="orders" />
+          ) : (
+            <></>
+          )}
+
+          {orderState && orderState == 'Chờ giao hàng' ? (
+            <ShipedButton form={form} navigate={navigate} id={id} modelName="orders" />
+          ) : (
+            <></>
+          )}
+
+          {orderState && orderState !== 'Đã giao' && orderState !== 'Đã từ chối' ? (
+            <RejectButton form={form} navigate={navigate} id={id} modelName="orders" />
+          ) : (
+            <></>
+          )}
+
+          {/* <DeleteButton id={id} modelName="orders" /> */}
         </div>
       </div>
       <Form form={form} layout="vertical" style={{ maxWidth: '100%' }} onValuesChange={formChange}>
@@ -167,8 +292,8 @@ const OrderFormPage = () => {
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label={t('employeeName')} rules={[{ required: true, message: "Vui lòng nhập số đơn bán hàng" }]}>
-                  <Input value={employeeName} readOnly />
+                <Form.Item label={t('employeeName')} name="employeeName">
+                  <Input readOnly />
                 </Form.Item>
                 <Form.Item name="employee" hidden>
                   <Input />
@@ -176,7 +301,7 @@ const OrderFormPage = () => {
               </Col>
               <Col span={6}>
                 <Form.Item label={t('orderDate')} name="orderDate">
-                  <Input readOnly/>
+                  <Input readOnly />
                 </Form.Item>
               </Col>
             </Row>
@@ -184,17 +309,17 @@ const OrderFormPage = () => {
             <Row gutter={[12]}>
               <Col span={6}>
                 <Form.Item label={t('customer')} name="customerName">
-                  <Input readOnly/>
+                  <Input readOnly />
                 </Form.Item>
               </Col>
               <Col span={6}>
                 <Form.Item label={t('phoneNumber')} name="phoneNumber">
-                  <Input readOnly/>
+                  <Input readOnly />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item label={t('shipTo')} name="shipTo">
-                  <Input readOnly/>
+                  <Input readOnly />
                 </Form.Item>
               </Col>
             </Row>
@@ -202,7 +327,7 @@ const OrderFormPage = () => {
             <Row gutter={[12]}>
               <Col span={6}>
                 <Form.Item label={t('paymentMethod')} name="paymentMethod">
-                  <Input readOnly/>
+                  <Input readOnly />
                 </Form.Item>
               </Col>
               <Col span={6}>

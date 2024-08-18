@@ -74,7 +74,7 @@ export const apiUpload = async (files) => {
     return res.data;
   } catch (error) {
     console.error('There was an error making the request:', error);
-    throw error;
+    throw 'Không thể upload file';
   }
 };
 
