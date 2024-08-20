@@ -19,7 +19,6 @@ const OrderFormPage = () => {
   document.title = "Đặt hàng";
   const { t } = useTranslation();
   const [order, setOrder] = useState([]);
-  console.log("🚀 ~ OrderFormPage ~ order:", order)
   const [loading, setLoading] = useState(true);
   const [form] = Form.useForm();
   const { id } = useParams();
@@ -29,7 +28,6 @@ const OrderFormPage = () => {
   const [orderState, setOrderState] = useState('');
 
   const formChange = async (changedValues, allValues) => {
-    console.log("🚀 ~ form.getFieldsValue():", form.getFieldsValue());
   };
 
 
@@ -64,11 +62,34 @@ const OrderFormPage = () => {
         };
 
         await axios.put(`http://localhost/v1/orders/${id}`, data);
+
+        const { productList } = order;
+        const updateProductPromises = productList.map(async (productItem) => {
+          const { count, productId } = productItem;
+
+          const { dataObject } = await apiGetById({ modelName: 'products', id: productId });
+          dataObject.qty -= count;
+          dataObject.sold += count;
+
+          const dataProduct = {
+            modelName: "products",
+            data: {
+              ...dataObject
+            },
+          };
+
+          return axios.put(`http://localhost/v1/products/${productId}`, dataProduct);
+        });
+
+        await Promise.all(updateProductPromises);
+
+        // Sau khi tất cả các lệnh gọi API hoàn thành, điều hướng trở lại trang trước
         navigate(-1);
       } catch (error) {
-        message.error(t('messages.importStockFail'));
+        message.error(t('messages.actionFail'));
       }
     };
+
 
     return (
       <Button type="primary" onClick={accept} {...props}>

@@ -10,7 +10,7 @@ import { TabPane } from 'react-bootstrap';
 
 const { RangePicker } = DatePicker;
 
-const ReportSale = () => {
+const ReportOrder = () => {
   document.title = "Báo cáo thống kê";
   const { t } = useTranslation();
   const [dateRange, setDateRange] = useState([dayjs().subtract(7, 'day'), dayjs()]); // Default to last 7 days
@@ -33,7 +33,7 @@ const ReportSale = () => {
       const fromDate = dateRange[0] ? dateRange[0].format('YYYY-MM-DD') : '';
       const toDate = dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : '';
       const data = {
-        modelName: 'sales',
+        modelName: 'orders',
         data: {
           fromDate,
           toDate
@@ -44,7 +44,7 @@ const ReportSale = () => {
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key])}`)
         .join('&');
 
-      const response = await axios.get(`http://localhost/v1/sales/salesAggregate/?${queryString}`);
+      const response = await axios.get(`http://localhost/v1/orders/orderAggregate/?${queryString}`);
       const { reportByDate, reportByProduct } = response.data;
       setDataReportByDate(reportByDate || []);
       setDataReportByProduct(reportByProduct || []);
@@ -68,8 +68,8 @@ const ReportSale = () => {
     },
     {
       title: t('total'),
-      dataIndex: 'totalSales',
-      key: 'totalSales',
+      dataIndex: 'totalOrders',
+      key: 'totalOrders',
       render: (text) => `${text}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
     },
   ];
@@ -77,7 +77,7 @@ const ReportSale = () => {
   return (
     <div>
       <div className="header-list">
-        <div className="title">{t('saleReport')}</div>
+        <div className="title">{t('reportOrder')}</div>
         <div className="button-list">
           <BackButton />
           <ExportButton />
@@ -105,7 +105,7 @@ const ReportSale = () => {
                 <Col span={24}>
                   {dataReportByDate.length > 0 ? (
                     <LineChart width={1000} height={400} data={dataReportByDate} margin={{ top: 5, right: 20, bottom: 5, left: 60 }}>
-                      <Line type="monotone" dataKey="totalSales" stroke="#8884d8" />
+                      <Line type="monotone" dataKey="totalOrders" stroke="#8884d8" />
                       <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
                       <XAxis dataKey="_id" tickFormatter={(date) => new Date(date).toLocaleDateString()} />
                       <YAxis tickFormatter={(value) => value.toLocaleString()} /> {/* Định dạng giá trị trục tung */}
@@ -115,14 +115,14 @@ const ReportSale = () => {
                         align="right"
                         wrapperStyle={{ paddingLeft: 30 }}
                         formatter={(value) => {
-                          return value === 'totalSales' ? 'Doanh thu' : value;
+                          return value === 'totalOrders' ? 'Doanh thu' : value;
                         }}
                       />
                       <Tooltip
                         formatter={(value, name) => {
                           // Thay đổi cách hiển thị giá trị tooltip
                           const formattedValue = value.toLocaleString();
-                          return name === 'totalSales' ? ['Doanh thu', formattedValue] : [name, formattedValue];
+                          return name === 'totalOrders' ? ['Doanh thu', formattedValue] : [name, formattedValue];
                         }}
                       />
                     </LineChart>
@@ -183,4 +183,4 @@ const ReportSale = () => {
   );
 };
 
-export default ReportSale;
+export default ReportOrder;

@@ -27,7 +27,6 @@ const LoginPage = () => {
     };
     try {
       const result = await employeeLogin(loginData);
-      console.log("🚀 ~ onFinish ~ result:", result)
       if(result) {
         localStorage.setItem('user', JSON.stringify(result?.dataObject));
         const { functionList, permissionList } = result?.dataObject?.role;
@@ -39,7 +38,7 @@ const LoginPage = () => {
       }      
       // dispatch(login(result));
       // dispatch(fetchFunction());
-      navigate(`${PATH.MANAGER.DASHBOARD}`);
+      navigate(`${PATH.MANAGER.REPORTSALES}`);
     } catch (error) {
       console.log('Login Failed:', error);
     }

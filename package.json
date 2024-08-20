@@ -44,6 +44,7 @@
     "sass": "^1.77.4",
     "styled-components": "^6.1.12",
     "suneditor-react": "^3.6.1",
+    "vn-num2words": "^1.0.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

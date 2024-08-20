@@ -24,5 +24,6 @@ export const PATH = {
     STOCKEXPORTS: `/${MANAGER}/stockExports`,
     VENDORS: `/${MANAGER}/vendors`,
     REPORTSALES: `/${MANAGER}/reportSales`,
+    REPORTORDERS: `/${MANAGER}/reportOrders`,
   },
 }

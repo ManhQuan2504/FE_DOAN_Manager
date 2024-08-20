@@ -106,6 +106,7 @@ const OrderListPage = () => {
       title: t('totalAmount'),
       dataIndex: 'totalAmount',
       key: 'totalAmount',
+      render: (text) => `${text}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
     },
     {
       title: t('paymentMethod'),
