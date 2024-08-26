@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -7,7 +7,7 @@ import { Button, Layout, theme } from 'antd';
 import Menu from './Menu';
 import './manager-layout.css';
 import { useTranslation } from 'react-i18next';
-import { Space, Switch } from 'antd';
+import { Switch } from 'antd';
 import i18n from '~/i18n/i18n';
 import DropdownAvt from '../DropdownAvt';
 
@@ -36,8 +36,7 @@ function ManagerLayout({ children }) {
     <Layout style={{ height: '100%', minHeight: '100vh' }}>
       <Sider trigger={null} collapsible collapsed={collapsed} width={270} theme="light">
         <div className="demo-logo-vertical" />
-        <Menu theme="light" mode="inline" width={'100%'}>
-        </Menu>
+        <Menu theme="light" mode="inline" width={'100%'} />
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer, display: 'flex', alignItems: 'center' }}>
@@ -57,11 +56,11 @@ function ManagerLayout({ children }) {
           style={{
             margin: '24px 16px',
             padding: 24,
-            minHeight: 280,
+            // minHeight: 280,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
-            overflowY: 'hidden',
-            height: 'auto'
+            overflowY: 'auto', // Thêm overflowY để có thanh cuộn
+            height: 'calc(100vh - 112px)' // Chiều cao tính toán dựa trên tổng chiều cao trừ đi header và margin
           }}
         >
           <div className="content-body">{children}</div>

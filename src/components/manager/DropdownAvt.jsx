@@ -1,5 +1,5 @@
-import React from 'react';
-import { Dropdown, Menu, Avatar } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Dropdown, Menu, Avatar, Space } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -8,6 +8,15 @@ import { PATH } from '~/constants/part';
 const DropdownAvt = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [employee, setEmployee] = useState(null); // Khởi tạo state cho employee là null
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setEmployee(user); // Thiết lập state employee khi component mount
+    }
+  }, []); // Chỉ chạy một lần khi component mount
+
   const handleMenuClick = ({ key }) => {
     if (key === 'logout') {
       handleLogout(); // Gọi hàm logout khi nhấn vào mục "Logout"
@@ -55,7 +64,14 @@ const DropdownAvt = () => {
 
   return (
     <Dropdown overlay={menu} placement="bottomRight" arrow>
-      <Avatar icon={<UserOutlined />} style={{ cursor: 'pointer' }} />
+      <Space align="center" style={{ cursor: "pointer" }}>
+        <Avatar
+          src={employee?.avatar && employee.avatar.length > 0 ? employee.avatar : null}
+          icon={(!employee?.avatar || employee.avatar.length === 0) && <UserOutlined />}
+        />
+
+        <span>{employee?.name}</span>
+      </Space>
     </Dropdown>
   );
 };
