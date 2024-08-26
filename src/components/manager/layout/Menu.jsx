@@ -66,7 +66,7 @@ const App = () => {
   return (
     <>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 60, width: '100%' }}>
-        <Style.HeaderLogo onClick={() => navigate('/manager')}>
+        <Style.HeaderLogo onClick={() => navigate('')}>
           LANCHISHOP
         </Style.HeaderLogo>
       </div>

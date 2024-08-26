@@ -18,9 +18,7 @@ const ProductFormPage = () => {
   document.title = "Nhân viên";
   const { t } = useTranslation();
   const [employee, setEmployee] = useState([]);
-  console.log("🚀 ~ ProductFormPage ~ employee:", employee)
   const [roles, setRoles] = useState([]);
-  console.log("🚀 ~ ProductFormPage ~ roles:", roles)
   const [loading, setLoading] = useState(true);
   const [form] = Form.useForm();
   const { id } = useParams();
@@ -33,7 +31,6 @@ const ProductFormPage = () => {
     const handleCreate = async () => {
       try {
         const formData = await form.getFieldValue();
-        console.log("🚀 ~ handleCreate ~ formData:", formData)
         const uploadedImage = await apiUpload(formData.avatar)
         if (uploadedImage && uploadedImage?.length > 0) {
           delete formData.avatar;
@@ -44,7 +41,6 @@ const ProductFormPage = () => {
               avatar: uploadedImage,
             },
           };
-          console.log("🚀 ~ handleCreate ~ data:", data)
           await axios.post(`http://localhost/v1/employees/createEmployee`, data);
           message.success(t('messages.createSuccess'));
           navigate('/manager/employees'); // Navigate back to the previous page
@@ -68,8 +64,6 @@ const ProductFormPage = () => {
   };
 
   const formChange = async (changedValues, allValues) => {
-    console.log("🚀 ~ form.getFieldsValue():", form.getFieldsValue());
-    // console.log("🚀 ~ allValues:", allValues);
   };
 
   const fetchRole = async () => {
@@ -88,16 +82,19 @@ const ProductFormPage = () => {
     }
   };
 
-
   const fetchData = async () => {
     setLoading(true);
     try {
       if (id && id !== '0') {
         const employeeData = await apiGetById({ modelName: 'employees', id });
-        setEmployee(employeeData.dataObject);
+
+        console.log("🚀 ~ fetchData ~ employeeData.dataObject:", employeeData.dataObject)
+        const { password, ...filteredEmployeeData } = employeeData.dataObject;
+
+        setEmployee(filteredEmployeeData);
         form.setFieldsValue({
-          ...employeeData.dataObject,
-          role: employeeData.dataObject.role._id
+          ...filteredEmployeeData,
+          role: filteredEmployeeData.role._id
         });
       }
     } catch (error) {
@@ -115,8 +112,6 @@ const ProductFormPage = () => {
     //   form.resetFields();
     // };
   }, [id, form]);
-  console.log("🚀 ~ ProductFormPage ~ employee:", employee)
-
   return (
     <div>
       <div className="header-list">
@@ -132,6 +127,13 @@ const ProductFormPage = () => {
         </div>
       </div>
       <Form form={form} layout="vertical" style={{ maxWidth: '100%' }} onValuesChange={formChange}>
+        <Row>
+          <Col span={12}>
+            <Form.Item label={t('avatar')} name="avatar">
+              <ImageUpload fileList={employee.avatar} limit={1} />
+            </Form.Item>
+          </Col>
+        </Row>
         <Row gutter={[12]}>
           <Col span={6}>
             <Form.Item label={t('employeeCode')} name="employeeCode">
@@ -144,13 +146,19 @@ const ProductFormPage = () => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label={t('email')} name="email">
-              <Input />
+            <Form.Item label={t('role')} name="role">
+              <Select>
+                {roles.map(role => (
+                  <Option key={role._id} value={role._id}>
+                    {role.roleName}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label={t('password')} name="password" >
-              <Password />
+            <Form.Item label={t('email')} name="email">
+              <Input />
             </Form.Item>
           </Col>
         </Row>
@@ -166,20 +174,6 @@ const ProductFormPage = () => {
               <Input />
             </Form.Item>
           </Col>
-          <Col span={6}>
-            <Form.Item label={t('role')} name="role">
-              <Select>
-                {roles.map(role => (
-                  <Option key={role._id} value={role._id}>
-                    {role.roleName}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row>
           <Col span={12}>
             <Form.Item label={t('address')} name="address">
               <Input />
@@ -187,14 +181,27 @@ const ProductFormPage = () => {
           </Col>
         </Row>
 
-        <Row>
-          <Col span={12}>
-            <Form.Item label={t('avatar')} name="avatar">
-              <ImageUpload fileList={employee.avatar} limit={1} />
+        <Row gutter={[12]}>
+          <Col span={6} >
+            <Form.Item
+              name="password"
+              style={{ marginBottom: '30px' }}
+              label={t('password')}
+            >
+              <Input.Password placeholder="Mật khẩu" />
+            </Form.Item>
+          </Col>
+
+          <Col span={6} >
+            <Form.Item
+              name="rePassword"
+              style={{ marginBottom: '30px' }}
+              label={t('rePassword')}
+            >
+              <Input.Password placeholder="Nhập lại mật khẩu" />
             </Form.Item>
           </Col>
         </Row>
-
       </Form>
     </div>
   );

@@ -29,6 +29,7 @@ const LoginPage = () => {
     };
     try {
       const result = await employeeLogin(loginData);
+      console.log("🚀 ~ onFinish ~ result:", result)
       if (result) {
         localStorage.setItem('user', JSON.stringify(result?.dataObject));
         const { functionList, permissionList } = result?.dataObject?.role;

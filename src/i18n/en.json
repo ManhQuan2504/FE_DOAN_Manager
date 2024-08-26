@@ -79,6 +79,7 @@
   "employeeName": "Employee Name",
   "email": "Email",
   "password": "Password",
+  "rePassword": "RePassword",
   "phoneNumber": "Phone Number",
   "identityNumber": "Identity Number",
   "address": "Address",

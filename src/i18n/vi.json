@@ -79,6 +79,7 @@
   "employeeName": "Tên nhân viên",
   "email": "Email",
   "password": "Mật khẩu",
+  "rePassword": "Nhập lại mật khẩu",
   "phoneNumber": "SĐT",
   "identityNumber": "CCCD",
   "address": "Địa chỉ",

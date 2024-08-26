@@ -8,18 +8,18 @@ import { PATH } from '~/constants/part';
 const DropdownAvt = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [employee, setEmployee] = useState(null); // Khởi tạo state cho employee là null
+  const [employee, setEmployee] = useState(null);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
-      setEmployee(user); // Thiết lập state employee khi component mount
+      setEmployee(user);
     }
-  }, []); // Chỉ chạy một lần khi component mount
+  }, []);
 
   const handleMenuClick = ({ key }) => {
     if (key === 'logout') {
-      handleLogout(); // Gọi hàm logout khi nhấn vào mục "Logout"
+      handleLogout();
     } else {
       console.log('click', key);
     }
@@ -30,7 +30,6 @@ const DropdownAvt = () => {
     keysToRemove.forEach((key) => {
       localStorage.removeItem(key);
     });
-
     navigate(`${PATH.MANAGER.LOGIN}`);
   };
 
@@ -43,7 +42,7 @@ const DropdownAvt = () => {
     },
     {
       label: t('logout'),
-      key: 'logout', // Đặt key là 'logout' để nhận biết khi người dùng nhấn vào "Logout"
+      key: 'logout',
       icon: <UserOutlined />,
     },
   ];
@@ -61,15 +60,16 @@ const DropdownAvt = () => {
       ))}
     </Menu>
   );
+  console.log("🚀 ~ DropdownAvt ~ employee.:", employee)
 
   return (
     <Dropdown overlay={menu} placement="bottomRight" arrow>
-      <Space align="center" style={{ cursor: "pointer" }}>
+      <Space align="center" style={{ cursor: 'pointer' }}>
         <Avatar
-          src={employee?.avatar && employee.avatar.length > 0 ? employee.avatar : null}
-          icon={(!employee?.avatar || employee.avatar.length === 0) && <UserOutlined />}
+          size={'large'}
+          src={employee?.avatar && employee?.avatar?.length > 0 ? employee?.avatar[0]?.absoluteUrl : null}
+          icon={!employee?.avatar || employee?.avatar?.length === 0 ? <UserOutlined /> : null}
         />
-
         <span>{employee?.name}</span>
       </Space>
     </Dropdown>
