@@ -24,7 +24,6 @@ const EmployeeFormPage = () => {
         data: {},
       };
       const response = await apiGetList(data);
-      console.log("🚀 ~ fetchEmployees ~ response:", response)
       setEmployees(response.dataObject);
     } catch (error) {
       console.error('Failed to fetch Functions:', error);

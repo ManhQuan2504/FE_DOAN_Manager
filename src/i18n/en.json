@@ -80,6 +80,7 @@
   "email": "Email",
   "password": "Password",
   "rePassword": "RePassword",
+  "passwordMismatch": "Password Mismatch",
   "phoneNumber": "Phone Number",
   "identityNumber": "Identity Number",
   "address": "Address",
@@ -148,5 +149,6 @@
   "changeAvatar": "Change Avatar",
   "saveChanges": "Save Changes",
   "reportOrder": "Report Orders",
+  "mustBeAGmail": "Must Be A Gmail",
   "orderManager": "order Manager"
 }

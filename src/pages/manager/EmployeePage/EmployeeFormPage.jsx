@@ -24,28 +24,33 @@ const ProductFormPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  //nút tạo sp: gửi api upload ảnh => tạo NV
   const CreateEmployeeButton = ({ modelName, form, navigate, ...props }) => {
     const { t } = useTranslation();
 
     const handleCreate = async () => {
       try {
-        const formData = await form.getFieldValue();
-        const uploadedImage = await apiUpload(formData.avatar)
-        if (uploadedImage && uploadedImage?.length > 0) {
-          delete formData.avatar;
-          const data = {
-            modelName: modelName,
-            data: {
-              ...formData,
-              avatar: uploadedImage,
-            },
-          };
-          await axios.post(`http://localhost/v1/employees/createEmployee`, data);
-          message.success(t('messages.createSuccess'));
-          navigate('/manager/employees'); // Navigate back to the previous page
+        const { password, rePassword } = form.getFieldValue();
+        if (!password || password !== rePassword) {
+          message.error(('Mật khẩu không hợp lệ'));
+          return;
+        } else {
+          const formData = await form.getFieldValue();
+          const uploadedImage = await apiUpload(formData.avatar)
+          if (uploadedImage && uploadedImage?.length > 0) {
+            delete formData.avatar;
+            delete formData.rePassword;
+            const data = {
+              modelName: modelName,
+              data: {
+                ...formData,
+                avatar: uploadedImage,
+              },
+            };
+            await axios.post(`http://localhost/v1/employees/createEmployee`, data);
+            message.success(t('messages.createSuccess'));
+            navigate('/manager/employees');
+          }
         }
-
       } catch (error) {
         console.error('Failed to create item:', error);
         message.error(error);
@@ -59,6 +64,73 @@ const ProductFormPage = () => {
         {...props}
       >
         {t('button.create')}
+      </Button>
+    );
+  };
+
+  const UpdateEmployeeButton = ({ modelName, form, navigate, id, ...props }) => {
+    const { t } = useTranslation();
+
+    const UpdateEmployeeButton = async () => {
+      try {
+        const formData = await form.getFieldValue();
+        console.log("🚀 ~ UpdateEmployeeButton ~ formData:", formData)
+        const { password, rePassword, avatar } = formData;
+
+        if ((password && password !== rePassword) || (password && !rePassword)) {
+          console.log("🚀 ~ handleUpdateEmployee ~ password mismatch:", password);
+          message.success(t('messages.createSuccess'));
+          return;
+        } else {
+          if (avatar[0]?.uid) {
+            console.log("có")
+            const uploadedImage = await apiUpload(formData.avatar)
+            if (uploadedImage && uploadedImage?.length > 0) {
+              delete formData.avatar;
+              delete formData.rePassword;
+              const data = {
+                modelName: modelName,
+                id,
+                data: {
+                  ...formData,
+                  avatar: uploadedImage,
+                },
+              };
+              await axios.put(`http://localhost/v1/employees/updateEmployee/${id}`, data);
+              message.success(t('messages.updateSuccess'));
+              navigate('/manager/employees');
+            }
+          } else {
+            console.log("ko")
+
+            delete formData.avatar;
+            delete formData.rePassword;
+            const data = {
+              modelName: modelName,
+              id,
+              data: {
+                ...formData,
+              },
+            };
+            await axios.put(`http://localhost/v1/employees/updateEmployee/${id}`, data);
+            message.success(t('messages.updateSuccess'));
+            navigate('/manager/employees');
+          }
+
+        }
+      } catch (error) {
+        console.error('Failed to create item:', error);
+        message.error(error);
+      }
+    };
+
+    return (
+      <Button
+        type="primary"
+        onClick={UpdateEmployeeButton}
+        {...props}
+      >
+        {t('button.update')}
       </Button>
     );
   };
@@ -87,8 +159,6 @@ const ProductFormPage = () => {
     try {
       if (id && id !== '0') {
         const employeeData = await apiGetById({ modelName: 'employees', id });
-
-        console.log("🚀 ~ fetchData ~ employeeData.dataObject:", employeeData.dataObject)
         const { password, ...filteredEmployeeData } = employeeData.dataObject;
 
         setEmployee(filteredEmployeeData);
@@ -107,11 +177,8 @@ const ProductFormPage = () => {
   useEffect(() => {
     fetchRole();
     fetchData();
-
-    // return () => {
-    //   form.resetFields();
-    // };
   }, [id, form]);
+
   return (
     <div>
       <div className="header-list">
@@ -120,7 +187,7 @@ const ProductFormPage = () => {
           <BackButton />
           <DeleteButton id={id} modelName="employees" />
           {id && id !== '0' ? (
-            <UpdateButton form={form} navigate={navigate} id={id} modelName="employees" />
+            <UpdateEmployeeButton form={form} navigate={navigate} id={id} modelName="employees" />
           ) : (
             <CreateEmployeeButton form={form} navigate={navigate} modelName="employees" />
           )}
@@ -157,10 +224,20 @@ const ProductFormPage = () => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label={t('email')} name="email">
+            <Form.Item
+              label={t('email')}
+              name="email"
+              rules={[
+                {
+                  type: 'email',
+                  message: t('mustBeAGmail'),
+                },
+              ]}
+            >
               <Input />
             </Form.Item>
           </Col>
+
         </Row>
 
         <Row gutter={[12]}>
@@ -182,7 +259,7 @@ const ProductFormPage = () => {
         </Row>
 
         <Row gutter={[12]}>
-          <Col span={6} >
+          <Col span={6}>
             <Form.Item
               name="password"
               style={{ marginBottom: '30px' }}
@@ -192,11 +269,22 @@ const ProductFormPage = () => {
             </Form.Item>
           </Col>
 
-          <Col span={6} >
+          <Col span={6}>
             <Form.Item
               name="rePassword"
               style={{ marginBottom: '30px' }}
               label={t('rePassword')}
+              dependencies={['password']}
+              rules={[
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error(t('passwordMismatch')));
+                  },
+                }),
+              ]}
             >
               <Input.Password placeholder="Nhập lại mật khẩu" />
             </Form.Item>

@@ -80,6 +80,7 @@
   "email": "Email",
   "password": "Mật khẩu",
   "rePassword": "Nhập lại mật khẩu",
+  "passwordMismatch": "Không trùng khớp",
   "phoneNumber": "SĐT",
   "identityNumber": "CCCD",
   "address": "Địa chỉ",
@@ -148,5 +149,6 @@
   "changeAvatar": "Thay đổi avatar",
   "saveChanges": "Lưu thay đổi",
   "reportOrder": "Báo cáo đặt hàng",
+  "mustBeAGmail": "Phải là email",
   "orderManager": "Quản lý đơn hàng"
 }

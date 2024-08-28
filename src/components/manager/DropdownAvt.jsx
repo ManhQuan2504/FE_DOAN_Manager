@@ -60,7 +60,6 @@ const DropdownAvt = () => {
       ))}
     </Menu>
   );
-  console.log("🚀 ~ DropdownAvt ~ employee.:", employee)
 
   return (
     <Dropdown overlay={menu} placement="bottomRight" arrow>

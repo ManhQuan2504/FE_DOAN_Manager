@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import 'antd/dist/reset.css';  // Import CSS của Ant Design
 import { employeeLogin, getFunc, getPer } from '~/services/manager/UI';
@@ -43,6 +43,7 @@ const LoginPage = () => {
       // dispatch(fetchFunction());
       navigate(`${PATH.MANAGER.REPORTSALES}`);
     } catch (error) {
+      message.error("Tên đăng nhập hoặc mật khẩu không chính xác");
       console.log('Login Failed:', error);
     }
   };
@@ -113,7 +114,7 @@ const LoginPage = () => {
             onFinishFailed={onFinishFailed}
           >
             <Form.Item
-              label="employeeCode"
+              label="Mã nhân viên"
               name="employeeCode"
               rules={[
                 { required: true, message: "Bạn chưa nhập tên đăng nhập !" },
