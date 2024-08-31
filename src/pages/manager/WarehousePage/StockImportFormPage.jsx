@@ -23,6 +23,7 @@ const StockImportFormPage = () => {
   const [vendors, setVendors] = useState([]);
   const [employeeName, setEmployeeName] = useState('');
   const [productData, setProductData] = useState([]); // State to store product data
+  const [state, setState] = useState('');
   console.log("🚀 ~1 StockImportFormPage ~ productData:", productData)
 
   const CreateStockImportButton = ({ modelName, form, navigate, ...props }) => {
@@ -111,7 +112,7 @@ const StockImportFormPage = () => {
             vendor: stockImportData.dataObject.vendor._id,
             employee: stockImportData.dataObject.employee._id,
           });
-
+          setState(stockImportData?.dataObject?.stockImportStatus)
           setEmployeeName(stockImportData.dataObject.employee.employeeName);
 
           // Set product data to display the product in Select
@@ -147,10 +148,35 @@ const StockImportFormPage = () => {
         <div className="title">{t('stockImport')}</div>
         <div className="button-list">
           <BackButton />
-          <UpdateButton form={form} navigate={navigate} id={id} modelName="stockImports" />
-          <DeleteButton id={id} modelName="stockImports" />
-          <ImportButton form={form} navigate={navigate} modelName="stockImports" />
-          <CreateStockImportButton form={form} navigate={navigate} modelName="stockImports" />
+          {/* <UpdateButton form={form} navigate={navigate} id={id} modelName="stockImports" /> */}
+          {/* <DeleteButton id={id} modelName="stockImports" /> */}
+          {/* <ImportButton form={form} navigate={navigate} modelName="stockImports" /> */}
+          {/* <CreateStockImportButton form={form} navigate={navigate} modelName="stockImports" /> */}
+
+          {(id && id !== '0') && (state && state !== 'Đã nhập kho') ? (
+            <UpdateButton form={form} navigate={navigate} id={id} modelName="stockImports" />
+          ) : (
+            <></>
+          )}
+
+          {id && id !== '0' ? (
+            <DeleteButton id={id} modelName="stockImports" />
+          ) : (
+            <></>
+          )}
+
+          {!id || id == '0' ? (
+            <CreateStockImportButton form={form} navigate={navigate} modelName="stockImports" />
+          ) : (
+            <></>
+          )}
+
+          {state && state == 'Chờ nhập kho' ? (
+            <ImportButton form={form} navigate={navigate} modelName="stockImports" />
+          ) : (
+            <></>
+          )}
+
         </div>
       </div>
       <Form layout="vertical" style={{ maxWidth: '100%' }} form={form} onValuesChange={formChange}>

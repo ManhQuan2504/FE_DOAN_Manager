@@ -23,7 +23,8 @@ const StockExportFormPage = () => {
   const [vendors, setVendors] = useState([]);
   const [employeeName, setEmployeeName] = useState('');
   const [productData, setProductData] = useState([]); // State to store product data
-  console.log("🚀 ~1 StockExportFormPage ~ productData:", productData)
+  const [state, setState] = useState('');
+  console.log("🚀 ~ StockExportFormPage ~ productData:", productData);
 
   const CreateStockExportButton = ({ modelName, form, navigate, ...props }) => {
     const { t } = useTranslation();
@@ -66,11 +67,11 @@ const StockExportFormPage = () => {
           },
         };
 
-        await axios.post(`http://localhost/v1/stockExports/Export/${id}`, data);
-        message.success(t('messages.createSuccess'));
+        await axios.post(`http://localhost/v1/stockExports/export/${id}`, data);
+        message.success(t('messages.exportStockSuccess'));
         navigate(-1);
       } catch (error) {
-        message.error(t('messages.createFail'));
+        message.error(t('messages.exportStockFail'));
       }
     };
 
@@ -111,13 +112,13 @@ const StockExportFormPage = () => {
             vendor: stockExportData.dataObject.vendor._id,
             employee: stockExportData.dataObject.employee._id,
           });
-
+          setState(stockExportData?.dataObject?.stockExportStatus);
           setEmployeeName(stockExportData.dataObject.employee.employeeName);
 
           // Set product data to display the product in Select
           setProductData([stockExportData.dataObject.product]);
         } else {
-          const autoCode = generateAutoCode('NK');
+          const autoCode = generateAutoCode('XK');
           form.setFieldsValue({ stockExportCode: autoCode });
 
           const user = JSON.parse(localStorage.getItem('user'));
@@ -147,23 +148,48 @@ const StockExportFormPage = () => {
         <div className="title">{t('stockExport')}</div>
         <div className="button-list">
           <BackButton />
-          <UpdateButton form={form} navigate={navigate} id={id} modelName="stockExports" />
-          <DeleteButton id={id} modelName="stockExports" />
-          <ExportButton form={form} navigate={navigate} modelName="stockExports" />
-          <CreateStockExportButton form={form} navigate={navigate} modelName="stockExports" />
+          {/* <UpdateButton form={form} navigate={navigate} id={id} modelName="stockExports" /> */}
+          {/* <DeleteButton id={id} modelName="stockExports" /> */}
+          {/* <ExportButton form={form} navigate={navigate} modelName="stockExports" /> */}
+          {/* <CreateStockExportButton form={form} navigate={navigate} modelName="stockExports" /> */}
+
+          {(id && id !== '0') && (state && state !== 'Đã xuất kho') ? (
+            <UpdateButton form={form} navigate={navigate} id={id} modelName="stockExports" />
+          ) : (
+            <></>
+          )}
+
+          {id && id !== '0' ? (
+            <DeleteButton id={id} modelName="stockExports" />
+          ) : (
+            <></>
+          )}
+
+          {!id || id === '0' ? (
+            <CreateStockExportButton form={form} navigate={navigate} modelName="stockExports" />
+          ) : (
+            <></>
+          )}
+
+          {state && state === 'Chờ xuất kho' ? (
+            <ExportButton form={form} navigate={navigate} modelName="stockExports" />
+          ) : (
+            <></>
+          )}
+
         </div>
       </div>
       <Form layout="vertical" style={{ maxWidth: '100%' }} form={form} onValuesChange={formChange}>
         <Row gutter={[12]}>
           <Col span={6}>
-            <Form.Item label={t('stockExportCode')} name="stockExportCode" rules={[{ required: true, message: "Vui lòng nhập mã phiếu nhập kho" }]}>
+            <Form.Item label={t('stockExportCode')} name="stockExportCode" rules={[{ required: true, message: "Vui lòng nhập mã phiếu xuất kho" }]}>
               <Input />
             </Form.Item>
           </Col>
 
           <Col span={6}>
             <Form.Item label={t('stockExportStatus')} name="stockExportStatus">
-              <Input readOnly/>
+              <Input readOnly />
             </Form.Item>
           </Col>
 
@@ -214,11 +240,11 @@ const StockExportFormPage = () => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label={t('cost')} name="cost" rules={[{ required: true, message: "Bạn chưa nhập đơn giá" }]}>
+            <Form.Item label={`${t('cost')} (VNĐ)`} name="cost" rules={[{ required: true, message: "Bạn chưa nhập đơn giá" }]}>
               <InputNumber
                 style={{ width: '100%' }}
-                formatter={value => `${value} VNĐ`}
-                parser={value => value.replace('VNĐ', '')}
+                formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                parser={(value) => value?.replace(/(,*)/g, '')}
               />
             </Form.Item>
           </Col>

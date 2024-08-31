@@ -136,6 +136,7 @@ const ProductFormPage = () => {
   };
 
   const formChange = async (changedValues, allValues) => {
+    console.log(form.getFieldValue());
   };
 
   const fetchRole = async () => {

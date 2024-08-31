@@ -34,11 +34,9 @@ const ImageUpload = ({ value = [], limit, onChange }) => {
   const handleChange = async ({ fileList: newFileList }) => {
     const updatedFileList = [];
     for (const file of newFileList) {
-      console.log("🚀 ~ handleChange ~ !file.url && !file.preview:", !file.url && !file.preview)
       if (!file.url && !file.preview) {
         file.preview = await getBase64(file.originFileObj);
       }
-      console.log("🚀 ~ handleChange ~ file:", file)
       updatedFileList.push(file);
     }
 
