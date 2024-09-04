@@ -135,7 +135,7 @@ const OrderListPage = () => {
         <div className="title">{t('order')}</div>
         <div className="button-list">
           <SearchOnList setSearchResults={setSearchResults} modelName={'orders'} />
-          <AddButton to={`${PATH.MANAGER.ORDERS}/0`} />
+          {/* <AddButton to={`${PATH.MANAGER.ORDERS}/0`} /> */}
           <Tooltip title={t('button.exportButton')}>
             <Button
               type="primary"

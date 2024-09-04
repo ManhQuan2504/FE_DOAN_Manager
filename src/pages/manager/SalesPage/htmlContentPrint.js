@@ -170,7 +170,7 @@ export const htmlContent = (order) => {
   <p class="bold">${totalPriceInWords} Việt Nam đồng</p>
   <h2>Ghi chú:</h2>
   <p class="note">Lưu ý: 1. Quý khách vui lòng kiểm tra kỹ chức năng, hình thức máy, phụ kiện, gói quà tặng trước khi ra về.</p>
-  <p class="note">2. Quý khách có thể tra cứu thông tin BH theo đường dẫn sau: https://mobilecity.vn/tra-cuu-bao-hanh</p>
+  <p class="note">2. Quý khách có thể tra cứu thông tin BH theo đường dẫn sau: https://lanchimart.vn/tra-cuu-bao-hanh</p>
 </div>
 </body>
 </html>

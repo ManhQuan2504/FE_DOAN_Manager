@@ -201,12 +201,24 @@ const ProductFormPage = () => {
         <div className="title">{t('product')}</div>
         <div className="button-list">
           <BackButton />
-          <DeleteButton id={id} modelName="products" />
+          {/* <DeleteButton id={id} modelName="products" />
           {id && id !== '0' ? (
             <UpdateButton form={form} navigate={navigate} id={id} modelName="products" />
           ) : (
             <CreateProductButton form={form} navigate={navigate} id={id} modelName="products" />
+          )} */}
+
+          {id && id !== '0' ? (
+            <>
+              <DeleteButton id={id} modelName="products" />
+              <UpdateButton form={form} navigate={navigate} id={id} modelName="products" />
+            </>
+          ) : (
+            <>
+              <CreateProductButton form={form} navigate={navigate} id={id} modelName="products" />
+            </>
           )}
+
         </div>
       </div>
       <Form

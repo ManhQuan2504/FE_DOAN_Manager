@@ -46,9 +46,21 @@ const UomFormPage = () => {
         <div className="title">{t('uom')}</div>
         <div className="button-list">
           <BackButton />
-          <UpdateButton form={form} navigate={navigate} id={id} modelName="uoms" />
+          {/* <UpdateButton form={form} navigate={navigate} id={id} modelName="uoms" />
           <DeleteButton id={id} modelName="uoms" />
-          <CreateButton form={form} navigate={navigate} modelName="uoms" />
+          <CreateButton form={form} navigate={navigate} modelName="uoms" /> */}
+
+          {id && id !== '0' ? (
+            <>
+              <DeleteButton id={id} modelName="uoms" />
+              <UpdateButton form={form} navigate={navigate} id={id} modelName="uoms" />
+            </>
+          ) : (
+            <>
+              <CreateButton form={form} navigate={navigate} modelName="uoms" />
+            </>
+          )}
+
         </div>
       </div>
       <Form layout="vertical" style={{ maxWidth: '100%' }} form={form}>

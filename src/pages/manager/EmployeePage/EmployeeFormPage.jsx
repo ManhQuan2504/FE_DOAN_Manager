@@ -186,12 +186,24 @@ const ProductFormPage = () => {
         <div className="title">{t('employee')}</div>
         <div className="button-list">
           <BackButton />
-          <DeleteButton id={id} modelName="employees" />
+          {/* <DeleteButton id={id} modelName="employees" />
           {id && id !== '0' ? (
             <UpdateEmployeeButton form={form} navigate={navigate} id={id} modelName="employees" />
           ) : (
             <CreateEmployeeButton form={form} navigate={navigate} modelName="employees" />
+          )} */}
+
+          {id && id !== '0' ? (
+            <>
+              <DeleteButton id={id} modelName="employees" />
+              <UpdateEmployeeButton form={form} navigate={navigate} id={id} modelName="employees" />
+            </>
+          ) : (
+            <>
+              <CreateEmployeeButton form={form} navigate={navigate} modelName="employees" />
+            </>
           )}
+          
         </div>
       </div>
       <Form form={form} layout="vertical" style={{ maxWidth: '100%' }} onValuesChange={formChange}>

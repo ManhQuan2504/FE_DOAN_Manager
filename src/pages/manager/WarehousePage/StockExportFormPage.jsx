@@ -104,7 +104,6 @@ const StockExportFormPage = () => {
       try {
         if (id && id !== '0') {
           const stockExportData = await apiGetById({ modelName: 'stockExports', id });
-          console.log("🚀 ~ fetchData ~ stockExportData:", stockExportData);
 
           form.setFieldsValue({
             ...stockExportData.dataObject,

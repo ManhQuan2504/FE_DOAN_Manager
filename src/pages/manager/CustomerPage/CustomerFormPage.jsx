@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Row, Col, Select, message, Button, Avatar } from 'antd';
+import { Form, Input, Row, Col, Select, message, Button, Avatar, Switch } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { apiCreate, apiGetById, apiGetList, apiUpload } from '~/services/helperServices';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -204,14 +204,14 @@ const CustomerFormPage = () => {
         <Row gutter={[12]}>
           <Col span={6}>
             <Form.Item label={t('customerName')} name="customerName" rules={[{ required: true, message: t('customerNameRequired') }]}>
-              <Input />
+              <Input readOnly/>
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item label={t('email')} name="email" rules={[
               { type: 'email', message: t('mustBeAValidEmail') },
             ]}>
-              <Input />
+              <Input readOnly/>
             </Form.Item>
           </Col>
           <Col span={6}>
@@ -219,7 +219,13 @@ const CustomerFormPage = () => {
               { required: true, message: t('phoneNumberRequired') },
               { pattern: /^[0-9]+$/, message: t('phoneNumberInvalid') }
             ]}>
-              <Input />
+              <Input readOnly/>
+            </Form.Item>
+          </Col>
+
+          <Col span={6}>
+            <Form.Item label={t('active')} name="active" valuePropName="checked">
+              <Switch defaultChecked={true} />
             </Form.Item>
           </Col>
         </Row>
@@ -227,7 +233,7 @@ const CustomerFormPage = () => {
         <Row gutter={[12]}>
           <Col span={12}>
             <Form.Item label={t('address')} name="address" rules={[{ required: true, message: t('addressRequired') }]}>
-              <TextArea rows={4} />
+              <TextArea rows={4} readOnly/>
             </Form.Item>
           </Col>
         </Row>

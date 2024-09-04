@@ -2,6 +2,7 @@
   "button": {
     "add": "Add",
     "exportButton": "Export Excel",
+    "export": "Export Excel",
     "delete": "Delete",
     "back": "Back",
     "update": "Update",

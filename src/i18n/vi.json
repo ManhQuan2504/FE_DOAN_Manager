@@ -2,6 +2,7 @@
   "button": {
     "add": "Tạo mới",
     "exportButton": "Xuất Excel",
+    "export": "Xuất Excel",
     "delete": "Xoá",
     "back": "Quay lại",
     "update": "Cập nhật",
@@ -20,9 +21,11 @@
     "deleteSuccess": "Xoá thành công",
     "deleteFail": "Xoá thất bại",
     "importStockSuccess": "Nhập kho thành công",
+    "exportStockSuccess": "Xuất kho thành công",
     "actionFail": "Thao tác thất bại",
     "actionSuccess": "Thao tác thành công",
-    "importStockFail": "Nhập kho thất bại"
+    "importStockFail": "Nhập kho thất bại",
+    "exportStockFail": "Xuất kho thất bại"
   },
   "isRequired": "Bắt buộc nhập",
   "account": "Tài khoản",

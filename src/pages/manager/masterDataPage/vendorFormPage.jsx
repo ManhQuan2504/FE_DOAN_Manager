@@ -49,9 +49,21 @@ const VendorFormPage = () => {
         <div className="title">{t('vendor')}</div>
         <div className="button-list">
           <BackButton />
-          <UpdateButton form={form} navigate={navigate} id={id} modelName="vendors" />
+          {/* <UpdateButton form={form} navigate={navigate} id={id} modelName="vendors" />
           <DeleteButton id={id} modelName="vendors" />
-          <CreateButton form={form} navigate={navigate} modelName="vendors" />
+          <CreateButton form={form} navigate={navigate} modelName="vendors" /> */}
+
+          {id && id !== '0' ? (
+            <>
+              <DeleteButton id={id} modelName="vendors" />
+              <UpdateButton form={form} navigate={navigate} id={id} modelName="vendors" />
+            </>
+          ) : (
+            <>
+              <CreateButton form={form} navigate={navigate} modelName="vendors" />
+            </>
+          )}
+
         </div>
       </div>
       <Form layout="vertical" style={{ maxWidth: '100%' }} form={form}>

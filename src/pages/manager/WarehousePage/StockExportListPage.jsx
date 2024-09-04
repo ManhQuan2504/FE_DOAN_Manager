@@ -81,7 +81,7 @@ const StockExportListPage = () => {
   return (
     <div>
       <div className="header-list">
-        <div className="title">{t('stockImport')}</div>
+        <div className="title">{t('stockExport')}</div>
         <div className="button-list">
           <SearchOnList setSearchResults={setSearchResults} modelName={'stockExports'}/>
           <AddButton to={`${PATH.MANAGER.STOCKEXPORTS}/0`} />

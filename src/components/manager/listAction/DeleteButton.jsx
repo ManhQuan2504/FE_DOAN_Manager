@@ -21,11 +21,11 @@ const DeleteButton = ({ id, modelName, ...props }) => {
             id: id,
           };
           await apiDelete(data);
-          message.success(t('deleteSuccess'));
+          message.success(t('messages.deleteSuccess'));
           navigate(-1); // Quay lại trang trước đó
         } catch (error) {
           console.error('Failed to delete:', error);
-          message.error(t('deleteFailed'));
+          message.error(t('messages.deleteFailed'));
         }
       },
       onCancel() {

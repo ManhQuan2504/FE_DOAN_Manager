@@ -64,9 +64,21 @@ const CategoryFormPage = () => {
         <div className="title">{t('category')}</div>
         <div className="button-list">
           <BackButton />
-          <UpdateButton form={form} navigate={navigate} id={id} modelName="categories" />
-          <DeleteButton id={id} modelName="categories" />
-          <CreateButton form={form} navigate={navigate} modelName="categories" />
+          {/* <UpdateButton form={form} navigate={navigate} id={id} modelName="categories" />
+          <CreateButton form={form} navigate={navigate} modelName="categories" /> */}
+          {/* <DeleteButton id={id} modelName="categories" /> */}
+
+          {id && id !== '0' ? (
+            <>
+              <DeleteButton id={id} modelName="categories" />
+              <UpdateButton form={form} navigate={navigate} id={id} modelName="categories" />
+            </>
+          ) : (
+            <>
+              <CreateButton form={form} navigate={navigate} modelName="categories" />
+            </>
+          )}
+
         </div>
       </div>
       <Form layout="vertical" style={{ maxWidth: '100%' }} form={form}>

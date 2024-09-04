@@ -51,9 +51,20 @@ const TaxFormPage = () => {
         <div className="title">{t('tax')}</div>
         <div className="button-list">
           <BackButton />
-          <UpdateButton form={form} navigate={navigate} id={id} modelName="taxs" />
+          {/* <UpdateButton form={form} navigate={navigate} id={id} modelName="taxs" />
           <DeleteButton id={id} modelName="taxs" />
-          <CreateButton form={form} navigate={navigate} modelName="taxs" />
+          <CreateButton form={form} navigate={navigate} modelName="taxs" /> */}
+
+          {id && id !== '0' ? (
+            <>
+              <DeleteButton id={id} modelName="taxs" />
+              <UpdateButton form={form} navigate={navigate} id={id} modelName="taxs" />
+            </>
+          ) : (
+            <>
+              <CreateButton form={form} navigate={navigate} modelName="taxs" />
+            </>
+          )}
         </div>
       </div>
 

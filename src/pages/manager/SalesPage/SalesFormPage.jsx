@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, Row, Col, Select, Tabs, InputNumber, Button, Table, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { apiCreate, apiGetById, apiGetList } from '~/services/helperServices';
+import { apiCreate, apiGetById, apiGetList, apiUpdate } from '~/services/helperServices';
 import CreateButton from '~/components/manager/listAction/CreateButton';
 import BackButton from '~/components/manager/listAction/BackButton';
 import UpdateButton from '~/components/manager/listAction/UpdateButton';
@@ -45,13 +45,11 @@ const SalesFormPage = () => {
   const [productData, setProductData] = useState([]);
   const [productsData, setProductsData] = useState([]);
   const [salesDetail, setSalesDetail] = useState([]);
-  console.log("🚀 ~ SalesFormPage ~ salesDetail:", salesDetail)
   const [pageSize, setPageSize] = useState(30);
   const [errorAddLineMessage, setErrorAddLineMessage] = useState('');
   const [totalAmount, setTotalAmount] = useState(0);
 
   const formChange = async (changedValues, allValues) => {
-    console.log("🚀 ~ form.getFieldsValue():", form.getFieldsValue());
   };
 
   const CreateSaletButton = ({ modelName, form, navigate, ...props }) => {
@@ -59,8 +57,23 @@ const SalesFormPage = () => {
 
     const handleCreate = async () => {
       try {
+        if (!salesDetail.length) {
+          return;
+        };
+
+        for (const item of salesDetail) {
+          if (item.qty <= 0) {
+            message.error(t(`Sản phẩm "${item.productName}" đã hết hàng`));
+            return;
+          }
+
+          if (item.qty < item.saleQty) {
+            message.error(t(`Sản phẩm "${item.productName}" không đủ số lượng`));
+            return;
+          }
+        }
+
         const { saleNumber, customer, employee, phoneNumber } = await form.getFieldValue();
-        console.log("🚀 ~ handleCreate ~ totalAmount:", totalAmount)
         const data = {
           modelName: 'sales',
           data: {
@@ -68,8 +81,27 @@ const SalesFormPage = () => {
             saleNumber, customer, employee, phoneNumber, totalAmount
           },
         };
-        console.log("🚀 ~ handleCreate ~ data:", data)
         await apiCreate(data);
+
+        for (const item of salesDetail) {
+          const updateProduct = await apiGetById({
+            modelName: 'products',
+            id: item.product,
+          })
+
+          if (updateProduct) {
+            const { dataObject } = updateProduct;
+            dataObject.sold += item.saleQty;
+            dataObject.qty -= item.saleQty;
+
+            await apiUpdate({
+              modelName: 'products',
+              id: item.product,
+              data: dataObject
+            });
+          }
+        }
+
         message.success(t('messages.createSuccess'));
         navigate(-1);
 
@@ -125,7 +157,6 @@ const SalesFormPage = () => {
     try {
       if (id && id !== '0') {
         const saleData = await apiGetById({ modelName: 'sales', id });
-        console.log("🚀 ~ fetchData ~ saleData:", saleData)
         setSale(saleData.dataObject);
         form.setFieldsValue(saleData.dataObject);
         setSalesDetail(saleData?.dataObject?.productList);
@@ -192,7 +223,6 @@ const SalesFormPage = () => {
         return newDetails;
       });
 
-      console.log("🚀 ~ SalesFormPage ~ salesDetail:", salesDetail)
 
       // Reset form fields in the salesProduct tab
       form.resetFields(['product', 'color', 'qty', 'saleQty']);
@@ -247,7 +277,6 @@ const SalesFormPage = () => {
 
   const handlePageSizeChange = (current, size) => {
     setPageSize(size);
-    console.log(`Page size changed to ${size}`);
   };
 
   const columns = [
@@ -290,9 +319,22 @@ const SalesFormPage = () => {
         <div className="title">{t('sale')}</div>
         <div className="button-list">
           <BackButton />
-          <UpdateButton form={form} navigate={navigate} id={id} modelName="sales" />
-          <DeleteButton id={id} modelName="sales" />
-          <CreateSaletButton form={form} navigate={navigate} modelName="sales" />
+          {/* <UpdateButton form={form} navigate={navigate} id={id} modelName="sales" />
+          <CreateSaletButton form={form} navigate={navigate} modelName="sales" /> */}
+          {/* <DeleteButton id={id} modelName="sales" /> */}
+
+          {id && id !== '0' ? (
+            <>
+              <DeleteButton id={id} modelName="sales" />
+              <UpdateButton form={form} navigate={navigate} id={id} modelName="sales" />
+            </>
+          ) : (
+            <>
+              <CreateSaletButton form={form} navigate={navigate} modelName="sales" />
+            </>
+          )}
+
+
         </div>
       </div>
       <Form form={form} layout="vertical" style={{ maxWidth: '100%' }} onValuesChange={formChange}>

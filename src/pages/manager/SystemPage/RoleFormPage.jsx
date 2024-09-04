@@ -268,9 +268,21 @@ const RoleFormPage = () => {
         <div className="title">{t('role')}</div>
         <div className="button-list">
           <BackButton />
-          <UpdateButton form={form} navigate={navigate} id={id} modelName={MODELNAME.ROLES} />
+          {/* <UpdateButton form={form} navigate={navigate} id={id} modelName={MODELNAME.ROLES} />
           <DeleteButton id={id} modelName={MODELNAME.ROLES} />
-          <CreateButton form={form} navigate={navigate} modelName={MODELNAME.ROLES} />
+          <CreateButton form={form} navigate={navigate} modelName={MODELNAME.ROLES} /> */}
+
+          {id && id !== '0' ? (
+            <>
+              <DeleteButton id={id} modelName={MODELNAME.ROLES} />
+              <UpdateButton form={form} navigate={navigate} id={id} modelName={MODELNAME.ROLES} />
+            </>
+          ) : (
+            <>
+              <CreateButton form={form} navigate={navigate} modelName={MODELNAME.ROLES} />
+            </>
+          )}
+
         </div>
       </div>
       <Form layout="vertical" style={{ maxWidth: '100%' }} form={form}>
