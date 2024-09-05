@@ -85,7 +85,7 @@ const StockImportListPage = () => {
         <div className="button-list">
           <SearchOnList setSearchResults={setSearchResults} modelName={'stockImports'}/>
           <AddButton to={`${PATH.MANAGER.STOCKIMPORTS}/0`} />
-          <ExportButton />
+          {/* <ExportButton /> */}
         </div>
       </div>
       <TableComponent data={searchResults.length > 0 ? searchResults : stockImports} columnsConfig={columnsConfig} loading={loading} />

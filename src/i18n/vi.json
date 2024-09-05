@@ -76,6 +76,7 @@
   "taxValue": "Giá trị thuế",
   "images": "Hình ảnh",
   "isParentCategory": "Là danh mục cha",
+  "isParent": "Là chức năng cha",
   "functionList": "Danh sách chức năng",
   "employee": "Nhân viên",
   "employeeCode": "Mã nhân viên",

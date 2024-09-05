@@ -80,7 +80,7 @@ const ReportOrder = () => {
         <div className="title">{t('reportOrder')}</div>
         <div className="button-list">
           <BackButton />
-          <ExportButton />
+          {/* <ExportButton /> */}
         </div>
       </div>
       <div>

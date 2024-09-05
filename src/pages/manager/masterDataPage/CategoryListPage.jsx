@@ -73,7 +73,7 @@ const CategoryListPage = () => {
         <div className="button-list">
           <SearchOnList setSearchResults={setSearchResults} modelName={'categories'}/>
           <AddButton to={`${PATH.MANAGER.CATEGORIES}/0`} />
-          <ExportButton />
+          {/* <ExportButton /> */}
         </div>
       </div>
       <TableComponent data={searchResults.length > 0 ? searchResults : categories} columnsConfig={columnsConfig} loading={loading} />

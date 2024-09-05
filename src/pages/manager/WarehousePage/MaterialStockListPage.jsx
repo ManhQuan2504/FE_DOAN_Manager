@@ -172,7 +172,7 @@ const MaterialStockListPage = () => {
         <div className="title">{t('materialStock')}</div>
         <div className="button-list">
           <SearchOnList setSearchResults={setSearchResults} modelName={'products'}/>
-          <ExportButton />
+          {/* <ExportButton /> */}
         </div>
       </div>
       <TableComponent data={searchResults.length > 0 ? searchResults : products}  columnsConfig={columnsConfig} loading={loading} />

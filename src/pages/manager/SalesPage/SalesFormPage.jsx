@@ -433,7 +433,7 @@ const SalesFormPage = () => {
               <Col span={6}>
               </Col>
               <Col span={6}>
-                <div>{t('totalAmount')}: {totalAmount}</div>
+                <div>{t('totalAmount')}: {totalAmount.toLocaleString('vi-VN')}</div>
               </Col>
             </Row>
           </TabPane>

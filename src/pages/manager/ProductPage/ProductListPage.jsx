@@ -73,7 +73,7 @@ const ProductFormPage = () => {
         <div className="button-list">
           <SearchOnList setSearchResults={setSearchResults} modelName={'products'}/>
           <AddButton to={`${PATH.MANAGER.PRODUCTS}/0`} />
-          <ExportButton />
+          {/* <ExportButton /> */}
         </div>
       </div>
       <TableComponent data={searchResults.length > 0 ? searchResults : products} columnsConfig={columnsConfig} loading={loading} />

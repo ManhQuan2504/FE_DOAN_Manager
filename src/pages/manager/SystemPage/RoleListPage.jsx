@@ -63,7 +63,7 @@ const RoleListPage = () => {
         <div className="button-list">
           <SearchOnList setSearchResults={setSearchResults} modelName={'roles'}/>
           <AddButton to={`${PATH.MANAGER.ROLES}/0`} />
-          <ExportButton />
+          {/* <ExportButton /> */}
         </div>
       </div>
       <TableComponent data={searchResults.length > 0 ? searchResults : roles} columnsConfig={columnsConfig} loading={loading} />

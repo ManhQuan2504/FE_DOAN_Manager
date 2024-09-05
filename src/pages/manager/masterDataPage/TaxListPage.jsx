@@ -64,7 +64,7 @@ const TaxListPage = () => {
         <div className="button-list">
           <SearchOnList setSearchResults={setSearchResults} modelName={'taxs'}/>
           <AddButton to={`${PATH.MANAGER.TAXS}/0`} />
-          <ExportButton />
+          {/* <ExportButton /> */}
         </div>
       </div>
       <TableComponent data={searchResults.length > 0 ? searchResults : taxs} columnsConfig={columnsConfig} loading={loading} />

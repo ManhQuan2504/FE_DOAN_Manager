@@ -80,7 +80,7 @@ const ReportSale = () => {
         <div className="title">{t('saleReport')}</div>
         <div className="button-list">
           <BackButton />
-          <ExportButton />
+          {/* <ExportButton /> */}
         </div>
       </div>
       <div>

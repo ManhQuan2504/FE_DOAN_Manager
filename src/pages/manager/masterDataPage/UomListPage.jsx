@@ -61,7 +61,7 @@ const UomListPage = () => {
         <div className="button-list">
           <SearchOnList setSearchResults={setSearchResults} modelName={'uoms'}/>
           <AddButton to={`${PATH.MANAGER.UOMS}/0`} />
-          <ExportButton />
+          {/* <ExportButton /> */}
         </div>
       </div>
       <TableComponent data={searchResults.length > 0 ? searchResults : uoms} columnsConfig={columnsConfig} loading={loading} />

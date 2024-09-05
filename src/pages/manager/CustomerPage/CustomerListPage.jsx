@@ -69,7 +69,7 @@ const CustomerListPage = () => {
         <div className="title">{t('customer')}</div>
         <div className="button-list">
           <SearchOnList setSearchResults={setSearchResults} modelName={'customers'}/>
-          <ExportButton />
+          {/* <ExportButton /> */}
         </div>
       </div>
       <TableComponent data={searchResults.length > 0 ? searchResults : customers} columnsConfig={columnsConfig} loading={loading} />

@@ -73,7 +73,7 @@ const FunctionListPage = () => {
         <div className="button-list">
           <SearchOnList setSearchResults={setSearchResults} modelName={'functions'}/>
           <AddButton to={`${PATH.MANAGER.FUNCTIONS}/0`} />
-          <ExportButton />
+          {/* <ExportButton /> */}
         </div>
       </div>
       <TableComponent data={searchResults.length > 0 ? searchResults : functions} columnsConfig={columnsConfig} loading={loading} />

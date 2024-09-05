@@ -71,7 +71,7 @@ const EmployeeFormPage = () => {
         <div className="button-list">
           <SearchOnList setSearchResults={setSearchResults} modelName={'employees'}/>
           <AddButton to={`${PATH.MANAGER.EMPLOYEES}/0`} />
-          <ExportButton />
+          {/* <ExportButton /> */}
         </div>
       </div>
       <TableComponent data={searchResults.length > 0 ? searchResults : employees} columnsConfig={columnsConfig} loading={loading} />
