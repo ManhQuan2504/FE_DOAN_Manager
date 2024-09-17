@@ -154,5 +154,8 @@
   "saveChanges": "Lưu thay đổi",
   "reportOrder": "Báo cáo đặt hàng",
   "mustBeAGmail": "Phải là email",
+  "vendorTaxCode": "Mã số thuế",
+  "brcCode": "Số đăng kí kinh doanh",
+  "vendorShortName": "Tên viết tắt",
   "orderManager": "Quản lý đơn hàng"
 }

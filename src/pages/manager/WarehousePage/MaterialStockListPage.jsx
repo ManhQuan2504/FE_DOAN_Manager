@@ -128,15 +128,29 @@ const MaterialStockListPage = () => {
           return recordValue.startsWith(value);
         },
         sorter: (a, b) => {
-          const keys = col.key.split('.');
-          let aValue = a;
-          let bValue = b;
-          keys.forEach(k => {
-            aValue = aValue ? aValue[k] : '';
-            bValue = bValue ? bValue[k] : '';
-          });
-          return aValue.localeCompare(bValue);
-        },
+          const keys = col.key.split('.'); // Tách key theo dấu chấm để lấy các phần của key
+          console.log("🚀 ~ TableComponent ~ keys:", keys);
+
+          // Hàm lấy giá trị từ đối tượng dựa trên đường dẫn key
+          const getValueByKeyPath = (obj, keyPath) => {
+            return keyPath.reduce((acc, key) => {
+              if (acc && typeof acc === 'object' && acc.hasOwnProperty(key)) {
+                return acc[key]; // Tiếp tục truy cập vào cấp tiếp theo
+              }
+              return ''; // Trả về chuỗi rỗng nếu không tồn tại
+            }, obj);
+          };
+
+          const aValue = getValueByKeyPath(a, keys); // Lấy giá trị của a
+          const bValue = getValueByKeyPath(b, keys); // Lấy giá trị của b
+
+          console.log("🚀 ~ TableComponent ~ aValue:", aValue);
+          console.log("🚀 ~ TableComponent ~ bValue:", bValue);
+
+          // So sánh 2 giá trị, nếu không phải chuỗi thì chuyển về chuỗi trước khi so sánh
+          return String(aValue).localeCompare(String(bValue));
+        }
+
       })),
     ];
 
@@ -171,11 +185,11 @@ const MaterialStockListPage = () => {
       <div className="header-list">
         <div className="title">{t('materialStock')}</div>
         <div className="button-list">
-          <SearchOnList setSearchResults={setSearchResults} modelName={'products'}/>
+          <SearchOnList setSearchResults={setSearchResults} modelName={'products'} />
           {/* <ExportButton /> */}
         </div>
       </div>
-      <TableComponent data={searchResults.length > 0 ? searchResults : products}  columnsConfig={columnsConfig} loading={loading} />
+      <TableComponent data={searchResults.length > 0 ? searchResults : products} columnsConfig={columnsConfig} loading={loading} />
     </div>
   );
 };

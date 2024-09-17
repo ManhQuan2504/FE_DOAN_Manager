@@ -12,6 +12,7 @@ import ProductSearch from '~/components/ProductFieldComponent';
 import { COLOR_MENU } from '~/constants/colorConstants';
 import axios from 'axios';
 import { Option } from 'antd/es/mentions';
+import TextArea from 'antd/es/input/TextArea';
 
 const StockExportFormPage = () => {
   document.title = "Xuất kho";
@@ -245,6 +246,14 @@ const StockExportFormPage = () => {
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value?.replace(/(,*)/g, '')}
               />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter={[12]}>
+          <Col span={12}>
+            <Form.Item label={'Lý do xuất kho'} name="note">
+              <TextArea rows={10} />
             </Form.Item>
           </Col>
         </Row>

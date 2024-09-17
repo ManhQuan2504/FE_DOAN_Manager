@@ -151,5 +151,8 @@
   "saveChanges": "Save Changes",
   "reportOrder": "Report Orders",
   "mustBeAGmail": "Must Be A Gmail",
+  "vendorTaxCode": "Vendor Tax Code",
+  "brcCode": "Business registration number",
+  "vendorShortName": "Tên viết tắt",
   "orderManager": "order Manager"
 }

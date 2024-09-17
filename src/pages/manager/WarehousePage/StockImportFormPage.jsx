@@ -12,6 +12,7 @@ import ProductSearch from '~/components/ProductFieldComponent';
 import { COLOR_MENU } from '~/constants/colorConstants';
 import axios from 'axios';
 import { Option } from 'antd/es/mentions';
+import TextArea from 'antd/es/input/TextArea';
 
 const StockImportFormPage = () => {
   document.title = "Nhập kho";
@@ -24,7 +25,6 @@ const StockImportFormPage = () => {
   const [employeeName, setEmployeeName] = useState('');
   const [productData, setProductData] = useState([]); // State to store product data
   const [state, setState] = useState('');
-  console.log("🚀 ~1 StockImportFormPage ~ productData:", productData)
 
   const CreateStockImportButton = ({ modelName, form, navigate, ...props }) => {
     const { t } = useTranslation();
@@ -246,6 +246,14 @@ const StockImportFormPage = () => {
                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => value?.replace(/(,*)/g, '')}
               />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter={[12]}>
+          <Col span={12}>
+            <Form.Item label={'Lý do nhập kho'} name="note">
+              <TextArea rows={10} />
             </Form.Item>
           </Col>
         </Row>

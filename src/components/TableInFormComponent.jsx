@@ -27,6 +27,7 @@ const TableInFormComponent = ({ data, columnsConfig, loading, onDelete }) => {
       filterSearch: true,
       onFilter: (value, record) => {
         const recordValue = record[col.dataIndex] || 'No Value';
+        console.log("🚀 ~ TableInFormComponent ~ recordValue:", recordValue)
         return recordValue.startsWith(value);
       },
       sorter: (a, b) => {

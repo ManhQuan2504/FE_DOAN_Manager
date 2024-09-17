@@ -61,7 +61,7 @@ const SalesListPage = () => {
     },
     {
       title: t('employee'),
-      key: 'employeeName',
+      key: 'employee',
       render: (text, record) => record.employee?.employeeName,
     },
   ];

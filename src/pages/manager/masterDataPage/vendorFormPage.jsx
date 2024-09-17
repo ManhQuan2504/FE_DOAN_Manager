@@ -82,7 +82,42 @@ const VendorFormPage = () => {
           </Col>
 
           <Col span={6}>
+            <Form.Item label={t('vendorShortName')} name="vendorShortName" >
+              <Input />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter={[12]}>
+          <Col span={6}>
             <Form.Item label={t('phoneNumber')} name="phoneNumber" rules={[{ required: true, message: "Vui lòng nhập SĐT" }]}>
+              <Input />
+            </Form.Item>
+          </Col>
+
+          <Col span={6}>
+            <Form.Item
+              label={t('email')}
+              name="email"
+              rules={[
+                {
+                  type: 'email',
+                  message: t('mustBeAGmail'),
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+
+          <Col span={6}>
+            <Form.Item label={t('vendorTaxCode')} name="vendorTaxCode" rules={[{ required: true, message: "Vui lòng nhập mã số thuế" }]}>
+              <Input />
+            </Form.Item>
+          </Col>
+
+          <Col span={6}>
+            <Form.Item label={t('brcCode')} name="brcCode" >
               <Input />
             </Form.Item>
           </Col>

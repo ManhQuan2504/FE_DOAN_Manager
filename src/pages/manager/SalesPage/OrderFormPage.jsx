@@ -25,6 +25,7 @@ const OrderFormPage = () => {
   const navigate = useNavigate();
   const [pageSize, setPageSize] = useState(30);
   const [orderDetail, setOrderDetail] = useState([]);
+  console.log("🚀 ~ OrderFormPage ~ orderDetail:", orderDetail)
   const [orderState, setOrderState] = useState('');
 
   const formChange = async (changedValues, allValues) => {
@@ -217,15 +218,32 @@ const OrderFormPage = () => {
     {
       title: t('saleQty'),
       dataIndex: 'count',
-      width: 170,
+      width: 150,
       key: 'count',
     },
     {
       title: `${t('price')} (VNĐ)`,
       dataIndex: 'price',
-      width: 170,
+      width: 150,
       key: 'price',
       render: (text) => `${text}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+    },
+    {
+      title: t('tax'),
+      dataIndex: 'tax',
+      width: 100,
+      key: 'tax.taxValue',
+      render: (text, record) => record.tax?.taxValue + "%",
+    },
+    {
+      title: "Đơn giá(sau VAT)",
+      dataIndex: "price",
+      key: "price",
+      width: 170,
+      render: (text, record) => {
+        const priceWithVAT = record.price + (record.price * record.tax?.taxValue) / 100;
+        return priceWithVAT.toLocaleString('vi-VN');
+      },
     },
     {
       title: `${t('warranty')} (${t('month')})`,

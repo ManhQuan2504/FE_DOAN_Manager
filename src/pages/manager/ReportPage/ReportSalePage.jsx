@@ -79,7 +79,7 @@ const ReportSale = () => {
       <div className="header-list">
         <div className="title">{t('saleReport')}</div>
         <div className="button-list">
-          <BackButton />
+          {/* <BackButton /> */}
           {/* <ExportButton /> */}
         </div>
       </div>
